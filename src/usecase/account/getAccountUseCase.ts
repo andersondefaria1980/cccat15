@@ -1,5 +1,5 @@
-import AccountDto from "../domain/accountDto";
-import { AccountRepositoryInterface } from "../repository/accountRepositoryInterface";
+import AccountDto from "../../domain/accountDto";
+import { AccountRepositoryInterface } from "../../repository/account/accountRepositoryInterface";
 
 export default class GetAccountUseCase {
     public constructor(private accountRepository: AccountRepositoryInterface) {        

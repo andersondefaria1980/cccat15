@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import pgp from "pg-promise";
-import { validateCpf } from "./usecase/validateCpf";
+import { validateCpf } from "./usecase/validators/validateCpf";
 
 /**
  * criar teste
@@ -9,7 +9,7 @@ import { validateCpf } from "./usecase/validateCpf";
  * criar interface e interagir
  */
 
-export async function signup (input: any): Promise<any> {
+export async function signupOld (input: any): Promise<any> {
 	const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
 	try {
 		const id = crypto.randomUUID();

@@ -1,7 +1,7 @@
 import crypto from "crypto";
-import AccountDTO from "../src/domain/accountDto";
-import AccountRepositoryInMemory from "../src/repository/accountRepositoryInMemory";
-import GetAccountUseCase from "../src/usecase/getAccountUseCase";
+import AccountDTO from "../../src/domain/accountDto";
+import AccountRepositoryInMemory from "../../src/repository/account/accountRepositoryInMemory";
+import GetAccountUseCase from "../../src/usecase/account/getAccountUseCase";
 
 test("Must return an account", function() {
     let accountRepository = new AccountRepositoryInMemory();
