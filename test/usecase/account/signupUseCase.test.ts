@@ -1,14 +1,14 @@
-import AccountDTO from "../../src/domain/accountDto";
-import AccountRepositoryInMemory from "../../src/repository/account/accountRepositoryInMemory";
-import GetAccountUseCase from "../../src/usecase/account/getAccountUseCase";
-import SignupUseCase from "../../src/usecase/account/signupUseCase";
+import AccountDTO from "../../../src/domain/accountDto";
+import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
+import GetAccountUseCase from "../../../src/usecase/account/getAccountUseCase";
+import SignupUseCase from "../../../src/usecase/account/signupUseCase";
 
-test("Must create an account: ", function() {
+test("Must create an account: ", async function() {
     let accountRepository = new AccountRepositoryInMemory;
     const signupUseCase = new SignupUseCase(accountRepository);
     const accountDTO = new AccountDTO(null, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
     
-    const createdAccountId = signupUseCase.execute(accountDTO);
+    const createdAccountId = await signupUseCase.execute(accountDTO);
     const getAccountUseCase = new GetAccountUseCase(accountRepository);
     const returnedAccountDTO = getAccountUseCase.execute(createdAccountId);
     
@@ -30,11 +30,11 @@ test("Must return error if email already exists", function() {
     const signupUseCase = new SignupUseCase(accountRepository);
     const accountDtoToSignup = new AccountDTO(null, "Joao Silveira", "jose@tests.com", "04780028078", "AAA 5589", "698523", false, true);
 
-    const result = () => {
-        signupUseCase.execute(accountDtoToSignup);
+    const result = async () => {
+        await signupUseCase.execute(accountDtoToSignup);
     };
-    expect(result).toThrow(Error);
-    expect(result).toThrow("Email has already been taken.");    
+    expect(result).rejects.toThrow(Error);
+    expect(result).rejects.toThrow("Email has already been taken.");    
 });
 
 test.each([
@@ -45,9 +45,9 @@ test.each([
     let accountRepository = new AccountRepositoryInMemory;
     const signupUseCase = new SignupUseCase(accountRepository);    
     
-    const result = () => {
-        signupUseCase.execute(object.accountDto);
+    const result = async () => {
+        await signupUseCase.execute(object.accountDto);
     };
-    expect(result).toThrow(Error);
-    expect(result).toThrow(object.field + " is invalid."); 
+    expect(result).rejects.toThrow(Error);
+    expect(result).rejects.toThrow(object.field + " is invalid."); 
 });

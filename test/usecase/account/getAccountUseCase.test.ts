@@ -1,7 +1,7 @@
 import crypto from "crypto";
-import AccountDTO from "../../src/domain/accountDto";
-import AccountRepositoryInMemory from "../../src/repository/account/accountRepositoryInMemory";
-import GetAccountUseCase from "../../src/usecase/account/getAccountUseCase";
+import AccountDTO from "../../../src/domain/accountDto";
+import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
+import GetAccountUseCase from "../../../src/usecase/account/getAccountUseCase";
 
 test("Must return an account", function() {
     let accountRepository = new AccountRepositoryInMemory();
@@ -10,7 +10,7 @@ test("Must return an account", function() {
     accountRepository.addAccount(accountDTO);
     
     const getAccountUseCase = new GetAccountUseCase(accountRepository);    
-    const returnedAccountDTO = accountRepository.findAccount(id);
+    const returnedAccountDTO = getAccountUseCase.execute(id);
     
     expect(returnedAccountDTO).toBeInstanceOf(AccountDTO);
     expect(returnedAccountDTO?.getAccountId()).toBe(accountDTO.getAccountId());

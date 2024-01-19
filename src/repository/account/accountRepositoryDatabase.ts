@@ -33,4 +33,8 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
         accountDbList.forEach((accountDb) => accountDtoList.push(new AccountDto(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.car_plate, "pass", accountDb.is_passenger, accountDb.is_driver)));
         return accountDtoList;
     }
+
+    public async deleteAccount(accountId: string) {
+        await db.any(`delete from cccat15.account where account_id = '${accountId}'`);
+    }
 }

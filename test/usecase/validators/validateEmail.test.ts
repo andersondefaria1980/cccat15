@@ -1,4 +1,4 @@
-import { validateEmail } from "../../src/usecase/validators/validateEmail";
+import { validateEmail } from "../../../src/usecase/validators/validateEmail";
 
 test.each([
 	"anddesron.asdfasd@asdfasd.com",

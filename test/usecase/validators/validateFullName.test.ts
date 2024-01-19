@@ -1,4 +1,4 @@
-import { validateFullName } from "../../src/usecase/validators/validateFullName";
+import { validateFullName } from "../../../src/usecase/validators/validateFullName";
 
 test.each([
 	"aaa de aaa",

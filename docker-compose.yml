@@ -4,9 +4,9 @@ services:
       image: postgres
       container_name: db_pgsql_ccca15
       ports:
-          - '25432:5432'
+          - '35432:5432'
       expose:
-          - '25432'
+          - '35432'
       environment:
           POSTGRES_PASSWORD: secret
           POSTGRES_DB: ccca_15

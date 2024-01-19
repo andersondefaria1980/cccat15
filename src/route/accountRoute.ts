@@ -9,12 +9,10 @@ router.get('/accounts/:id', accountController.getAccount);
 
 router.post('/accounts', accountController.addAccount);
 
-router.put('accounts/:id', async function (req, resp) {
+router.put('/accounts/:id', async function (req, resp) {
 
 });
 
-router.delete('accounts/:id', async function (req, resp) {
-
-});
+router.delete('/accounts/:id', accountController.deleteAccount);
 
 export default router;

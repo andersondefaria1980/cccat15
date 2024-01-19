@@ -5,7 +5,7 @@ const connection: any = {
     user: 'postgres',
     password: 'secret',
     host: 'localhost',
-    port: 25432,
+    port: 35432,
     database: 'ccca_15',
 }
 

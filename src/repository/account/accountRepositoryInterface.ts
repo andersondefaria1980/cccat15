@@ -5,4 +5,5 @@ export interface AccountRepositoryInterface {
     findAccount(accountId: string): any;
     findAccountByEmail(email: string): any;
     listAccounts(): any;
+    deleteAccount(accountId: string): any;
 }
