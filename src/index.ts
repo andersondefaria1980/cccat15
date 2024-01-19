@@ -1,0 +1,13 @@
+import express, { Express, Request, Response } from "express";
+import accountRoute from './route/accountRoute';
+import bodyParser from "body-parser";
+
+const app: Express = express();
+const port = 3000;
+
+app.use( bodyParser.json() );
+app.use('/', accountRoute);
+
+app.listen(port, () => {
+    console.log(`[server]: Server is running at http://localhost:${port}`);
+});

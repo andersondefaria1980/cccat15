@@ -1,0 +1,12 @@
+version: '3'
+services:    
+  pgsql:
+      image: postgres
+      container_name: db_pgsql_ccca15
+      ports:
+          - '25432:5432'
+      expose:
+          - '25432'
+      environment:
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: ccca_15
