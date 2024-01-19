@@ -4,7 +4,7 @@ import AccountRepositoryInMemory from "../../../src/repository/account/accountRe
 import GetAccountUseCase from "../../../src/usecase/account/getAccountUseCase";
 
 test("Must return an account", function() {
-    let accountRepository = new AccountRepositoryInMemory();
+    const accountRepository = new AccountRepositoryInMemory();
     const id = crypto.randomUUID();
     const accountDTO = new AccountDTO(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
     accountRepository.addAccount(accountDTO);

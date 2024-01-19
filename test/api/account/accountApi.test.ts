@@ -25,7 +25,6 @@ describe("GET /accounts/:id", () => {
 
 describe("POST /accounts", () => {
     it("Should create and delete an account", async () => {
-
         const account = {
             "name": "Roberto da Silva",
             "email": "roberto@gmail.com",
