@@ -6,7 +6,7 @@ export default class DeleteAccountUseCase {
     public async execute(accountId: string) {       
         const account = await this.accountRepository.findAccount(accountId);
         if (!account) {
-            throw Error("Account doesn't exists");
+            throw Error("Account not found.");
         }
         await this.accountRepository.deleteAccount(accountId);
     }

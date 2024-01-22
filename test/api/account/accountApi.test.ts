@@ -1,3 +1,6 @@
+import AccountDto from "../../../src/domain/accountDto";
+import AccountRepositoryDatabase from "../../../src/repository/account/accountRepositoryDatabase";
+
 const request = require("supertest");
 const baseURL = "http://localhost:3000";
 
@@ -10,8 +13,8 @@ describe("PUT /accounts", () => {
         
         const changedAccountDto = {
             "accountId": accountDataToUpdate.accountId,
-            "name": accountDataToUpdate.name + " da Silva",
-            "email": accountDataToUpdate.email + 'm',
+            "name": "Anderson Jose Antonio",
+            "email": "email@teste.com",
             "cpf": "45133532016",
             "carPlate": "DDD 2222",
             "password": "9999",
@@ -64,10 +67,10 @@ describe("GET /accounts/:id", () => {
 });
 
 describe("POST /accounts", () => {
-    it("Should create and delete an account", async () => {
+    it("Should create and delete an account", async () => {        
         const account = {
             "name": "Roberto da Silva",
-            "email": "roberto@gmail.com",
+            "email": "robertodasilvasauro@gmail.com",
             "cpf": "02976067945",
             "carPlate": "BBB 1258",
             "password": "pass",
@@ -79,18 +82,17 @@ describe("POST /accounts", () => {
         expect(responseCreate.body.msg).toBe("Success: Account is created");
         expect(typeof(responseCreate.body.accountId)).toBe("string");
         const createdAccountId = responseCreate.body.accountId;
-
-        const responseGet = await request(baseURL).get(`/accounts/${createdAccountId}`);
-        expect(responseGet.statusCode).toBe(200);
-        validateAccountResponse(responseGet.body);
+                
+        const accountRepository = new AccountRepositoryDatabase();
+        const accountDtoAfterCreate = await accountRepository.findAccount(createdAccountId);
+        expect(accountDtoAfterCreate).toBeInstanceOf(AccountDto);
         
         const responseDelete = await request(baseURL).delete(`/accounts/${createdAccountId}`);
         expect(responseDelete.statusCode).toBe(200);
-        expect(responseDelete.body.msg).toBe("Account deleted");
+        expect(responseDelete.body.msg).toBe("Success: Account deleted");
 
-        const responseGetAfterDelete = await request(baseURL).get(`/accounts/${createdAccountId}`);
-        expect(responseGetAfterDelete.statusCode).toBe(404); 
-        expect(responseGetAfterDelete.body.msg).toBe("Account not found");        
+        const accountDtoAfterDelete = await accountRepository.findAccount(createdAccountId);
+        expect(accountDtoAfterDelete).toBe(undefined);
     });
 });
 

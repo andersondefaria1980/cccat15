@@ -15,3 +15,15 @@ test("Must delete an account", async function() {
     const accountFound = await accountRepository.findAccount(id);
     expect(accountFound).toBe(undefined);
 });
+
+test("Must return error if account does not exists", async function() {
+    const accountRepository = new AccountRepositoryInMemory();
+    const id = crypto.randomUUID();
+    const deleteAccountUseCase = new DeleteAccountUseCase(accountRepository);
+    
+    const result = async () => {
+        await deleteAccountUseCase.execute(id);
+    };
+    expect(result).rejects.toThrow(Error);
+    expect(result).rejects.toThrow("Account not found.");  
+});

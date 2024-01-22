@@ -5,6 +5,7 @@ import ListAccountsUseCase from '../usecase/account/listAccountsUseCase';
 import AccountDto from '../domain/accountDto';
 import SignupUseCase from '../usecase/account/signupUseCase';
 import UpdateAccountUseCase from '../usecase/account/updateAccountUseCase';
+import DeleteAccountUseCase from '../usecase/account/deleteAccountUseCase';
 
 async function getAccounts(req: Request, res: Response, next: NextFunction) {
     const listAccountsUseCase = new ListAccountsUseCase(new AccountRepositoryDatabase());
@@ -53,10 +54,19 @@ async function addAccount(req: Request, res: Response, next: NextFunction) {
 async function deleteAccount(req: Request, res: Response, next: NextFunction) {    
     const accountId = req.params.id;
     const repository = new AccountRepositoryDatabase();
-    await repository.deleteAccount(accountId);
-    res.status(200).json({
-        "msg": "Account deleted"
-    });
+    const deleteAccountUseCase = new DeleteAccountUseCase(repository);
+
+    try {
+        await deleteAccountUseCase.execute(accountId);     
+        res.status(200).json({
+            msg: "Success: Account deleted",
+            accountId: accountId,                
+        });
+    } catch (e) {        
+        res.status(400).json({
+            msg: `${e}`,            
+        });
+    }
 }
 
 async function updateAccount(req: Request, res: Response, next: NextFunction) {    

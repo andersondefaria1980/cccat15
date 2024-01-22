@@ -29,10 +29,10 @@ test("Must return error if email already exists", function() {
     const accountDto = new AccountDTO('aaa', "José da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
     accountRepository.addAccount(accountDto);
     const updateAccountUseCase = new UpdateAccountUseCase(accountRepository);
-    const accountDtoToSignup = new AccountDTO(null, "Joao Silveira", "jose@tests.com", "04780028078", "AAA 5589", "698523", false, true);
+    const accountDtoToUpdate = new AccountDTO(null, "Joao Silveira", "jose@tests.com", "04780028078", "AAA 5589", "698523", false, true);
 
     const result = async () => {
-        await updateAccountUseCase.execute(accountDtoToSignup);
+        await updateAccountUseCase.execute(accountDtoToUpdate);
     };
     expect(result).rejects.toThrow(Error);
     expect(result).rejects.toThrow("Email has already been taken.");    
@@ -51,4 +51,18 @@ test.each([
     };
     expect(result).rejects.toThrow(Error);
     expect(result).rejects.toThrow(object.field + " is invalid."); 
+});
+
+test("Must return error if account id not found", function() {
+    let accountRepository = new AccountRepositoryInMemory;
+    const accountDto = new AccountDTO('aaa', "José da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
+    accountRepository.addAccount(accountDto);
+    const updateAccountUseCase = new UpdateAccountUseCase(accountRepository);
+    const accountDtoToUpdate = new AccountDTO('ccc', "Joao Silveira", "jose_25@tests.com", "04780028078", "AAA 5589", "698523", false, true);
+
+    const result = async () => {
+        await updateAccountUseCase.execute(accountDtoToUpdate);
+    };
+    expect(result).rejects.toThrow(Error);
+    expect(result).rejects.toThrow("`Account [ccc] not found.`");    
 });
