@@ -4,12 +4,12 @@ import GetAccountUseCase from '../usecase/account/getAccountUseCase';
 import ListAccountsUseCase from '../usecase/account/listAccountsUseCase';
 import AccountDto from '../domain/accountDto';
 import SignupUseCase from '../usecase/account/signupUseCase';
+import UpdateAccountUseCase from '../usecase/account/updateAccountUseCase';
 
 async function getAccounts(req: Request, res: Response, next: NextFunction) {
     const listAccountsUseCase = new ListAccountsUseCase(new AccountRepositoryDatabase());
     const accounts = await listAccountsUseCase.execute()
-        .catch((e: Error) => {
-            console.log('aaaaaa');
+        .catch((e: Error) => {            
             res.status(500).json({
                 msg: "Erro: " + e.message
             });
@@ -59,9 +59,27 @@ async function deleteAccount(req: Request, res: Response, next: NextFunction) {
     });
 }
 
+async function updateAccount(req: Request, res: Response, next: NextFunction) {    
+    const body = req.body;
+    const accountDto = new AccountDto(body.accountId, body.name, body.email, body.cpf, body.carPlate, body.password, body.isPassenger, body.isDriver);
+    const updateAccountUseCase = new UpdateAccountUseCase(new AccountRepositoryDatabase());
+    
+    try {
+        await updateAccountUseCase.execute(accountDto);        
+        res.status(200).json({
+            msg: "Success: Account is updated",            
+        });
+    } catch (e) {        
+        res.status(400).json({
+            msg: `${e}`,            
+        });
+    }
+}
+
 export default {
     getAccounts,
     getAccount,
     addAccount,
-    deleteAccount
+    deleteAccount,
+    updateAccount,
 }

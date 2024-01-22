@@ -1,18 +1,18 @@
 import crypto from "crypto";
-import AccountDTO from "../../../src/domain/accountDto";
+import AccountDto from "../../../src/domain/accountDto";
 import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
 import GetAccountUseCase from "../../../src/usecase/account/getAccountUseCase";
 
 test("Must return an account", function() {
     const accountRepository = new AccountRepositoryInMemory();
     const id = crypto.randomUUID();
-    const accountDTO = new AccountDTO(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
+    const accountDTO = new AccountDto(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
     accountRepository.addAccount(accountDTO);
     
     const getAccountUseCase = new GetAccountUseCase(accountRepository);    
     const returnedAccountDTO = getAccountUseCase.execute(id);
     
-    expect(returnedAccountDTO).toBeInstanceOf(AccountDTO);
+    expect(returnedAccountDTO).toBeInstanceOf(AccountDto);
     expect(returnedAccountDTO?.getAccountId()).toBe(accountDTO.getAccountId());
     expect(returnedAccountDTO?.getName()).toBe(accountDTO.getName());
     expect(returnedAccountDTO?.getEmail()).toBe(accountDTO.getEmail());
@@ -26,7 +26,7 @@ test("Must return an account", function() {
 test("Must return error", function() {
     let accountRepository = new AccountRepositoryInMemory();
     const id = crypto.randomUUID();
-    const accountDTO = new AccountDTO(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
+    const accountDTO = new AccountDto(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
     accountRepository.addAccount(accountDTO);
         
     const getAccountUseCase = new GetAccountUseCase(accountRepository);    

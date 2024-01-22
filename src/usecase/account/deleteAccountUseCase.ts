@@ -3,7 +3,7 @@ import { AccountRepositoryInterface } from "../../repository/account/accountRepo
 export default class DeleteAccountUseCase {
     public constructor(private accountRepository: AccountRepositoryInterface) {}
 
-    public async execute(accountId: string) {
+    public async execute(accountId: string) {       
         const account = await this.accountRepository.findAccount(accountId);
         if (!account) {
             throw Error("Account doesn't exists");

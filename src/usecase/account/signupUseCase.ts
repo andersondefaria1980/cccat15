@@ -10,18 +10,11 @@ export default class SignupUseCase {
 
     }
     
-    /**
-     * 
-     * @param accountDto 
-     * @throws Error
-     * @returns 
-     */
     public async execute(accountDto: AccountDto) {
         if (!validateFullName(accountDto.getName())) throw new Error("Name is invalid.");   
         if (!validateEmail(accountDto.getEmail())) throw new Error("Email is invalid.");           
-        if (!validateCpf(accountDto.getCpf())) throw new Error("CPF is invalid.");           
-        const accountByEmail = await this.accountRepository.findAccountByEmail(accountDto.getEmail());         
-               
+        if (!validateCpf(accountDto.getCpf())) throw new Error("CPF is invalid.");                   
+        const accountByEmail = await this.accountRepository.findAccountByEmail(accountDto.getEmail());                        
         if (accountByEmail) throw new Error("Email has already been taken.");
         
         const id = crypto.randomUUID();

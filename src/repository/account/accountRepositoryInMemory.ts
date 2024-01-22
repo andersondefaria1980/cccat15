@@ -23,9 +23,18 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
     public deleteAccount(accountId: string) {
         const indexOfObject = this.accounts.findIndex((a) => {
             return a.getAccountId() === accountId;
-        });
+        });                
         if (indexOfObject !== -1) {
             this.accounts.splice(indexOfObject, 1);
-        }
-    }    
+        }                
+    }
+
+    public updateAccount(accountDto: AccountDto) {
+        const indexOfObject = this.accounts.findIndex((a) => {
+            return a.getAccountId() === accountDto.getAccountId();
+        }); 
+        if (indexOfObject !== -1) {
+            this.accounts[indexOfObject] = accountDto;
+        }    
+    }
 }

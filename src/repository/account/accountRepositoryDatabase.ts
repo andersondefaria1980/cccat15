@@ -28,7 +28,7 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
     }    
 
     public async listAccounts() {
-        const accountDbList = await db.any("select * from cccat15.account");        
+        const accountDbList = await db.any("select * from cccat15.account order by name");        
         let accountDtoList: AccountDto[] = [];
         accountDbList.forEach((accountDb) => accountDtoList.push(new AccountDto(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.car_plate, "pass", accountDb.is_passenger, accountDb.is_driver)));
         return accountDtoList;
@@ -36,5 +36,9 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
 
     public async deleteAccount(accountId: string) {
         await db.any(`delete from cccat15.account where account_id = '${accountId}'`);
+    }
+
+    public async updateAccount(accountDto: AccountDto) {
+        await db.query(`update cccat15.account  set name = '${accountDto.getName()}', email = '${accountDto.getEmail()}', cpf = '${accountDto.getCpf()}', car_plate = '${accountDto.getCarPlate()}', is_passenger = ${accountDto.getIsPassenger()}, is_driver = ${accountDto.getIsDriver()} where account_id = '${accountDto.getAccountId()}';`)
     }
 }

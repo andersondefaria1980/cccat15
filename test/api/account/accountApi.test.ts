@@ -1,6 +1,42 @@
 const request = require("supertest");
 const baseURL = "http://localhost:3000";
 
+describe("PUT /accounts", () => {
+    it("Should update an account", async () => { 
+        const response = await request(baseURL).get("/accounts");
+        expect(response.statusCode).toBe(200);
+        const accounts = response.body;
+        const accountDataToUpdate = accounts[0];                
+        
+        const changedAccountDto = {
+            "accountId": accountDataToUpdate.accountId,
+            "name": accountDataToUpdate.name + " da Silva",
+            "email": accountDataToUpdate.email + 'm',
+            "cpf": "45133532016",
+            "carPlate": "DDD 2222",
+            "password": "9999",
+            "isPassenger": false,
+            "isDriver": false            
+        };                        
+        
+        const responseUpdate = await request(baseURL).put(`/accounts`).send(changedAccountDto);                
+        expect(responseUpdate.statusCode).toBe(200);                     
+        expect(responseUpdate.body.msg).toBe("Success: Account is updated");
+        
+        const responseGet = await request(baseURL).get(`/accounts/${changedAccountDto.accountId}`);
+        expect(responseGet.statusCode).toBe(200);        
+        validateAccountResponse(responseGet.body);
+                        
+        expect(responseGet.body.accountId).toBe(changedAccountDto.accountId);
+        expect(responseGet.body.name).toBe(changedAccountDto.name);
+        expect(responseGet.body.email).toBe(changedAccountDto.email);
+        expect(responseGet.body.cpf).toBe(changedAccountDto.cpf);
+        expect(responseGet.body.carPlate).toBe(changedAccountDto.carPlate);        
+        expect(responseGet.body.isPassenger).toBe(changedAccountDto.isPassenger);
+        expect(responseGet.body.isDriver).toBe(changedAccountDto.isDriver);
+    });
+});
+
 describe("GET /accounts", () => {
     it("Should return a list of accounts", async () => {
         const response = await request(baseURL).get("/accounts");
@@ -21,6 +57,10 @@ describe("GET /accounts/:id", () => {
         expect(response.statusCode).toBe(200);
         validateAccountResponse(response.body);    
     });
+    it("Should return not foundt", async () => {
+        const response = await request(baseURL).get(`/accounts/d05b5be4-d3d0-474f-a3c4-119765f4d07b`);
+        expect(response.statusCode).toBe(404);        
+    });
 });
 
 describe("POST /accounts", () => {
@@ -34,7 +74,7 @@ describe("POST /accounts", () => {
             "isPassenger": true,
             "isDriver": true            
         }
-        const responseCreate = await request(baseURL).post("/accounts").send(account);
+        const responseCreate = await request(baseURL).post("/accounts").send(account);                    
         expect(responseCreate.statusCode).toBe(201);
         expect(responseCreate.body.msg).toBe("Success: Account is created");
         expect(typeof(responseCreate.body.accountId)).toBe("string");

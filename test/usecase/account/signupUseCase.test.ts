@@ -1,6 +1,5 @@
 import AccountDTO from "../../../src/domain/accountDto";
 import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
-import GetAccountUseCase from "../../../src/usecase/account/getAccountUseCase";
 import SignupUseCase from "../../../src/usecase/account/signupUseCase";
 
 test("Must create an account: ", async function() {
@@ -8,9 +7,8 @@ test("Must create an account: ", async function() {
     const signupUseCase = new SignupUseCase(accountRepository);
     const accountDTO = new AccountDTO(null, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
     
-    const createdAccountId = await signupUseCase.execute(accountDTO);
-    const getAccountUseCase = new GetAccountUseCase(accountRepository);
-    const returnedAccountDTO = getAccountUseCase.execute(createdAccountId);
+    const createdAccountId = await signupUseCase.execute(accountDTO);    
+    const returnedAccountDTO = accountRepository.findAccount(createdAccountId);
     
     expect(returnedAccountDTO).toBeInstanceOf(AccountDTO);
     expect(typeof returnedAccountDTO?.getAccountId()).toBe("string");
