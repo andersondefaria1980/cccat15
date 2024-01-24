@@ -5,7 +5,7 @@ import { validateEmail } from "../validators/validateEmail";
 import { validateFullName } from "../validators/validateFullName";
 
 export default class UpdateAccountUseCase {
-    public constructor(private accountRepository: AccountRepositoryInterface) {}
+    public constructor(readonly accountRepository: AccountRepositoryInterface) {}
 
     public async execute(accountToUpdate: AccountDto) {
         if (!validateFullName(accountToUpdate.getName())) throw new Error("Name is invalid.");   
@@ -15,14 +15,12 @@ export default class UpdateAccountUseCase {
         const accountByEmail = await this.accountRepository.findAccountByEmail(accountToUpdate.getEmail());                              
         if (accountByEmail && accountByEmail.getAccountId() !== accountToUpdate.getAccountId()) throw new Error("Email has already been taken.");
 
-        const accountId = typeof(accountToUpdate.getAccountId(), "string") ? accountToUpdate.getAccountId() : "";
-        const accountIdToSearch: string = accountId?.toString() ?  accountId.toString() : "";
-
+        const accountIdToSearch: string = `${accountToUpdate.getAccountId()}`;
         let accountDB = await this.accountRepository.findAccount(accountIdToSearch);
         if (!accountDB) {
             throw Error(`Account [${accountIdToSearch}] not found.`);
         }        
 
-        this.accountRepository.updateAccount(accountToUpdate);
+        await this.accountRepository.updateAccount(accountToUpdate);
     }
 }

@@ -5,36 +5,38 @@ const request = require("supertest");
 const baseURL = "http://localhost:3000";
 
 describe("PUT /accounts", () => {
-    it("Should update an account", async () => { 
+    it("Should update an account", async () => {
+
+
         const response = await request(baseURL).get("/accounts");
         expect(response.statusCode).toBe(200);
         const accounts = response.body;
-        const accountDataToUpdate = accounts[0];                
-        
+        const accountDataToUpdate = accounts[0];
+
         const changedAccountDto = {
             "accountId": accountDataToUpdate.accountId,
-            "name": "Anderson Jose Antonio",
-            "email": "email@teste.com",
+            "name": "Account Change",
+            "email": `email_${Math.random()}@teste-put.com`,
             "cpf": "45133532016",
             "carPlate": "DDD 2222",
             "password": "9999",
             "isPassenger": false,
-            "isDriver": false            
-        };                        
-        
-        const responseUpdate = await request(baseURL).put(`/accounts`).send(changedAccountDto);                
-        expect(responseUpdate.statusCode).toBe(200);                     
+            "isDriver": false
+        };
+
+        const responseUpdate = await request(baseURL).put(`/accounts`).send(changedAccountDto);
+        expect(responseUpdate.statusCode).toBe(200);
         expect(responseUpdate.body.msg).toBe("Success: Account is updated");
-        
+
         const responseGet = await request(baseURL).get(`/accounts/${changedAccountDto.accountId}`);
-        expect(responseGet.statusCode).toBe(200);        
+        expect(responseGet.statusCode).toBe(200);
         validateAccountResponse(responseGet.body);
-                        
+
         expect(responseGet.body.accountId).toBe(changedAccountDto.accountId);
         expect(responseGet.body.name).toBe(changedAccountDto.name);
         expect(responseGet.body.email).toBe(changedAccountDto.email);
         expect(responseGet.body.cpf).toBe(changedAccountDto.cpf);
-        expect(responseGet.body.carPlate).toBe(changedAccountDto.carPlate);        
+        expect(responseGet.body.carPlate).toBe(changedAccountDto.carPlate);
         expect(responseGet.body.isPassenger).toBe(changedAccountDto.isPassenger);
         expect(responseGet.body.isDriver).toBe(changedAccountDto.isDriver);
     });
@@ -67,10 +69,10 @@ describe("GET /accounts/:id", () => {
 });
 
 describe("POST /accounts", () => {
-    it("Should create and delete an account", async () => {        
+    it("Should create and delete an account", async () => {
         const account = {
             "name": "Roberto da Silva",
-            "email": "robertodasilvasauro@gmail.com",
+            "email": `email_${Math.random()}@gmail.com`,
             "cpf": "02976067945",
             "carPlate": "BBB 1258",
             "password": "pass",
@@ -82,17 +84,21 @@ describe("POST /accounts", () => {
         expect(responseCreate.body.msg).toBe("Success: Account is created");
         expect(typeof(responseCreate.body.accountId)).toBe("string");
         const createdAccountId = responseCreate.body.accountId;
-                
-        const accountRepository = new AccountRepositoryDatabase();
-        const accountDtoAfterCreate = await accountRepository.findAccount(createdAccountId);
-        expect(accountDtoAfterCreate).toBeInstanceOf(AccountDto);
-        
-        const responseDelete = await request(baseURL).delete(`/accounts/${createdAccountId}`);
-        expect(responseDelete.statusCode).toBe(200);
-        expect(responseDelete.body.msg).toBe("Success: Account deleted");
 
-        const accountDtoAfterDelete = await accountRepository.findAccount(createdAccountId);
-        expect(accountDtoAfterDelete).toBe(undefined);
+        const responseGet = await request(baseURL).get(`/accounts/${createdAccountId}`);
+        expect(responseGet.body.accountId).toBe(createdAccountId);
+        expect(responseGet.body.name).toBe(account.name);
+        expect(responseGet.body.email).toBe(account.email);
+        expect(responseGet.body.cpf).toBe(account.cpf);
+        expect(responseGet.body.carPlate).toBe(account.carPlate);
+        expect(responseGet.body.isPassenger).toBe(account.isPassenger);
+        expect(responseGet.body.isDriver).toBe(account.isDriver);
+
+        const responseDelete = await request(baseURL).delete(`/accounts/${createdAccountId}`);
+        expect(responseDelete.statusCode).toBe(200)
+
+        const responseGetAfterDelete = await request(baseURL).get(`/accounts/${createdAccountId}`);
+        expect(responseGetAfterDelete.statusCode).toBe(404);
     });
 });
 

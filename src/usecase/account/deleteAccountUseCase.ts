@@ -1,7 +1,7 @@
 import { AccountRepositoryInterface } from "../../repository/account/accountRepositoryInterface";
 
 export default class DeleteAccountUseCase {
-    public constructor(private accountRepository: AccountRepositoryInterface) {}
+    public constructor(readonly accountRepository: AccountRepositoryInterface) {}
 
     public async execute(accountId: string) {       
         const account = await this.accountRepository.findAccount(accountId);

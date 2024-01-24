@@ -4,23 +4,23 @@ import { AccountRepositoryInterface } from "./accountRepositoryInterface";
 export default class AccountRepositoryInMemory implements AccountRepositoryInterface {
     private accounts: AccountDto[] = [];
 
-    public addAccount(accountDto: AccountDto) {
+    public async addAccount(accountDto: AccountDto) {
         this.accounts.push(accountDto);
     }
 
-    public findAccount(accountId: string) {
+    public async findAccount(accountId: string) {
         return this.accounts.find(a => a.getAccountId() === accountId);
     }
     
-    findAccountByEmail(email: string) {
+    public async findAccountByEmail(email: string) {
         return this.accounts.find(a => a.getEmail() === email);
     }    
 
-    public listAccounts() {
+    public async listAccounts() {
         return this.accounts;
     }
 
-    public deleteAccount(accountId: string) {
+    public async deleteAccount(accountId: string) {
         const indexOfObject = this.accounts.findIndex((a) => {
             return a.getAccountId() === accountId;
         });                
@@ -29,7 +29,7 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
         }                
     }
 
-    public updateAccount(accountDto: AccountDto) {
+    public async updateAccount(accountDto: AccountDto) {
         const indexOfObject = this.accounts.findIndex((a) => {
             return a.getAccountId() === accountDto.getAccountId();
         }); 

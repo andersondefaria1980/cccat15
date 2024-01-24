@@ -1,0 +1,19 @@
+pendências (22/01/2024)
+ - testar placa no signup - OK
+ - data base evitar sql injection passando parametro para sql - OK
+ - simplificar assert da exception nos testes - jogar função e throw error - OK
+ - adicionar as Promise no repository interface - OK
+ - ajustar teste para nao criar classe toda hora  - beforeEach(() => {}) - OK
+ - colocar readonly nos parametros dos construtores - OK
+ 
+ próxima aula
+  - novo use case
+  
+  
+**  Realiza - precisamos diminuir os testes de integração, não precisa testar todas as possibilidades se já está testado no de unidade
+
+
+testes
+
+dsfgdsfg
+

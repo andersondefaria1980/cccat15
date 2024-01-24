@@ -2,7 +2,7 @@ import pgPromise from "pg-promise";
 import {IMain, IDatabase} from "pg-promise";
 
 const connection: any = {
-    user: 'postgres',
+    user: 'pguser',
     password: 'secret',
     host: 'localhost',
     port: 35432,

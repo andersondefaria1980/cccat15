@@ -3,15 +3,20 @@ import AccountDto from "../../../src/domain/accountDto";
 import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
 import GetAccountUseCase from "../../../src/usecase/account/getAccountUseCase";
 
-test("Must return an account", function() {
-    const accountRepository = new AccountRepositoryInMemory();
+let accountRepository: AccountRepositoryInMemory;
+let getAccountUseCase: GetAccountUseCase;
+
+beforeEach(() => {
+    accountRepository = new AccountRepositoryInMemory();
+    getAccountUseCase = new GetAccountUseCase(accountRepository);
+});
+
+test("Must return an account", async function() {
     const id = crypto.randomUUID();
     const accountDTO = new AccountDto(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
     accountRepository.addAccount(accountDTO);
-    
-    const getAccountUseCase = new GetAccountUseCase(accountRepository);    
-    const returnedAccountDTO = getAccountUseCase.execute(id);
-    
+    getAccountUseCase = new GetAccountUseCase(accountRepository);
+    const returnedAccountDTO = await getAccountUseCase.execute(id);
     expect(returnedAccountDTO).toBeInstanceOf(AccountDto);
     expect(returnedAccountDTO?.getAccountId()).toBe(accountDTO.getAccountId());
     expect(returnedAccountDTO?.getName()).toBe(accountDTO.getName());
@@ -23,14 +28,15 @@ test("Must return an account", function() {
     expect(returnedAccountDTO?.getIsDriver()).toBe(accountDTO.getIsDriver());
 });
 
-test("Must return error", function() {
-    let accountRepository = new AccountRepositoryInMemory();
-    const id = crypto.randomUUID();
-    const accountDTO = new AccountDto(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);
-    accountRepository.addAccount(accountDTO);
-        
-    const getAccountUseCase = new GetAccountUseCase(accountRepository);    
-    const returnedAccountDTO = accountRepository.findAccount('AAA');
-
-    expect(returnedAccountDTO).toBeUndefined;    
+describe("Must not find account", () => {
+    it("Must return undefined if id doesn't exist", async () => {
+        const anotherID = crypto.randomUUID();
+        const returnedAccountDTO = await getAccountUseCase.execute(anotherID);
+        expect(returnedAccountDTO).toBeUndefined;
+    });
+    it("Must return undefined if id is not valid", async () => {
+        const invalidId: string = "AAA";
+        const returnedAccountDTOInvalidId = await getAccountUseCase.execute(invalidId);
+        expect(returnedAccountDTOInvalidId).toBeUndefined;
+    });
 });

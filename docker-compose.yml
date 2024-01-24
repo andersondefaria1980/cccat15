@@ -7,6 +7,9 @@ services:
           - '35432:5432'
       expose:
           - '35432'
+      volumes:
+        - /private/var/lib/postgresql:/var/lib/postgresql
       environment:
+          POSTGRES_USER: pguser
           POSTGRES_PASSWORD: secret
           POSTGRES_DB: ccca_15

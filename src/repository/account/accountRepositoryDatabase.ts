@@ -2,15 +2,16 @@ import AccountDto from "../../domain/accountDto";
 import { AccountRepositoryInterface } from "./accountRepositoryInterface";
 import { db } from "../../infra/database";
 
-export default class AccountRepositoryDatabase implements AccountRepositoryInterface {    
+export default class AccountRepositoryDatabase implements AccountRepositoryInterface {
     private accounts: AccountDto[] = [];        
 
     public async addAccount(accountDto: AccountDto) {
-        await db.query(`insert into cccat15.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ('${accountDto.getAccountId()}', '${accountDto.getName()}', '${accountDto.getEmail()}', '${accountDto.getCpf()}', '${accountDto.getCarPlate()}', ${accountDto.getIsPassenger()}, ${accountDto.getIsDriver()});`)
+        await db.query("insert into cccat15.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)",
+            [accountDto.getAccountId(), accountDto.getName(), accountDto.getEmail(), accountDto.getCpf(), accountDto.getCarPlate(), accountDto.getIsPassenger(), accountDto.getIsDriver()]);
     }
 
     public async findAccount(accountId: string) {        
-        const accountDbList = await db.any("select * from cccat15.account where account_id = '" + accountId + "'");        
+        const accountDbList = await db.any("select * from cccat15.account where account_id = $1", accountId);
         if (accountDbList.length > 0) {
             const accountDb = accountDbList[0]
             return new AccountDto(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.car_plate, "pass", accountDb.is_passenger, accountDb.is_driver);
@@ -19,7 +20,7 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
     }
     
     public async findAccountByEmail(email: string) {
-        const accountDbList = await db.any("select * from cccat15.account where email = '" + email + "'");        
+        const accountDbList = await db.any("select * from cccat15.account where email = $1", email);
         if (accountDbList.length > 0) {
             const accountDb = accountDbList[0]
             return new AccountDto(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.car_plate, "pass", accountDb.is_passenger, accountDb.is_driver);
@@ -35,10 +36,11 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
     }
 
     public async deleteAccount(accountId: string) {
-        await db.any(`delete from cccat15.account where account_id = '${accountId}'`);
+        await db.any("delete from cccat15.account where account_id = $1", accountId );
     }
 
     public async updateAccount(accountDto: AccountDto) {
-        await db.query(`update cccat15.account  set name = '${accountDto.getName()}', email = '${accountDto.getEmail()}', cpf = '${accountDto.getCpf()}', car_plate = '${accountDto.getCarPlate()}', is_passenger = ${accountDto.getIsPassenger()}, is_driver = ${accountDto.getIsDriver()} where account_id = '${accountDto.getAccountId()}';`)
+        await db.query("update cccat15.account  set name = $1, email = $2, cpf = $3, car_plate = $4, is_passenger = $5, is_driver = $6 where account_id = $7",
+            [accountDto.getName(), accountDto.getEmail(), accountDto.getCpf(), accountDto.getCarPlate(), accountDto.getIsPassenger(), accountDto.getIsDriver(), accountDto.getAccountId()]);
     }
 }
