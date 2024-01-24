@@ -16,14 +16,14 @@ test("Must create an account: ", async function() {
     const returnedAccountDTO = await accountRepository.findAccount(createdAccountId);
     
     expect(returnedAccountDTO).toBeInstanceOf(AccountDTO);
-    expect(typeof returnedAccountDTO?.getAccountId()).toBe("string");
-    expect(returnedAccountDTO?.getName()).toBe(accountDTO.getName());
-    expect(returnedAccountDTO?.getEmail()).toBe(accountDTO.getEmail());
-    expect(returnedAccountDTO?.getCpf()).toBe(accountDTO.getCpf());
-    expect(returnedAccountDTO?.getCarPlate()).toBe(accountDTO.getCarPlate());
-    expect(returnedAccountDTO?.getPassword()).toBe(accountDTO.getPassword());
-    expect(returnedAccountDTO?.getIsPassenger()).toBe(accountDTO.getIsPassenger());
-    expect(returnedAccountDTO?.getIsDriver()).toBe(accountDTO.getIsDriver());    
+    expect(typeof returnedAccountDTO?.accountId).toBe("string");
+    expect(returnedAccountDTO?.name).toBe(accountDTO.name);
+    expect(returnedAccountDTO?.email).toBe(accountDTO.email);
+    expect(returnedAccountDTO?.cpf).toBe(accountDTO.cpf);
+    expect(returnedAccountDTO?.carPlate).toBe(accountDTO.carPlate);
+    expect(returnedAccountDTO?.password).toBe(accountDTO.password);
+    expect(returnedAccountDTO?.isPassenger).toBe(accountDTO.isPassenger);
+    expect(returnedAccountDTO?.isDriver).toBe(accountDTO.isDriver);
 });
 
 test("Must return error if email already exists", async function() {

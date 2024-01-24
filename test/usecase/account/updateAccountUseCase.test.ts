@@ -19,14 +19,14 @@ test("Must update an account: ", async function() {
     await updateAccountUseCase.execute(accountDtoBeforeUpdate);
     const accountDtoAfterUpdate = await accountRepository.findAccount(accountId);
     expect(accountDtoAfterUpdate).toBeInstanceOf(AccountDTO);
-    expect(accountDtoAfterUpdate?.getAccountId()).toBe(accountDtoBeforeUpdate.getAccountId());
-    expect(accountDtoAfterUpdate?.getName()).toBe(accountDtoBeforeUpdate.getName());
-    expect(accountDtoAfterUpdate?.getEmail()).toBe(accountDtoBeforeUpdate.getEmail());
-    expect(accountDtoAfterUpdate?.getCpf()).toBe(accountDtoBeforeUpdate.getCpf());
-    expect(accountDtoAfterUpdate?.getCarPlate()).toBe(accountDtoBeforeUpdate.getCarPlate());
-    expect(accountDtoAfterUpdate?.getPassword()).toBe(accountDtoBeforeUpdate.getPassword());
-    expect(accountDtoAfterUpdate?.getIsPassenger()).toBe(accountDtoBeforeUpdate.getIsPassenger());
-    expect(accountDtoAfterUpdate?.getIsDriver()).toBe(accountDtoBeforeUpdate.getIsDriver());    
+    expect(accountDtoAfterUpdate?.accountId).toBe(accountDtoBeforeUpdate.accountId);
+    expect(accountDtoAfterUpdate?.name).toBe(accountDtoBeforeUpdate.name);
+    expect(accountDtoAfterUpdate?.email).toBe(accountDtoBeforeUpdate.email);
+    expect(accountDtoAfterUpdate?.cpf).toBe(accountDtoBeforeUpdate.cpf);
+    expect(accountDtoAfterUpdate?.carPlate).toBe(accountDtoBeforeUpdate.carPlate);
+    expect(accountDtoAfterUpdate?.password).toBe(accountDtoBeforeUpdate.password);
+    expect(accountDtoAfterUpdate?.isPassenger).toBe(accountDtoBeforeUpdate.isPassenger);
+    expect(accountDtoAfterUpdate?.isDriver).toBe(accountDtoBeforeUpdate.isDriver);
 });
 
 test("Must return error if email already exists", async function() {

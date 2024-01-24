@@ -1,10 +1,11 @@
 import CoordinateDto from "./coordinateDto";
+import AccountDto from "./accountDto";
 
 export default class RideDto {
     public constructor(
         private _rideId: string,
-        private _passengetId: string,
-        private _driverId: string|null,
+        private _passenger: AccountDto,
+        private _driverId: AccountDto | null,
         private _status: string,
         private _fare: number,
         private _distance: number,
@@ -17,11 +18,11 @@ export default class RideDto {
         return this._rideId;
     }
 
-    get passengetId(): string {
-        return this._passengetId;
+    get passenger(): AccountDto {
+        return this._passenger;
     }
 
-    get driverId(): string | null {
+    get driverId(): AccountDto | null {
         return this._driverId;
     }
 

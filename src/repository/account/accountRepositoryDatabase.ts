@@ -7,7 +7,7 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
 
     public async addAccount(accountDto: AccountDto) {
         await db.query("insert into cccat15.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)",
-            [accountDto.getAccountId(), accountDto.getName(), accountDto.getEmail(), accountDto.getCpf(), accountDto.getCarPlate(), accountDto.getIsPassenger(), accountDto.getIsDriver()]);
+            [accountDto.accountId, accountDto.name, accountDto.email, accountDto.cpf, accountDto.carPlate, accountDto.isPassenger, accountDto.isDriver]);
     }
 
     public async findAccount(accountId: string) {        
@@ -41,6 +41,6 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
 
     public async updateAccount(accountDto: AccountDto) {
         await db.query("update cccat15.account  set name = $1, email = $2, cpf = $3, car_plate = $4, is_passenger = $5, is_driver = $6 where account_id = $7",
-            [accountDto.getName(), accountDto.getEmail(), accountDto.getCpf(), accountDto.getCarPlate(), accountDto.getIsPassenger(), accountDto.getIsDriver(), accountDto.getAccountId()]);
+            [accountDto.name, accountDto.email, accountDto.cpf, accountDto.carPlate, accountDto.isPassenger, accountDto.isDriver, accountDto.accountId]);
     }
 }

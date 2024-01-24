@@ -9,11 +9,11 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
     }
 
     public async findAccount(accountId: string) {
-        return this.accounts.find(a => a.getAccountId() === accountId);
+        return this.accounts.find(a => a.accountId === accountId);
     }
     
     public async findAccountByEmail(email: string) {
-        return this.accounts.find(a => a.getEmail() === email);
+        return this.accounts.find(a => a.accountId === email);
     }    
 
     public async listAccounts() {
@@ -22,7 +22,7 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
 
     public async deleteAccount(accountId: string) {
         const indexOfObject = this.accounts.findIndex((a) => {
-            return a.getAccountId() === accountId;
+            return a.accountId === accountId;
         });                
         if (indexOfObject !== -1) {
             this.accounts.splice(indexOfObject, 1);
@@ -31,7 +31,7 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
 
     public async updateAccount(accountDto: AccountDto) {
         const indexOfObject = this.accounts.findIndex((a) => {
-            return a.getAccountId() === accountDto.getAccountId();
+            return a.accountId === accountDto.accountId;
         }); 
         if (indexOfObject !== -1) {
             this.accounts[indexOfObject] = accountDto;

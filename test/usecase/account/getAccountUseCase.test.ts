@@ -18,14 +18,14 @@ test("Must return an account", async function() {
     getAccountUseCase = new GetAccountUseCase(accountRepository);
     const returnedAccountDTO = await getAccountUseCase.execute(id);
     expect(returnedAccountDTO).toBeInstanceOf(AccountDto);
-    expect(returnedAccountDTO?.getAccountId()).toBe(accountDTO.getAccountId());
-    expect(returnedAccountDTO?.getName()).toBe(accountDTO.getName());
-    expect(returnedAccountDTO?.getEmail()).toBe(accountDTO.getEmail());
-    expect(returnedAccountDTO?.getCpf()).toBe(accountDTO.getCpf());
-    expect(returnedAccountDTO?.getCarPlate()).toBe(accountDTO.getCarPlate());
-    expect(returnedAccountDTO?.getPassword()).toBe(accountDTO.getPassword());
-    expect(returnedAccountDTO?.getIsPassenger()).toBe(accountDTO.getIsPassenger());
-    expect(returnedAccountDTO?.getIsDriver()).toBe(accountDTO.getIsDriver());
+    expect(returnedAccountDTO?.accountId).toBe(accountDTO.accountId);
+    expect(returnedAccountDTO?.name).toBe(accountDTO.name);
+    expect(returnedAccountDTO?.email).toBe(accountDTO.email);
+    expect(returnedAccountDTO?.cpf).toBe(accountDTO.cpf);
+    expect(returnedAccountDTO?.carPlate).toBe(accountDTO.carPlate);
+    expect(returnedAccountDTO?.password).toBe(accountDTO.password);
+    expect(returnedAccountDTO?.isPassenger).toBe(accountDTO.isPassenger);
+    expect(returnedAccountDTO?.isDriver).toBe(accountDTO.isDriver);
 });
 
 describe("Must not find account", () => {

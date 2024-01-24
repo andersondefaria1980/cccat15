@@ -10,23 +10,23 @@ export default class SignupUseCase {
     public constructor(readonly accountRepository: AccountRepositoryInterface) {}
     
     public async execute(accountDto: AccountDto) {
-        if (!validateFullName(accountDto.getName())) throw new Error("Name is invalid.");   
-        if (!validateEmail(accountDto.getEmail())) throw new Error("Email is invalid.");           
-        if (!validateCpf(accountDto.getCpf())) throw new Error("CPF is invalid.");
-        if (!validateCarPlate(accountDto.getCarPlate())) throw new Error("Car plate is invalid.");
-        const accountByEmail = await this.accountRepository.findAccountByEmail(accountDto.getEmail());                        
+        if (!validateFullName(accountDto.name)) throw new Error("Name is invalid.");
+        if (!validateEmail(accountDto.email)) throw new Error("Email is invalid.");
+        if (!validateCpf(accountDto.cpf)) throw new Error("CPF is invalid.");
+        if (!validateCarPlate(accountDto.carPlate)) throw new Error("Car plate is invalid.");
+        const accountByEmail = await this.accountRepository.findAccountByEmail(accountDto.email);
         if (accountByEmail) throw new Error("Email has already been taken.");
         
         const id = crypto.randomUUID();
         const accountDtoToInsert = new AccountDto(
             id,
-            accountDto.getName(),
-            accountDto.getEmail(),
-            accountDto.getCpf(),
-            accountDto.getCarPlate(),
-            accountDto.getPassword(),
-            accountDto.getIsPassenger(),
-            accountDto.getIsDriver(),
+            accountDto.name,
+            accountDto.email,
+            accountDto.cpf,
+            accountDto.carPlate,
+            accountDto.password,
+            accountDto.isPassenger,
+            accountDto.isDriver,
         );
         await this.accountRepository.addAccount(accountDtoToInsert);
         return id;

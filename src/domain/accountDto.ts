@@ -1,37 +1,45 @@
 export default class AccountDto {
     public constructor(
-        private accountId: string | null,
-        private name: string,
-        private email: string,
-        private cpf: string,
-        private carPlate: string,
-        private password: string,
-        private isPassenger: boolean,
-        private isDriver: boolean,
+        private _accountId: string | null,
+        private _name: string,
+        private _email: string,
+        private _cpf: string,
+        private _carPlate: string,
+        private _password: string,
+        private _isPassenger: boolean,
+        private _isDriver: boolean,
     ){};
 
-    public getAccountId(): string | null {
-        return this.accountId;
-    }    
-    public getName(): string {
-        return this.name;
-    }    
-    public getEmail(): string {
-        return this.email;
-    }    
-    public getCpf(): string {
-        return this.cpf;
-    }    
-    public getCarPlate(): string {
-        return this.carPlate;
-    }    
-    public getPassword(): string {
-        return this.password;
-    }    
-    public getIsPassenger(): boolean {
-        return this.isPassenger;
-    }    
-    public getIsDriver(): boolean {
-        return this.isDriver;
-    }    
+
+    get accountId(): string | null {
+        return this._accountId;
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get email(): string {
+        return this._email;
+    }
+
+    get cpf(): string {
+        return this._cpf;
+    }
+
+    get carPlate(): string {
+        return this._carPlate;
+    }
+
+    get password(): string {
+        return this._password;
+    }
+
+    get isPassenger(): boolean {
+        return this._isPassenger;
+    }
+
+    get isDriver(): boolean {
+        return this._isDriver;
+    }
 }

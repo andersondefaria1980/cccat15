@@ -2,13 +2,13 @@ import CoordinateDto from "./coordinateDto";
 
 export default class RideDtoRequest {
     public constructor(
-        private _passengetId: string,
+        private _passengerId: string,
         private _from: CoordinateDto,
         private _to: CoordinateDto,
     ){};
 
-    get passengetId(): string {
-        return this._passengetId;
+    get passengerId(): string {
+        return this._passengerId;
     }
 
     get from(): CoordinateDto {
