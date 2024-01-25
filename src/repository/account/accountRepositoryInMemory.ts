@@ -13,7 +13,7 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
     }
     
     public async findAccountByEmail(email: string) {
-        return this.accounts.find(a => a.accountId === email);
+        return this.accounts.find(a => a.email == email);
     }    
 
     public async listAccounts() {

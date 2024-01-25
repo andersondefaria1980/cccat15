@@ -8,11 +8,6 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         this.rides.push(rideDto);
     }
 
-    async findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<RideDto[]> {
-        if (!status || status.length == 0) return this.rides.filter(r => r.passenger.accountId === passengerId);
-        return this.rides.filter(r => r.passenger.accountId === passengerId && status.filter(s => hasStatus ? (s === r.status) : (s !== r.status)));
-    }
-
     async findRide(rideId: string): Promise<RideDto | undefined> {
         return await this.rides.find(r => r.rideId === rideId);
     }
@@ -24,5 +19,15 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         if (indexOfObject !== -1) {
             this.rides[indexOfObject] = rideDto;
         }
+    }
+
+    async findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<RideDto[]> {
+        if (!status || status.length == 0) return this.rides.filter(r => r.passenger.accountId === passengerId);
+        return this.rides.filter(r => r.passenger.accountId === passengerId && status.filter(s => hasStatus ? (s === r.status) : (s !== r.status)));
+    }
+
+    async findRidesFromDriver(driverId: string, status?: string[], hasStatus?: boolean): Promise<RideDto[]> {
+        if (!status || status.length == 0) return this.rides.filter(r => r.driver?.accountId === driverId);
+        return this.rides.filter(r => r.driver?.accountId === driverId && status.filter(s => hasStatus ? (s === r.status) : (s !== r.status)));
     }
 }

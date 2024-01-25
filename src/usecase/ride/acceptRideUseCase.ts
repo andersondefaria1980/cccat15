@@ -1,7 +1,5 @@
 import {RideRepositoryInterface} from "../../repository/ride/rideRepositoryInterface";
 import {AccountRepositoryInterface} from "../../repository/account/accountRepositoryInterface";
-import RideDto from "../../domain/rideDto";
-import RequestRideUseCase from "./requestRideUseCase";
 import RideValues from "../../domain/rideValues";
 
 export default class AcceptRideUseCase {
@@ -18,6 +16,10 @@ export default class AcceptRideUseCase {
         const accountDriver = await this.accountRepository.findAccount(driverId);
         if (!accountDriver) throw new Error("Driver account not found.");
         if (!accountDriver.isDriver) throw new Error("Driver account is not set as a driver.");
+
+        const accountDriverId = accountDriver.accountId ? accountDriver.accountId : "";
+        const driveRidesNotCompleted = await this.rideRepository.findRidesFromDriver(accountDriverId, [RideValues.STATUS_ACCEPTED, RideValues.STATUS_IN_PROGRESS], true);
+        if (driveRidesNotCompleted.length > 0) throw new Error("Driver has another ride accepted or in progress.");
 
         ride.driver = accountDriver;
         ride.status = RideValues.STATUS_ACCEPTED;
