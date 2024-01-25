@@ -4,8 +4,8 @@ import crypto from "crypto";
 import AccountDTO from "../../../src/domain/accountDto";
 import CoordinateDto from "../../../src/domain/coordinateDto";
 import RideDto from "../../../src/domain/rideDto";
-import RequestRideUseCase from "../../../src/usecase/ride/requestRideUseCase";
 import GetRideUseCase from "../../../src/usecase/ride/gerRideUseCase";
+import RideValues from "../../../src/domain/rideValues";
 
 let rideRepository: RideRepositoryInMemory;
 let accountRepository: AccountRepositoryInMemory;
@@ -24,7 +24,7 @@ test("Must return a ride", async function () {
     const from = new CoordinateDto(1,2);
     const to = new CoordinateDto(5,6);
     const rideId = crypto.randomUUID();
-    const rideDto = new RideDto(rideId, accountDto, null, RequestRideUseCase.STATUS_REQUESTED, 0, 0, from, to, Date.now());
+    const rideDto = new RideDto(rideId, accountDto, null, RideValues.STATUS_REQUESTED, 0, 0, from, to, Date.now());
     rideRepository.addRide(rideDto);
     const ride = await getRideUseCase.execute(rideId);
     expect(ride).toBeInstanceOf(RideDto);

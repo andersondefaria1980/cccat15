@@ -5,7 +5,7 @@ export default class RideDto {
     public constructor(
         private _rideId: string,
         private _passenger: AccountDto,
-        private _driverId: AccountDto | null,
+        private _driver: AccountDto | null,
         private _status: string,
         private _fare: number,
         private _distance: number,
@@ -22,12 +22,19 @@ export default class RideDto {
         return this._passenger;
     }
 
-    get driverId(): AccountDto | null {
-        return this._driverId;
+    get driver(): AccountDto | null {
+        return this._driver;
+    }
+
+    set driver(value: AccountDto | null) {
+        this._driver = value;
     }
 
     get status(): string {
         return this._status;
+    }
+    set status(value: string) {
+        this._status = value;
     }
 
     get fare(): number {

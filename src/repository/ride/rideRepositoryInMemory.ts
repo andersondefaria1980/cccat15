@@ -17,4 +17,12 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         return await this.rides.find(r => r.rideId === rideId);
     }
 
+    async updateRide(rideDto: RideDto): Promise<void> {
+        const indexOfObject = this.rides.findIndex((a) => {
+            return a.rideId === rideDto.rideId;
+        });
+        if (indexOfObject !== -1) {
+            this.rides[indexOfObject] = rideDto;
+        }
+    }
 }
