@@ -18,6 +18,18 @@ router.post('/rides/request', async function (req, res, ) {
     await rideController.requestRide(req, res);
 });
 
+router.delete('/rides/:id', async function (req, res, ) {
+    await rideController.deleteRide(req, res);
+});
+
+router.post('/rides/accept', async function (req, res, ) {
+    await rideController.acceptRide(req, res);
+});
+
+router.post('/rides/start', async function (req, res, ) {
+    await rideController.startRide(req, res);
+});
+
 router.get('/accounts', async function (req, res, ) {
     await accountController.getAccounts(req, res);
 });

@@ -19,11 +19,4 @@ export default class RideDtoRequest {
         return this._to;
     }
 
-    public toApi() {
-        return {
-            passengerId: this.passengerId,
-            from: this.from.toApi(),
-            to: this.to.toApi(),
-        }
-    }
 }

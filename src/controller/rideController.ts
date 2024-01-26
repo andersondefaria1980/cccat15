@@ -2,10 +2,13 @@ import { Request, Response, NextFunction } from 'express';
 import AccountRepositoryDatabase from '../repository/account/accountRepositoryDatabase';
 import RideRepositoryDatabase from "../repository/ride/rideRepositoryDatabase";
 import ListRidesUseCase from "../usecase/ride/listRidesUseCase";
-import GetRideUseCase from "../usecase/ride/gerRideUseCase";
+import GetRideUseCase from "../usecase/ride/getRideUseCase";
 import RideDtoRequest from "../domain/rideDtoRequest";
 import CoordinateDto from "../domain/coordinateDto";
 import RequestRideUseCase from "../usecase/ride/requestRideUseCase";
+import DeleteRideUseCase from "../usecase/ride/deleteRideUseCase";
+import AcceptRideUseCase from "../usecase/ride/acceptRideUseCase";
+import StartRideUseCase from "../usecase/ride/startRideUseCase";
 
 export default class RideController {
     private rideRepository: RideRepositoryDatabase;
@@ -46,16 +49,68 @@ export default class RideController {
 
     public async requestRide(req: Request, res: Response) {
         const body = req.body;
-        const from = new CoordinateDto(body.from.lat, body.from.long);
-        const to = new CoordinateDto(body.to.lat, body.to.long);
+        const from = new CoordinateDto(body.from.latitude, body.from.longitude);
+        const to = new CoordinateDto(body.to.latitude, body.to.longitude);
         const rideDtoRequest = new RideDtoRequest(body.passengerId, from, to);
         const requestRideUseCase = new RequestRideUseCase(this.rideRepository, this.accountRepository);
 
         try {
             const rideId = await requestRideUseCase.execute(rideDtoRequest);
             res.status(201).json({
-                msg: "Success: Ride is created.",
+                msg: "Ride requested.",
                 rideId: rideId,
+            });
+        } catch (e) {
+            res.status(400).json({
+                msg: `${e}`,
+            });
+        }
+    }
+
+    public async deleteRide(req: Request, res: Response) {
+        const rideId = req.params.id;
+        const deleteRideUseCase = new DeleteRideUseCase(this.rideRepository);
+
+        try {
+            await deleteRideUseCase.execute(rideId);
+            res.status(200).json({
+                msg: "Ride deleted.",
+                accountId: rideId,
+            });
+        } catch (e) {
+            res.status(400).json({
+                msg: `${e}`,
+            });
+        }
+    }
+
+    public async acceptRide(req: Request, res: Response) {
+        const rideId = req.body.rideId;
+        const driverId = req.body.driverId;
+        const acceptRideUseCase = new AcceptRideUseCase(this.rideRepository, this.accountRepository);
+
+        try {
+            await acceptRideUseCase.execute(rideId, driverId);
+            res.status(200).json({
+                msg: "Ride accepted.",
+                accountId: rideId,
+            });
+        } catch (e) {
+            res.status(400).json({
+                msg: `${e}`,
+            });
+        }
+    }
+
+    public async startRide(req: Request, res: Response) {
+        const rideId = req.body.rideId;
+        const startRideUseCase = new StartRideUseCase(this.rideRepository);
+
+        try {
+            await startRideUseCase.execute(rideId);
+            res.status(200).json({
+                msg: "Ride started.",
+                accountId: rideId,
             });
         } catch (e) {
             res.status(400).json({

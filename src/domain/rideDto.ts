@@ -61,7 +61,7 @@ export default class RideDto {
         return {
             rideId: this.rideId,
             passenger: this.passenger.toApi(),
-            driver: this.driver?.toApi(),
+            driver: this.driver ? this.driver.toApi() : null,
             status: this.status,
             fare: this.fare,
             distance: this.distance,

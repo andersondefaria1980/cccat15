@@ -11,7 +11,7 @@ beforeEach(() => {
     listAccountsUseCase = new ListAccountsUseCase(accountRepository);
 });
 
-test("Must return alis of accounts", async function() {
+test("Must return a list of accounts", async function() {
     const id = crypto.randomUUID();
     const accountDTO = new AccountDto(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);    
     accountRepository.addAccount(accountDTO);

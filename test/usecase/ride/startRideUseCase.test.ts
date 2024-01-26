@@ -3,6 +3,7 @@ import AccountRepositoryInMemory from "../../../src/repository/account/accountRe
 import RideTestUtils from "./rideTestUtils";
 import RideValues from "../../../src/domain/rideValues";
 import StartRideUseCase from "../../../src/usecase/ride/startRideUseCase";
+import crypto from "crypto";
 
 let rideRepository: RideRepositoryInMemory;
 let accountRepository: AccountRepositoryInMemory;
@@ -23,6 +24,13 @@ test("Must start a ride", async function() {
     await startRideUseCase.execute(rideId);
     const rideAfterStarted = await rideRepository.findRide(rideId);
     expect(rideAfterStarted?.status).toBe(RideValues.STATUS_IN_PROGRESS);
+});
+
+test("Must throw error if ride does not exist", async function () {
+    const passengerAccountDto = await rideTestUtils.createAccount(accountRepository, true, false);
+    const rideId = crypto.randomUUID();
+    startRideUseCase = new StartRideUseCase(rideRepository);
+    await expect(() => startRideUseCase.execute(rideId)).rejects.toThrow(new Error("Ride not found."));
 });
 
 test("Must throw error if ride does not have driver", async function () {

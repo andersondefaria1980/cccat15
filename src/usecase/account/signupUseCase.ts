@@ -28,7 +28,7 @@ export default class SignupUseCase {
             accountDto.isPassenger,
             accountDto.isDriver,
         );
-        console.log(accountDtoToInsert);
+
         await this.accountRepository.addAccount(accountDtoToInsert);
         return id;
     }

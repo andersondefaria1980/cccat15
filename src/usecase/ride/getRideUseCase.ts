@@ -4,8 +4,6 @@ export default class GetRideUseCase {
     public constructor(private rideRepository: RideRepositoryInterface) {}
 
     public async execute(rideId: string) {
-        const ride = await this.rideRepository.findRide(rideId);
-        if (!ride) throw Error("Ride not found.");
-        return ride;
+        return await this.rideRepository.findRide(rideId);
     }
 }

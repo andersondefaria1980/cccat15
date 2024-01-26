@@ -1,6 +1,10 @@
+pendências - 26/01
+ - mudar metodos findRidesFromPassanger para pegar exatamente o que quer para ter cobertura 100%, 
+  - false o mesmo para o driver
+
 pendências (24/01)
- - continuar desenvolvimento acpetRide
- - depois de fechar os use cases fazer a api
+ - continuar desenvolvimento acpetRide - OK
+ - depois de fechar os use cases fazer a api - OK
 
 pendências (22/01/2024)
  - testar placa no signup - OK
