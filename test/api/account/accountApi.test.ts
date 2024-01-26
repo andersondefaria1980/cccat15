@@ -1,13 +1,11 @@
-import AccountDto from "../../../src/domain/accountDto";
-import AccountRepositoryDatabase from "../../../src/repository/account/accountRepositoryDatabase";
+import AccountApiTestUtils from "./accountApiTestUtils";
 
 const request = require("supertest");
 const baseURL = "http://localhost:3000";
+const accountApiTestUtils = new AccountApiTestUtils();
 
 describe("PUT /accounts", () => {
     it("Should update an account", async () => {
-
-
         const response = await request(baseURL).get("/accounts");
         expect(response.statusCode).toBe(200);
         const accounts = response.body;
@@ -30,7 +28,7 @@ describe("PUT /accounts", () => {
 
         const responseGet = await request(baseURL).get(`/accounts/${changedAccountDto.accountId}`);
         expect(responseGet.statusCode).toBe(200);
-        validateAccountResponse(responseGet.body);
+        accountApiTestUtils.validateAccountResponse(responseGet.body);
 
         expect(responseGet.body.accountId).toBe(changedAccountDto.accountId);
         expect(responseGet.body.name).toBe(changedAccountDto.name);
@@ -48,7 +46,7 @@ describe("GET /accounts", () => {
         expect(response.statusCode).toBe(200);
         const accounts = response.body;
         accounts.forEach( (a: any) => {
-            validateAccountResponse(a);
+            accountApiTestUtils.validateAccountResponse(a);
         });
     });
 });
@@ -60,7 +58,7 @@ describe("GET /accounts/:id", () => {
         
         const response = await request(baseURL).get(`/accounts/${firstAccount.accountId}`);
         expect(response.statusCode).toBe(200);
-        validateAccountResponse(response.body);    
+        accountApiTestUtils.validateAccountResponse(response.body);
     });
     it("Should return not foundt", async () => {
         const response = await request(baseURL).get(`/accounts/d05b5be4-d3d0-474f-a3c4-119765f4d07b`);
@@ -101,14 +99,3 @@ describe("POST /accounts", () => {
         expect(responseGetAfterDelete.statusCode).toBe(404);
     });
 });
-
-function validateAccountResponse(a: any) {
-    expect(typeof(a.accountId)).toBe("string");
-    expect(typeof(a.name)).toBe("string");
-    expect(typeof(a.email)).toBe("string");
-    expect(typeof(a.cpf)).toBe("string");
-    expect(typeof(a.carPlate)).toBe("string");
-    expect(typeof(a.password)).toBe("string");
-    expect(typeof(a.isPassenger)).toBe("boolean");
-    expect(typeof(a.isDriver)).toBe("boolean");
-}

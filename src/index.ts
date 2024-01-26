@@ -1,6 +1,5 @@
 import express, { Express, Request, Response } from "express";
-import accountRoute from './route/accountRoute';
-import bodyParser from "body-parser";
+import accountRoute from './route/route';
 
 const app: Express = express();
 const port = 3000;

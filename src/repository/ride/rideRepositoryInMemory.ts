@@ -30,4 +30,8 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         if (!status || status.length == 0) return this.rides.filter(r => r.driver?.accountId === driverId);
         return this.rides.filter(r => r.driver?.accountId === driverId && status.filter(s => hasStatus ? (s === r.status) : (s !== r.status)));
     }
+
+    async listRides(): Promise<RideDto[]> {
+        return this.rides;
+    }
 }

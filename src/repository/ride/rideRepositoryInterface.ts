@@ -6,5 +6,5 @@ export interface RideRepositoryInterface {
     updateRide(rideDto: RideDto): Promise<void>;
     findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<RideDto[]>;
     findRidesFromDriver(driverId: string, status?: string[], hasStatus?: boolean): Promise<RideDto[]>;
-
+    listRides(): Promise<RideDto[]>;
 }

@@ -11,4 +11,11 @@ export default class CoordinateDto {
     get longitude(): number {
         return this._longitude;
     }
+
+    public toApi() {
+        return {
+            latitude: this.latitude,
+            longitude: this.longitude,
+        };
+    }
 }

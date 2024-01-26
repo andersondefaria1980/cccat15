@@ -22,7 +22,11 @@ export default class AccountController {
                     msg: "Erro: " + e.message
                 });
             });
-        return res.status(200).json(accounts);
+        let accountsApi: any = [];
+        if (accounts) {
+            accountsApi = accounts.map((a) => a.toApi());
+        }
+        return res.status(200).json(accountsApi);
     }
 
     public async getAccount(req: Request, res: Response) {
@@ -30,7 +34,7 @@ export default class AccountController {
         const getAccountUseCase = new GetAccountUseCase(this.accountRepository);
         const account = await getAccountUseCase.execute(accountId);
         if (account) {
-            res.status(200).json(account);
+            res.status(200).json(account.toApi());
         } else {
             res.status(404).json({
                 "msg": "Account not found"

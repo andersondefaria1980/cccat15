@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706191949585" clover="3.2.0">
-  <project timestamp="1706191949585" name="All files">
-    <metrics statements="220" coveredstatements="213" conditionals="62" coveredconditionals="52" methods="83" coveredmethods="74" elements="365" coveredelements="339" complexity="0" loc="220" ncloc="220" packages="7" files="21" classes="21"/>
+<coverage generated="1706214945241" clover="3.2.0">
+  <project timestamp="1706214945241" name="All files">
+    <metrics statements="222" coveredstatements="214" conditionals="62" coveredconditionals="52" methods="84" coveredmethods="74" elements="368" coveredelements="340" complexity="0" loc="222" ncloc="222" packages="7" files="21" classes="21"/>
     <package name="src.domain">
-      <metrics statements="56" coveredstatements="49" conditionals="0" coveredconditionals="0" methods="28" coveredmethods="21"/>
+      <metrics statements="57" coveredstatements="49" conditionals="0" coveredconditionals="0" methods="29" coveredmethods="21"/>
       <file name="accountDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/accountDto.ts">
-        <metrics statements="17" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="9"/>
+        <metrics statements="18" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="9"/>
         <line num="1" count="9" type="stmt"/>
         <line num="3" count="38" type="stmt"/>
         <line num="4" count="38" type="stmt"/>
@@ -15,14 +15,15 @@
         <line num="8" count="38" type="stmt"/>
         <line num="9" count="38" type="stmt"/>
         <line num="10" count="38" type="stmt"/>
-        <line num="15" count="44" type="stmt"/>
-        <line num="19" count="19" type="stmt"/>
-        <line num="23" count="26" type="stmt"/>
-        <line num="27" count="15" type="stmt"/>
-        <line num="31" count="10" type="stmt"/>
-        <line num="35" count="7" type="stmt"/>
-        <line num="39" count="11" type="stmt"/>
-        <line num="43" count="10" type="stmt"/>
+        <line num="14" count="44" type="stmt"/>
+        <line num="18" count="19" type="stmt"/>
+        <line num="22" count="26" type="stmt"/>
+        <line num="26" count="15" type="stmt"/>
+        <line num="30" count="10" type="stmt"/>
+        <line num="34" count="7" type="stmt"/>
+        <line num="38" count="11" type="stmt"/>
+        <line num="42" count="10" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
       </file>
       <file name="coordinateDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/coordinateDto.ts">
         <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
@@ -115,7 +116,7 @@
       </file>
     </package>
     <package name="src.usecase.account">
-      <metrics statements="48" coveredstatements="48" conditionals="14" coveredconditionals="14" methods="10" coveredmethods="10"/>
+      <metrics statements="49" coveredstatements="49" conditionals="14" coveredconditionals="14" methods="10" coveredmethods="10"/>
       <file name="deleteAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/deleteAccountUseCase.ts">
         <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="3" count="1" type="stmt"/>
@@ -141,7 +142,7 @@
         <line num="7" count="1" type="stmt"/>
       </file>
       <file name="signupUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/signupUseCase.ts">
-        <metrics statements="18" coveredstatements="18" conditionals="5" coveredconditionals="5" methods="2" coveredmethods="2"/>
+        <metrics statements="19" coveredstatements="19" conditionals="5" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -160,6 +161,7 @@
         <line num="21" count="1" type="stmt"/>
         <line num="31" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
       </file>
       <file name="updateAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/updateAccountUseCase.ts">
         <metrics statements="15" coveredstatements="15" conditionals="7" coveredconditionals="7" methods="2" coveredmethods="2"/>

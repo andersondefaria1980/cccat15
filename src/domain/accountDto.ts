@@ -10,7 +10,6 @@ export default class AccountDto {
         private _isDriver: boolean,
     ){};
 
-
     get accountId(): string | null {
         return this._accountId;
     }
@@ -41,5 +40,17 @@ export default class AccountDto {
 
     get isDriver(): boolean {
         return this._isDriver;
+    }
+
+    public toApi() {
+        return {
+            accountId: this.accountId,
+            name: this.name,
+            email: this.email,
+            cpf: this.cpf,
+            carPlate: this.carPlate,
+            isPassenger: this.isPassenger,
+            isDriver: this.isDriver,
+        };
     }
 }

@@ -18,4 +18,12 @@ export default class RideDtoRequest {
     get to(): CoordinateDto {
         return this._to;
     }
+
+    public toApi() {
+        return {
+            passengerId: this.passengerId,
+            from: this.from.toApi(),
+            to: this.to.toApi(),
+        }
+    }
 }

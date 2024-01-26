@@ -56,4 +56,18 @@ export default class RideDto {
     get date(): number {
         return this._date;
     }
+
+    public toApi() {
+        return {
+            rideId: this.rideId,
+            passenger: this.passenger.toApi(),
+            driver: this.driver?.toApi(),
+            status: this.status,
+            fare: this.fare,
+            distance: this.distance,
+            from: this.from.toApi(),
+            to: this.to.toApi(),
+            date: this.date,
+        }
+    }
 }

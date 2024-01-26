@@ -3,14 +3,13 @@ import { AccountRepositoryInterface } from "./accountRepositoryInterface";
 import { db } from "../../infra/database";
 
 export default class AccountRepositoryDatabase implements AccountRepositoryInterface {
-    private accounts: AccountDto[] = [];        
 
     public async addAccount(accountDto: AccountDto) {
         await db.query("insert into cccat15.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)",
             [accountDto.accountId, accountDto.name, accountDto.email, accountDto.cpf, accountDto.carPlate, accountDto.isPassenger, accountDto.isDriver]);
     }
 
-    public async findAccount(accountId: string) {        
+    public async findAccount(accountId: string) {
         const accountDbList = await db.any("select * from cccat15.account where account_id = $1", accountId);
         if (accountDbList.length > 0) {
             const accountDb = accountDbList[0]
