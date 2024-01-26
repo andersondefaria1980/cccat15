@@ -1,6 +1,6 @@
-import {RideRepositoryInterface} from "../../repository/ride/rideRepositoryInterface";
-import {AccountRepositoryInterface} from "../../repository/account/accountRepositoryInterface";
-import RideValues from "../../domain/rideValues";
+import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
+import {AccountRepositoryInterface} from "../../repository/account/AccountRepositoryInterface";
+import RideValues from "../../domain/RideValues";
 
 export default class AcceptRideUseCase {
     public constructor(

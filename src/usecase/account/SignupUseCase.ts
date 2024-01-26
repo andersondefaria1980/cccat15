@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import { AccountRepositoryInterface } from "../../repository/account/accountRepositoryInterface";
-import AccountDto from "../../domain/accountDto";
+import { AccountRepositoryInterface } from "../../repository/account/AccountRepositoryInterface";
+import AccountDto from "../../domain/AccountDto";
 import { validateFullName } from "../validators/validateFullName";
 import { validateEmail } from "../validators/validateEmail";
 import { validateCpf } from "../validators/validateCpf";

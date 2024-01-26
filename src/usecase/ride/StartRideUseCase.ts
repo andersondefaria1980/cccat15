@@ -1,5 +1,5 @@
-import {RideRepositoryInterface} from "../../repository/ride/rideRepositoryInterface";
-import RideValues from "../../domain/rideValues";
+import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
+import RideValues from "../../domain/RideValues";
 
 export default class StartRideUseCase {
     public constructor(readonly rideRepository: RideRepositoryInterface) {}

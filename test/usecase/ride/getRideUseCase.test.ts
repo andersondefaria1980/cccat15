@@ -1,11 +1,11 @@
-import RideRepositoryInMemory from "../../../src/repository/ride/rideRepositoryInMemory";
-import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
+import RideRepositoryInMemory from "../../../src/repository/ride/RideRepositoryInMemory";
+import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
 import crypto from "crypto";
-import AccountDTO from "../../../src/domain/accountDto";
-import CoordinateDto from "../../../src/domain/coordinateDto";
-import RideDto from "../../../src/domain/rideDto";
-import GetRideUseCase from "../../../src/usecase/ride/getRideUseCase";
-import RideValues from "../../../src/domain/rideValues";
+import AccountDTO from "../../../src/domain/AccountDto";
+import CoordinateDto from "../../../src/domain/CoordinateDto";
+import RideDto from "../../../src/domain/RideDto";
+import GetRideUseCase from "../../../src/usecase/ride/GetRideUseCase";
+import RideValues from "../../../src/domain/RideValues";
 
 let rideRepository: RideRepositoryInMemory;
 let accountRepository: AccountRepositoryInMemory;

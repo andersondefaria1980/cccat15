@@ -1,11 +1,11 @@
-import AccountDto from "../../../src/domain/accountDto";
-import RideValues from "../../../src/domain/rideValues";
-import CoordinateDto from "../../../src/domain/coordinateDto";
+import AccountDto from "../../../src/domain/AccountDto";
+import RideValues from "../../../src/domain/RideValues";
+import CoordinateDto from "../../../src/domain/CoordinateDto";
 import crypto from "crypto";
-import RideDto from "../../../src/domain/rideDto";
-import {AccountRepositoryInterface} from "../../../src/repository/account/accountRepositoryInterface";
-import AccountDTO from "../../../src/domain/accountDto";
-import {RideRepositoryInterface} from "../../../src/repository/ride/rideRepositoryInterface";
+import RideDto from "../../../src/domain/RideDto";
+import {AccountRepositoryInterface} from "../../../src/repository/account/AccountRepositoryInterface";
+import AccountDTO from "../../../src/domain/AccountDto";
+import {RideRepositoryInterface} from "../../../src/repository/ride/RideRepositoryInterface";
 
 export default class RideTestUtils {
 

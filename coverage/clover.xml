@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1706276245536" clover="3.2.0">
-  <project timestamp="1706276245536" name="All files">
+<coverage generated="1706280619162" clover="3.2.0">
+  <project timestamp="1706280619162" name="All files">
     <metrics statements="243" coveredstatements="243" conditionals="65" coveredconditionals="55" methods="94" coveredmethods="92" elements="402" coveredelements="390" complexity="0" loc="243" ncloc="243" packages="8" files="24" classes="24"/>
     <package name="src.domain">
       <metrics statements="59" coveredstatements="59" conditionals="2" coveredconditionals="1" methods="31" coveredmethods="31"/>
-      <file name="accountDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/accountDto.ts">
+      <file name="AccountDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/AccountDto.ts">
         <metrics statements="18" coveredstatements="18" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="10"/>
         <line num="1" count="11" type="stmt"/>
         <line num="3" count="41" type="stmt"/>
@@ -25,7 +25,7 @@
         <line num="42" count="11" type="stmt"/>
         <line num="46" count="1" type="stmt"/>
       </file>
-      <file name="coordinateDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/coordinateDto.ts">
+      <file name="CoordinateDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/CoordinateDto.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="1" count="6" type="stmt"/>
         <line num="3" count="32" type="stmt"/>
@@ -34,7 +34,7 @@
         <line num="12" count="2" type="stmt"/>
         <line num="16" count="2" type="stmt"/>
       </file>
-      <file name="rideDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/rideDto.ts">
+      <file name="RideDto.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/RideDto.ts">
         <metrics statements="22" coveredstatements="22" conditionals="2" coveredconditionals="1" methods="13" coveredmethods="13"/>
         <line num="4" count="6" type="stmt"/>
         <line num="6" count="14" type="stmt"/>
@@ -59,7 +59,7 @@
         <line num="57" count="2" type="stmt"/>
         <line num="61" count="1" type="stmt"/>
       </file>
-      <file name="rideDtoRequest.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/rideDtoRequest.ts">
+      <file name="RideDtoRequest.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/RideDtoRequest.ts">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="4" type="stmt"/>
@@ -69,7 +69,7 @@
         <line num="15" count="2" type="stmt"/>
         <line num="19" count="2" type="stmt"/>
       </file>
-      <file name="rideValues.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/rideValues.ts">
+      <file name="RideValues.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/domain/RideValues.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="7" type="stmt"/>
         <line num="2" count="7" type="stmt"/>
@@ -81,7 +81,7 @@
     </package>
     <package name="src.repository.account">
       <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="11" coveredmethods="11"/>
-      <file name="accountRepositoryInMemory.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/repository/account/accountRepositoryInMemory.ts">
+      <file name="AccountRepositoryInMemory.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/repository/account/AccountRepositoryInMemory.ts">
         <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="11" coveredmethods="11"/>
         <line num="4" count="11" type="stmt"/>
         <line num="5" count="38" type="stmt"/>
@@ -101,7 +101,7 @@
     </package>
     <package name="src.repository.ride">
       <metrics statements="17" coveredstatements="17" conditionals="24" coveredconditionals="16" methods="17" coveredmethods="15"/>
-      <file name="rideRepositoryInMemory.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/repository/ride/rideRepositoryInMemory.ts">
+      <file name="RideRepositoryInMemory.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/repository/ride/RideRepositoryInMemory.ts">
         <metrics statements="17" coveredstatements="17" conditionals="24" coveredconditionals="16" methods="17" coveredmethods="15"/>
         <line num="4" count="6" type="stmt"/>
         <line num="5" count="19" type="stmt"/>
@@ -124,7 +124,7 @@
     </package>
     <package name="src.usecase.account">
       <metrics statements="48" coveredstatements="48" conditionals="14" coveredconditionals="14" methods="10" coveredmethods="10"/>
-      <file name="deleteAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/deleteAccountUseCase.ts">
+      <file name="DeleteAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/DeleteAccountUseCase.ts">
         <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
@@ -133,7 +133,7 @@
         <line num="9" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
       </file>
-      <file name="getAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/getAccountUseCase.ts">
+      <file name="GetAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/GetAccountUseCase.ts">
         <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="2" coveredmethods="2"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="4" type="stmt"/>
@@ -142,13 +142,13 @@
         <line num="10" count="1" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
       </file>
-      <file name="listAccountsUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/listAccountsUseCase.ts">
+      <file name="ListAccountsUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/ListAccountsUseCase.ts">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
       </file>
-      <file name="signupUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/signupUseCase.ts">
+      <file name="SignupUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/SignupUseCase.ts">
         <metrics statements="18" coveredstatements="18" conditionals="5" coveredconditionals="5" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -169,7 +169,7 @@
         <line num="32" count="1" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
       </file>
-      <file name="updateAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/updateAccountUseCase.ts">
+      <file name="UpdateAccountUseCase.ts" path="/home/anderson/projects/estudo/clean-code-clean-arcihtecture-rodrigo-branas/cccat15/src/usecase/account/UpdateAccountUseCase.ts">
         <metrics statements="15" coveredstatements="15" conditionals="7" coveredconditionals="7" methods="2" coveredmethods="2"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>

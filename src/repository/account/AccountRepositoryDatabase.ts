@@ -1,5 +1,5 @@
-import AccountDto from "../../domain/accountDto";
-import { AccountRepositoryInterface } from "./accountRepositoryInterface";
+import AccountDto from "../../domain/AccountDto";
+import { AccountRepositoryInterface } from "./AccountRepositoryInterface";
 import { db } from "../../infra/database";
 
 export default class AccountRepositoryDatabase implements AccountRepositoryInterface {

@@ -1,6 +1,6 @@
-import AccountDto from "../../../src/domain/accountDto";
-import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
-import ListAccountsUseCase from "../../../src/usecase/account/listAccountsUseCase";
+import AccountDto from "../../../src/domain/AccountDto";
+import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
+import ListAccountsUseCase from "../../../src/usecase/account/ListAccountsUseCase";
 import crypto from "crypto";
 
 let accountRepository: AccountRepositoryInMemory;

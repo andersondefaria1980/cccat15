@@ -1,4 +1,4 @@
-import RideDto from "../../domain/rideDto";
+import RideDto from "../../domain/RideDto";
 
 export interface RideRepositoryInterface {
     addRide(rideDto: RideDto): Promise<void>;

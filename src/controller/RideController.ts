@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import AccountRepositoryDatabase from '../repository/account/accountRepositoryDatabase';
-import RideRepositoryDatabase from "../repository/ride/rideRepositoryDatabase";
-import ListRidesUseCase from "../usecase/ride/listRidesUseCase";
-import GetRideUseCase from "../usecase/ride/getRideUseCase";
-import RideDtoRequest from "../domain/rideDtoRequest";
-import CoordinateDto from "../domain/coordinateDto";
-import RequestRideUseCase from "../usecase/ride/requestRideUseCase";
-import DeleteRideUseCase from "../usecase/ride/deleteRideUseCase";
-import AcceptRideUseCase from "../usecase/ride/acceptRideUseCase";
-import StartRideUseCase from "../usecase/ride/startRideUseCase";
+import AccountRepositoryDatabase from '../repository/account/AccountRepositoryDatabase';
+import RideRepositoryDatabase from "../repository/ride/RideRepositoryDatabase";
+import ListRidesUseCase from "../usecase/ride/ListRidesUseCase";
+import GetRideUseCase from "../usecase/ride/GetRideUseCase";
+import RideDtoRequest from "../domain/RideDtoRequest";
+import CoordinateDto from "../domain/CoordinateDto";
+import RequestRideUseCase from "../usecase/ride/RequestRideUseCase";
+import DeleteRideUseCase from "../usecase/ride/DeleteRideUseCase";
+import AcceptRideUseCase from "../usecase/ride/AcceptRideUseCase";
+import StartRideUseCase from "../usecase/ride/StartRideUseCase";
 
 export default class RideController {
     private rideRepository: RideRepositoryDatabase;

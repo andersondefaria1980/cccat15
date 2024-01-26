@@ -1,4 +1,4 @@
-import CoordinateDto from "./coordinateDto";
+import CoordinateDto from "./CoordinateDto";
 
 export default class RideDtoRequest {
     public constructor(

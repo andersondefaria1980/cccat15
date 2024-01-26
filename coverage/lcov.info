@@ -1,5 +1,5 @@
 TN:
-SF:src/domain/accountDto.ts
+SF:src/domain/AccountDto.ts
 FN:2,(anonymous_0)
 FN:13,(anonymous_1)
 FN:17,(anonymous_2)
@@ -46,7 +46,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src/domain/coordinateDto.ts
+SF:src/domain/CoordinateDto.ts
 FN:2,(anonymous_0)
 FN:7,(anonymous_1)
 FN:11,(anonymous_2)
@@ -69,7 +69,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src/domain/rideDto.ts
+SF:src/domain/RideDto.ts
 FN:5,(anonymous_0)
 FN:17,(anonymous_1)
 FN:21,(anonymous_2)
@@ -128,7 +128,7 @@ BRF:2
 BRH:1
 end_of_record
 TN:
-SF:src/domain/rideDtoRequest.ts
+SF:src/domain/RideDtoRequest.ts
 FN:4,(anonymous_0)
 FN:10,(anonymous_1)
 FN:14,(anonymous_2)
@@ -152,7 +152,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src/domain/rideValues.ts
+SF:src/domain/RideValues.ts
 FNF:0
 FNH:0
 DA:1,7
@@ -167,7 +167,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src/repository/account/accountRepositoryInMemory.ts
+SF:src/repository/account/AccountRepositoryInMemory.ts
 FN:4,(anonymous_7)
 FN:7,(anonymous_8)
 FN:11,(anonymous_10)
@@ -214,7 +214,7 @@ BRF:2
 BRH:2
 end_of_record
 TN:
-SF:src/repository/ride/rideRepositoryInMemory.ts
+SF:src/repository/ride/RideRepositoryInMemory.ts
 FN:4,(anonymous_7)
 FN:7,(anonymous_8)
 FN:11,(anonymous_10)
@@ -298,7 +298,7 @@ BRF:24
 BRH:16
 end_of_record
 TN:
-SF:src/usecase/account/deleteAccountUseCase.ts
+SF:src/usecase/account/DeleteAccountUseCase.ts
 FN:4,(anonymous_7)
 FN:6,(anonymous_8)
 FNF:2
@@ -318,7 +318,7 @@ BRF:1
 BRH:1
 end_of_record
 TN:
-SF:src/usecase/account/getAccountUseCase.ts
+SF:src/usecase/account/GetAccountUseCase.ts
 FN:5,(anonymous_7)
 FN:7,(anonymous_8)
 FNF:2
@@ -338,7 +338,7 @@ BRF:1
 BRH:1
 end_of_record
 TN:
-SF:src/usecase/account/listAccountsUseCase.ts
+SF:src/usecase/account/ListAccountsUseCase.ts
 FN:4,(anonymous_7)
 FN:6,(anonymous_8)
 FNF:2
@@ -354,7 +354,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src/usecase/account/signupUseCase.ts
+SF:src/usecase/account/SignupUseCase.ts
 FN:10,(anonymous_8)
 FN:12,(anonymous_9)
 FNF:2
@@ -390,7 +390,7 @@ BRF:5
 BRH:5
 end_of_record
 TN:
-SF:src/usecase/account/updateAccountUseCase.ts
+SF:src/usecase/account/UpdateAccountUseCase.ts
 FN:8,(anonymous_7)
 FN:10,(anonymous_8)
 FNF:2

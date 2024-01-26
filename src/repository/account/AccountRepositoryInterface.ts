@@ -1,4 +1,4 @@
-import AccountDto from "../../domain/accountDto";
+import AccountDto from "../../domain/AccountDto";
 
 export interface AccountRepositoryInterface {    
     addAccount(accountDto: AccountDto): Promise<void>;

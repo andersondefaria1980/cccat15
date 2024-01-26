@@ -1,8 +1,8 @@
-import {RideRepositoryInterface} from "./rideRepositoryInterface";
-import RideDto from "../../domain/rideDto";
+import {RideRepositoryInterface} from "./RideRepositoryInterface";
+import RideDto from "../../domain/RideDto";
 import {db} from "../../infra/database";
-import AccountDto from "../../domain/accountDto";
-import CoordinateDto from "../../domain/coordinateDto";
+import AccountDto from "../../domain/AccountDto";
+import CoordinateDto from "../../domain/CoordinateDto";
 
 export default class RideRepositoryDatabase implements RideRepositoryInterface {
 

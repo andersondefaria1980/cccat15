@@ -1,5 +1,5 @@
-import {RideRepositoryInterface} from "./rideRepositoryInterface";
-import RideDto from "../../domain/rideDto";
+import {RideRepositoryInterface} from "./RideRepositoryInterface";
+import RideDto from "../../domain/RideDto";
 
 export default class RideRepositoryInMemory implements RideRepositoryInterface {
     private rides: RideDto[] = [];

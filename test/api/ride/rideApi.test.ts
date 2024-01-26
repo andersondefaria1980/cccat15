@@ -2,7 +2,7 @@
  * todo trocar o getaccountPassanger e Driver para createAccount - e ver ocmo deletar depois
  */
 import AccountApiTestUtils from "../account/accountApiTestUtils";
-import RideValues from "../../../src/domain/rideValues";
+import RideValues from "../../../src/domain/RideValues";
 
 const request = require("supertest");
 const baseURL = "http://localhost:3000";

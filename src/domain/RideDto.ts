@@ -1,5 +1,5 @@
-import CoordinateDto from "./coordinateDto";
-import AccountDto from "./accountDto";
+import CoordinateDto from "./CoordinateDto";
+import AccountDto from "./AccountDto";
 
 export default class RideDto {
     public constructor(

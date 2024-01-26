@@ -1,9 +1,9 @@
-import {RideRepositoryInterface} from "../../repository/ride/rideRepositoryInterface";
-import RideDtoRequest from "../../domain/rideDtoRequest";
+import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
+import RideDtoRequest from "../../domain/RideDtoRequest";
 import crypto from "crypto";
-import RideDto from "../../domain/rideDto";
-import {AccountRepositoryInterface} from "../../repository/account/accountRepositoryInterface";
-import RideValues from "../../domain/rideValues";
+import RideDto from "../../domain/RideDto";
+import {AccountRepositoryInterface} from "../../repository/account/AccountRepositoryInterface";
+import RideValues from "../../domain/RideValues";
 
 export default class RequestRideUseCase {
     constructor(

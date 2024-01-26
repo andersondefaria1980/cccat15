@@ -1,6 +1,6 @@
 import express from 'express';
-import AccountController from "../controller/accountController";
-import RideController from "../controller/rideController";
+import AccountController from "../controller/AccountController";
+import RideController from "../controller/RideController";
 
 const router = express.Router();
 const accountController = new AccountController();

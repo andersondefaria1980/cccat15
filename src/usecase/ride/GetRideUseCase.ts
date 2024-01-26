@@ -1,4 +1,4 @@
-import {RideRepositoryInterface} from "../../repository/ride/rideRepositoryInterface";
+import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
 
 export default class GetRideUseCase {
     public constructor(private rideRepository: RideRepositoryInterface) {}

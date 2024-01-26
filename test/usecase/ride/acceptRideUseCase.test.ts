@@ -1,8 +1,8 @@
-import RideRepositoryInMemory from "../../../src/repository/ride/rideRepositoryInMemory";
-import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
+import RideRepositoryInMemory from "../../../src/repository/ride/RideRepositoryInMemory";
+import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
 import crypto from "crypto";
-import AcceptRideUseCase from "../../../src/usecase/ride/acceptRideUseCase";
-import RideValues from "../../../src/domain/rideValues";
+import AcceptRideUseCase from "../../../src/usecase/ride/AcceptRideUseCase";
+import RideValues from "../../../src/domain/RideValues";
 import RideTestUtils from "./rideTestUtils";
 
 let rideRepository: RideRepositoryInMemory;

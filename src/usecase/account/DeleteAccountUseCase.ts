@@ -1,4 +1,4 @@
-import { AccountRepositoryInterface } from "../../repository/account/accountRepositoryInterface";
+import { AccountRepositoryInterface } from "../../repository/account/AccountRepositoryInterface";
 
 export default class DeleteAccountUseCase {
     public constructor(readonly accountRepository: AccountRepositoryInterface) {}

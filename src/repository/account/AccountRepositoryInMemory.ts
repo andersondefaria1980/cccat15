@@ -1,5 +1,5 @@
-import AccountDto from "../../domain/accountDto";
-import { AccountRepositoryInterface } from "./accountRepositoryInterface";
+import AccountDto from "../../domain/AccountDto";
+import { AccountRepositoryInterface } from "./AccountRepositoryInterface";
 
 export default class AccountRepositoryInMemory implements AccountRepositoryInterface {
     private accounts: AccountDto[] = [];

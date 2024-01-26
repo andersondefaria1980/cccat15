@@ -1,6 +1,6 @@
-import AccountDTO from "../../../src/domain/accountDto";
-import AccountRepositoryInMemory from "../../../src/repository/account/accountRepositoryInMemory";
-import UpdateAccountUseCase from "../../../src/usecase/account/updateAccountUseCase";
+import AccountDTO from "../../../src/domain/AccountDto";
+import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
+import UpdateAccountUseCase from "../../../src/usecase/account/UpdateAccountUseCase";
 
 let accountRepository: AccountRepositoryInMemory;
 let updateAccountUseCase: UpdateAccountUseCase;

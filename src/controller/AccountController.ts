@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import AccountRepositoryDatabase from '../repository/account/accountRepositoryDatabase';
-import GetAccountUseCase from '../usecase/account/getAccountUseCase';
-import ListAccountsUseCase from '../usecase/account/listAccountsUseCase';
-import AccountDto from '../domain/accountDto';
-import SignupUseCase from '../usecase/account/signupUseCase';
-import UpdateAccountUseCase from '../usecase/account/updateAccountUseCase';
-import DeleteAccountUseCase from '../usecase/account/deleteAccountUseCase';
+import AccountRepositoryDatabase from '../repository/account/AccountRepositoryDatabase';
+import GetAccountUseCase from '../usecase/account/GetAccountUseCase';
+import ListAccountsUseCase from '../usecase/account/ListAccountsUseCase';
+import AccountDto from '../domain/AccountDto';
+import SignupUseCase from '../usecase/account/SignupUseCase';
+import UpdateAccountUseCase from '../usecase/account/UpdateAccountUseCase';
+import DeleteAccountUseCase from '../usecase/account/DeleteAccountUseCase';
 
 export default class AccountController {
     private accountRepository: AccountRepositoryDatabase;

@@ -1,5 +1,5 @@
-import AccountDto from "../../domain/accountDto";
-import { AccountRepositoryInterface } from "../../repository/account/accountRepositoryInterface";
+import AccountDto from "../../domain/AccountDto";
+import { AccountRepositoryInterface } from "../../repository/account/AccountRepositoryInterface";
 import { validateCpf } from "../validators/validateCpf";
 import { validateEmail } from "../validators/validateEmail";
 import { validateFullName } from "../validators/validateFullName";
