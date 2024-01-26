@@ -93,7 +93,7 @@ describe("POST /accounts", () => {
         expect(responseGet.body.isDriver).toBe(account.isDriver);
 
         const responseDelete = await request(baseURL).delete(`/accounts/${createdAccountId}`);
-        expect(responseDelete.statusCode).toBe(200)
+        expect(responseDelete.statusCode).toBe(200);
 
         const responseGetAfterDelete = await request(baseURL).get(`/accounts/${createdAccountId}`);
         expect(responseGetAfterDelete.statusCode).toBe(404);
