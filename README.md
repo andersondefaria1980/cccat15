@@ -14,6 +14,7 @@ Utiliza nodejs e typescript e sobe um bancho postgres local
 * git
 
 ### COMANDOS
-```docker-compose up ``` cria uma base de dados Postgres local
-```nodemon src/index.ts ``` sobre o servidor com as apis
-
+- ```docker-compose up ``` cria uma base de dados Postgres local
+- ```nvm use default 16``` definie versão do node
+- ```nodemon src/index.ts ``` sobre o servidor com as apis
+- ```npx jest test --coverage``` roda todos os testes analisando a cobertura, dados salvos na pasta /coverage
