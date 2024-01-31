@@ -1,11 +1,9 @@
 import crypto from "crypto";
 import RideRepositoryInMemory from "../../../src/repository/ride/RideRepositoryInMemory";
 import DeleteRideUseCase from "../../../src/usecase/ride/DeleteRideUseCase";
-import AccountDTO from "../../../src/domain/AccountDto";
-import CoordinateDto from "../../../src/domain/CoordinateDto";
+import CoordinateDto from "../../../src/usecase/ride/inputOutputData/CoordinateDto";
 import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
-import RideDto from "../../../src/domain/RideDto";
-import RideValues from "../../../src/domain/RideValues";
+import RideTestUtils from "./RideTestUtils";
 
 let rideRepository: RideRepositoryInMemory;
 let accountRepository: AccountRepositoryInMemory;
@@ -18,17 +16,13 @@ beforeEach(() => {
 });
 
 test("Must delete an ride", async function() {
-    const accountId = crypto.randomUUID();
-    const accountDto = new AccountDTO(accountId, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", true, false);
-    await accountRepository.addAccount(accountDto);
-    const from = new CoordinateDto(1,2);
-    const to = new CoordinateDto(5,6);
-    const rideId = crypto.randomUUID();
-    const rideDto = new RideDto(rideId, accountDto, null, RideValues.STATUS_REQUESTED, 0, 0, from, to, Date.now());
-    await rideRepository.addRide(rideDto);
+    const passengerAccount = await RideTestUtils.createAccount(accountRepository, true, false);
+    const from = CoordinateDto.create(1,2);
+    const to = CoordinateDto.create(5,6);
+    const ride = await RideTestUtils.createRide(rideRepository, passengerAccount);
     deleteRideUseCase = new DeleteRideUseCase(rideRepository);
-    await deleteRideUseCase.execute(rideId);
-    const rideFound = await rideRepository.findRide(rideId);
+    await deleteRideUseCase.execute(ride.rideId);
+    const rideFound = await rideRepository.findRide(ride.rideId);
     expect(rideFound).toBe(undefined);
 });
 

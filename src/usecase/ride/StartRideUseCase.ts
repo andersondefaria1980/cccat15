@@ -1,5 +1,5 @@
 import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
-import RideValues from "../../domain/RideValues";
+import Ride from "../../domain/Ride";
 
 export default class StartRideUseCase {
     public constructor(readonly rideRepository: RideRepositoryInterface) {}
@@ -8,8 +8,8 @@ export default class StartRideUseCase {
         let ride = await this.rideRepository.findRide(rideId);
         if (!ride) throw new Error("Ride not found.");
         if (!ride.driver) throw new Error("Ride does not have a driver and cannot be started.");
-        if (ride.status !== RideValues.STATUS_ACCEPTED) throw new Error(`Ride can be started only if status = ${RideValues.STATUS_ACCEPTED}. Ride status is ${ride.status}`);
-        ride.status = RideValues.STATUS_IN_PROGRESS;
-        await this.rideRepository.updateRide(ride);
+        if (ride.status !== Ride.STATUS_ACCEPTED) throw new Error(`Ride can be started only if status = ${Ride.STATUS_ACCEPTED}. Ride status is ${ride.status}`);
+        const rideToUpdate = Ride.restore(ride.rideId, ride.passenger, ride.driver, Ride.STATUS_IN_PROGRESS, ride.fare, ride.distance, ride.from, ride.to, ride.date);
+        await this.rideRepository.updateRide(rideToUpdate);
     }
 }

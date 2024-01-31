@@ -1,26 +1,18 @@
-import AccountDto from "../../domain/AccountDto";
+import AccountInput from "./inputOutputData/AccountInput";
 import { AccountRepositoryInterface } from "../../repository/account/AccountRepositoryInterface";
-import { validateCpf } from "../validators/validateCpf";
-import { validateEmail } from "../validators/validateEmail";
-import { validateFullName } from "../validators/validateFullName";
+import Account from "../../domain/Account";
 
 export default class UpdateAccountUseCase {
     public constructor(readonly accountRepository: AccountRepositoryInterface) {}
 
-    public async execute(accountToUpdate: AccountDto) {
-        if (!validateFullName(accountToUpdate.name)) throw new Error("Name is invalid.");
-        if (!validateEmail(accountToUpdate.email)) throw new Error("Email is invalid.");
-        if (!validateCpf(accountToUpdate.cpf)) throw new Error("CPF is invalid.");
-        
-        const accountByEmail = await this.accountRepository.findAccountByEmail(accountToUpdate.email);
-        if (accountByEmail && accountByEmail.accountId !== accountToUpdate.accountId) throw new Error("Email has already been taken.");
-
-        const accountIdToSearch: string = `${accountToUpdate.accountId}`;
-        let accountDB = await this.accountRepository.findAccount(accountIdToSearch);
+    public async execute(accountId: string, input: AccountInput) {
+        const account = Account.restore(accountId, input.name, input.email, input.cpf, input.isPassenger, input.isDriver, input.carPlate);
+        const accountByEmail = await this.accountRepository.findAccountByEmail(input.email);
+        if (accountByEmail && accountByEmail.accountId !== accountId) throw new Error("Email has already been taken.");
+        let accountDB = await this.accountRepository.findAccount(accountId);
         if (!accountDB) {
-            throw Error(`Account [${accountIdToSearch}] not found.`);
-        }        
-
-        await this.accountRepository.updateAccount(accountToUpdate);
+            throw Error(`Account [${accountId}] not found.`);
+        }
+        await this.accountRepository.updateAccount(account);
     }
 }

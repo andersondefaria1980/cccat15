@@ -1,11 +1,11 @@
-import AccountDto from "../../domain/AccountDto";
 import { AccountRepositoryInterface } from "./AccountRepositoryInterface";
+import Account from "../../domain/Account";
 
 export default class AccountRepositoryInMemory implements AccountRepositoryInterface {
-    private accounts: AccountDto[] = [];
+    private accounts: Account[] = [];
 
-    public async addAccount(accountDto: AccountDto) {
-        this.accounts.push(accountDto);
+    public async addAccount(account: Account) {
+        this.accounts.push(account);
     }
 
     public async findAccount(accountId: string) {
@@ -29,12 +29,12 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
         }                
     }
 
-    public async updateAccount(accountDto: AccountDto) {
+    public async updateAccount(account: Account) {
         const indexOfObject = this.accounts.findIndex((a) => {
-            return a.accountId === accountDto.accountId;
+            return a.accountId === account.accountId;
         }); 
         if (indexOfObject !== -1) {
-            this.accounts[indexOfObject] = accountDto;
+            this.accounts[indexOfObject] = account;
         }    
     }
 }

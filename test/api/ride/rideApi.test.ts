@@ -1,8 +1,5 @@
-/**
- * todo trocar o getaccountPassanger e Driver para createAccount - e ver ocmo deletar depois
- */
 import AccountApiTestUtils from "../account/accountApiTestUtils";
-import RideValues from "../../../src/domain/RideValues";
+import Ride from "../../../src/domain/Ride";
 
 const request = require("supertest");
 const baseURL = "http://localhost:3000";
@@ -38,15 +35,15 @@ describe("POST /rides/request", () => {
         const [ride, createdRideId] = await createRide();
         const responseGet = await request(baseURL).get(`/rides/${createdRideId}`);
         expect(responseGet.body.rideId).toBe(createdRideId);
-        expect(responseGet.body.status).toBe(RideValues.STATUS_REQUESTED);
+        expect(responseGet.body.status).toBe(Ride.STATUS_REQUESTED);
         expect(responseGet.body.from.latitude).toBe(ride.from.latitude);
         expect(responseGet.body.from.longitude).toBe(ride.from.longitude);
         expect(responseGet.body.to.latitude).toBe(ride.to.latitude);
         expect(responseGet.body.to.longitude).toBe(ride.to.longitude);
-        expect(responseGet.body.passenger.accountId).toBe(ride.passengerId);
-        expect(responseGet.body.driver).toBeNull();
-        deleteRide(createdRideId);
-        deleteAccount(ride.passengerId);
+        expect(responseGet.body.passengerId).toBe(ride.passengerId);
+        expect(responseGet.body.driver).toBeUndefined();
+        await deleteRide(createdRideId);
+        await deleteAccount(ride.passengerId);
     });
 });
 
@@ -59,11 +56,11 @@ describe("POST /rides/accept", () => {
         expect(responseRequestRide.status).toBe(200);
         const response = await request(baseURL).get(`/rides/${createdRideId}`);
         expect(response.statusCode).toBe(200);
-        expect(response.body.driver.accountId).toBe(driverAccountId);
-        expect(response.body.status).toBe(RideValues.STATUS_ACCEPTED);
-        deleteRide(createdRideId);
-        deleteAccount(ride.passengerId);
-        deleteAccount(driverAccountId);
+        expect(response.body.driverId).toBe(driverAccountId);
+        expect(response.body.status).toBe(Ride.STATUS_ACCEPTED);
+        await deleteRide(createdRideId);
+        await deleteAccount(ride.passengerId);
+        await deleteAccount(driverAccountId);
     });
     it("Should return error if driver account is not set as a driver", async function () {
         const [ride, createdRideId] = await createRide();
@@ -72,9 +69,9 @@ describe("POST /rides/accept", () => {
         const responseRequestRide = await request(baseURL).post("/rides/accept").send(acceptRideRequestBody);
         expect(responseRequestRide.status).toBe(400);
         expect(responseRequestRide.body.msg).toBe("Error: Driver account is not set as a driver.");
-        deleteRide(createdRideId);
-        deleteAccount(ride.passengerId);
-        deleteAccount(driverAccountId);
+        await deleteRide(createdRideId);
+        await deleteAccount(ride.passengerId);
+        await deleteAccount(driverAccountId);
     })
 });
 
@@ -88,26 +85,26 @@ describe("POST /rides/start", () => {
         const responseStartRide = await request(baseURL).post(`/rides/start`).send({rideId: createdRideId});
         expect(responseStartRide.statusCode).toBe(200);
         const responseAfterStarted = await request(baseURL).get(`/rides/${createdRideId}`);
-        expect(responseAfterStarted.body.status).toBe(RideValues.STATUS_IN_PROGRESS);
-        deleteRide(createdRideId);
-        deleteAccount(ride.passengerId);
-        deleteAccount(driverAccountId);
+        expect(responseAfterStarted.body.status).toBe(Ride.STATUS_IN_PROGRESS);
+        await deleteRide(createdRideId);
+        await deleteAccount(ride.passengerId);
+        await deleteAccount(driverAccountId);
     });
     it("Should return error if ride does not have a driver", async function () {
         const [ride, createdRideId] = await createRide();
         const responseStartRide = await request(baseURL).post(`/rides/start`).send({rideId: createdRideId});
         expect(responseStartRide.status).toBe(400);
         expect(responseStartRide.body.msg).toBe("Error: Ride does not have a driver and cannot be started.");
-        deleteRide(createdRideId);
-        deleteAccount(ride.passengerId);
+        await deleteRide(createdRideId);
+        await deleteAccount(ride.passengerId);
     })
 });
 
 function validateRideResponse(r: any) {
     expect(typeof(r.rideId)).toBe("string");
-    accountApiTestUtils.validateAccountResponse(r.passenger);
+    expect(typeof(r.passengerId)).toBe("string");
     if (r.driver) {
-        accountApiTestUtils.validateAccountResponse(r.driver);
+        expect(typeof (r.driverId)).toBe("string");
     }
     expect(typeof(r.status)).toBe("string");
     expect(typeof(r.fare)).toBe("number");
@@ -153,9 +150,8 @@ async function deleteAccount(createdAccountId: string) {
 async function createRide(): Promise<[any, any]> {
     const ride = await getRideToRequest();
     const responseCreate = await request(baseURL).post("/rides/request").send(ride);
-    console.log(responseCreate.body);
     expect(responseCreate.statusCode).toBe(201);
-    expect(responseCreate.body.msg).toBe("Ride requested.");
+    expect(responseCreate.body.msg).toBe("Ride requested");
     expect(typeof(responseCreate.body.rideId)).toBe("string");
     return [ride, responseCreate.body.rideId ];
 }

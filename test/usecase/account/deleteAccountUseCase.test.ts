@@ -1,7 +1,7 @@
 import crypto from "crypto";
-import AccountDto from "../../../src/domain/AccountDto";
 import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
 import DeleteAccountUseCase from "../../../src/usecase/account/DeleteAccountUseCase";
+import Account from "../../../src/domain/Account";
 
 let accountRepository: AccountRepositoryInMemory;
 let deleteAccountUseCase: DeleteAccountUseCase;
@@ -12,12 +12,11 @@ beforeEach(() => {
 });
 
 test("Must delete an account", async function() {
-    const id = crypto.randomUUID();
-    const accountDTO = new AccountDto(id, "José da Silva", "jose@tests.com", "02563258741", "AAA 1234", "123456", false, true);    
-    await accountRepository.addAccount(accountDTO);
+    const account = Account.create("Jose da Silva", "jose@tests.com", "02976067945", false, true);
+    await accountRepository.addAccount(account);
     deleteAccountUseCase = new DeleteAccountUseCase(accountRepository);
-    await deleteAccountUseCase.execute(id);
-    const accountFound = await accountRepository.findAccount(id);
+    await deleteAccountUseCase.execute(account.accountId);
+    const accountFound = await accountRepository.findAccount(account.accountId);
     expect(accountFound).toBe(undefined);
 });
 

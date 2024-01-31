@@ -1,9 +1,7 @@
 import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
-import RideDtoRequest from "../../domain/RideDtoRequest";
-import crypto from "crypto";
-import RideDto from "../../domain/RideDto";
+import Ride from "../../domain/Ride";
 import {AccountRepositoryInterface} from "../../repository/account/AccountRepositoryInterface";
-import RideValues from "../../domain/RideValues";
+import RideInput from "./inputOutputData/RideInput";
 
 export default class RequestRideUseCase {
     constructor(
@@ -11,17 +9,15 @@ export default class RequestRideUseCase {
         readonly accountRepository: AccountRepositoryInterface
     ) {}
 
-    public async execute(requestRideDto: RideDtoRequest) {
-        const account = await this.accountRepository.findAccount(requestRideDto.passengerId);
-        if (!account) throw new Error("Account not found.");
-        if (!account.isPassenger) throw new Error("Account is not passenger.");
+    public async execute(rideInput: RideInput) {
+        const passengerAccount = await this.accountRepository.findAccount(rideInput.passengerId);
+        if (!passengerAccount) throw new Error("Account not found.");
 
-        const ridesNotCompleted = await this.rideRepository.findRidesFromPassenger(requestRideDto.passengerId, [RideValues.STATUS_COMPLETED], false);
+        const ridesNotCompleted = await this.rideRepository.findRidesFromPassenger(rideInput.passengerId, [Ride.STATUS_COMPLETED], false);
         if (ridesNotCompleted.length > 0) throw new Error("Passenger has ride not completed.");
 
-        const rideId = crypto.randomUUID();
-        const rideDto = new RideDto(rideId, account, null, RideValues.STATUS_REQUESTED, 0, 0, requestRideDto.from, requestRideDto.to, Date.now());
-        await this.rideRepository.addRide(rideDto)
-        return rideId;
+        const ride = Ride.create(passengerAccount, rideInput.from, rideInput.to);
+        await this.rideRepository.addRide(ride)
+        return ride.rideId;
     }
 }

@@ -1,10 +1,9 @@
-import RideDtoRequest from "../../../src/domain/RideDtoRequest";
 import RideRepositoryInMemory from "../../../src/repository/ride/RideRepositoryInMemory";
 import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
-import AccountDTO from "../../../src/domain/AccountDto";
-import crypto from "crypto";
-import CoordinateDto from "../../../src/domain/CoordinateDto";
+import CoordinateDto from "../../../src/usecase/ride/inputOutputData/CoordinateDto";
 import RequestRideUseCase from "../../../src/usecase/ride/RequestRideUseCase";
+import Account from "../../../src/domain/Account";
+import RideInput from "../../../src/usecase/ride/inputOutputData/RideInput";
 
 let rideRepository: RideRepositoryInMemory;
 let accountRepository: AccountRepositoryInMemory;
@@ -17,41 +16,30 @@ beforeEach(() => {
 })
 
 test("Must request a ride", async function() {
-    const accountId = crypto.randomUUID();
-    const accountDto = new AccountDTO(accountId, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", true, false);
-    await accountRepository.addAccount(accountDto);
-    const from = new CoordinateDto(1,2);
-    const to = new CoordinateDto(5,6);
-    const requestRideDto = new RideDtoRequest(accountId, from, to);
-    const rideId = await requestRideUseCase.execute(requestRideDto);
+    const accountPassenger = Account.create("Jose da Silva", "jose@tests.com", "04780028078", true, false);
+    await accountRepository.addAccount(accountPassenger);
+    const rideInput = RideInput.create(accountPassenger.accountId, 1,2,5,6);
+    const rideId = await requestRideUseCase.execute(rideInput);
     expect(typeof(rideId)).toBe("string");
 });
 
 test("Must return error if account not found", async function () {
-    const accountId = crypto.randomUUID();
-    const from = new CoordinateDto(1,2);
-    const to = new CoordinateDto(5,6);
-    const requestRideDto = new RideDtoRequest(accountId, from, to);
-    await expect(() => requestRideUseCase.execute(requestRideDto)).rejects.toThrow(new Error("Account not found."))
+    const accountId = 'AAA';
+    const rideInput = RideInput.create(accountId, 1,2,5,6);
+    await expect(() => requestRideUseCase.execute(rideInput)).rejects.toThrow(new Error("Account not found."))
 });
 
 test("Must return error if account is not passenger", async function () {
-    const accountId = crypto.randomUUID();
-    const accountDto = new AccountDTO(accountId, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
-    await accountRepository.addAccount(accountDto);
-    const from = new CoordinateDto(1,2);
-    const to = new CoordinateDto(5,6);
-    const requestRideDto = new RideDtoRequest(accountId, from, to);
-    await expect(() => requestRideUseCase.execute(requestRideDto)).rejects.toThrow(new Error("Account is not passenger."))
+    const account = Account.create("Jose da Silva", "jose@tests.com", "04780028078", false, true);
+    await accountRepository.addAccount(account);
+    const rideInput = RideInput.create(account.accountId, 1,2,5,6);
+    await expect(() => requestRideUseCase.execute(rideInput)).rejects.toThrow(new Error("Passenger account is not passenger."))
 });
 
 test("Must return error if passenger has any ride not completed", async function () {
-    const accountId = crypto.randomUUID();
-    const accountDto = new AccountDTO(accountId, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", true, false);
-    await accountRepository.addAccount(accountDto);
-    const from = new CoordinateDto(1,2);
-    const to = new CoordinateDto(5,6);
-    const requestRideDto = new RideDtoRequest(accountId, from, to);
-    await requestRideUseCase.execute(requestRideDto);
-    await expect(() => requestRideUseCase.execute(requestRideDto)).rejects.toThrow(new Error("Passenger has ride not completed."));
+    const account = Account.create("Jose da Silva", "jose@tests.com", "04780028078", true, false);
+    await accountRepository.addAccount(account);
+    const rideInput = RideInput.create(account.accountId, 1,2,5,6);
+    await requestRideUseCase.execute(rideInput);
+    await expect(() => requestRideUseCase.execute(rideInput)).rejects.toThrow(new Error("Passenger has ride not completed."));
 });

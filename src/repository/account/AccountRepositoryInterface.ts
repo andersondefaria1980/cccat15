@@ -1,10 +1,10 @@
-import AccountDto from "../../domain/AccountDto";
+import Account from "../../domain/Account";
 
 export interface AccountRepositoryInterface {    
-    addAccount(accountDto: AccountDto): Promise<void>;
-    findAccount(accountId: string): Promise<AccountDto|undefined>;
-    findAccountByEmail(email: string): Promise<AccountDto|undefined>;
-    listAccounts(): Promise<AccountDto[]>;
+    addAccount(account: Account): Promise<void>;
+    findAccount(accountId: string): Promise<Account|undefined>;
+    findAccountByEmail(email: string): Promise<Account|undefined>;
+    listAccounts(): Promise<Account[]>;
     deleteAccount(accountId: string): Promise<void>;
-    updateAccount(accountDto: AccountDto): Promise<void>;
+    updateAccount(account: Account): Promise<void>;
 }

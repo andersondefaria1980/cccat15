@@ -7,6 +7,7 @@ const accountApiTestUtils = new AccountApiTestUtils();
 describe("PUT /accounts", () => {
     it("Should update an account", async () => {
         const response = await request(baseURL).get("/accounts");
+        console.log(response.body);
         expect(response.statusCode).toBe(200);
         const accounts = response.body;
         const accountDataToUpdate = accounts[0];
@@ -24,7 +25,7 @@ describe("PUT /accounts", () => {
 
         const responseUpdate = await request(baseURL).put(`/accounts`).send(changedAccountDto);
         expect(responseUpdate.statusCode).toBe(200);
-        expect(responseUpdate.body.msg).toBe("Success: Account is updated");
+        expect(responseUpdate.body.msg).toBe("Account updated");
 
         const responseGet = await request(baseURL).get(`/accounts/${changedAccountDto.accountId}`);
         expect(responseGet.statusCode).toBe(200);
@@ -79,7 +80,7 @@ describe("POST /accounts", () => {
         }
         const responseCreate = await request(baseURL).post("/accounts").send(account);                    
         expect(responseCreate.statusCode).toBe(201);
-        expect(responseCreate.body.msg).toBe("Success: Account is created");
+        expect(responseCreate.body.msg).toBe("Account created");
         expect(typeof(responseCreate.body.accountId)).toBe("string");
         const createdAccountId = responseCreate.body.accountId;
 

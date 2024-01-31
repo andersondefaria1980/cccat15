@@ -1,3 +1,32 @@
+pendências 30/01
+ - otimizar codigo do route tem muit trycatch
+ - usaCases tarefa
+
+pendências - 29/01
+ - precisa ter o teste direto no localhost, usar o axios, que o supertest emula e API
+ - não pode usar o RepositoryDatabase no Controller, deveria ser a uma interface
+
+ - SINGLE RESPONSABILITY - 
+ - INTERFACE SEGREGATION - use case nao depende de coisas que nao precisa
+ - DEPENDECY INVERTSION PRINCIPLE - interface - agora o database tem que implementar a interface que o use case utiliza
+
+ - Expor somente os casos de uso, exemplo, update atividade - deveria ter um cancelAtividade, ReagendarAtividade, etc...
+ - Use case : oferece ao meu usuario final
+
+ - Ter uma classe account com todo o estado e comportamento - colocar toda validação da conta dentro da classe conta (valida cpf, email, placa... )
+    - usar reaonly os atributos
+    - repository retornar Account oa inves do DTO, trocar o DTO para classe Account
+     - criar contrutor readpnly com todos os campos 
+       - criar create and restore com as regras dentro      
+  OK para o item acima
+
+ - regras espeficiasd das entidades precisam estar dentro das entidades
+  - os retornos do useCase nao deve ser a entidade - deve ser um DTO
+   - o repository precisa retornar a entidade, ou seja, rideRepository, deve retornar ride, sem o nome do passageiro
+   
+   - relatorio, paginação, etc... nao precisa passar pelo dominio,pode ser uma consulta separada - model algua coisa
+
+
 pendências - 26/01
  - mudar metodos findRidesFromPassanger para pegar exatamente o que quer para ter cobertura 100%, 
   - false o mesmo para o driver

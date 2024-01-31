@@ -1,6 +1,7 @@
-import AccountDTO from "../../../src/domain/AccountDto";
 import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
 import SignupUseCase from "../../../src/usecase/account/SignupUseCase";
+import Account from "../../../src/domain/Account";
+import AccountInput from "../../../src/usecase/account/inputOutputData/AccountInput";
 
 let accountRepository: AccountRepositoryInMemory;
 let signupUseCase: SignupUseCase;
@@ -11,34 +12,33 @@ beforeEach(() => {
 });
 
 test("Must create an account: ", async function() {
-    const accountDTO = new AccountDTO(null, "Jose da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
-    const createdAccountId = await signupUseCase.execute(accountDTO);    
-    const returnedAccountDTO = await accountRepository.findAccount(createdAccountId);
+    const accountInput = AccountInput.create("Jose da Silva", "jose@tests.com", "04780028078", true, true, "AAA 1234");
+    const createdAccountId = await signupUseCase.execute(accountInput);
+    const returnedAccount = await accountRepository.findAccount(createdAccountId);
     
-    expect(returnedAccountDTO).toBeInstanceOf(AccountDTO);
-    expect(typeof returnedAccountDTO?.accountId).toBe("string");
-    expect(returnedAccountDTO?.name).toBe(accountDTO.name);
-    expect(returnedAccountDTO?.email).toBe(accountDTO.email);
-    expect(returnedAccountDTO?.cpf).toBe(accountDTO.cpf);
-    expect(returnedAccountDTO?.carPlate).toBe(accountDTO.carPlate);
-    expect(returnedAccountDTO?.password).toBe(accountDTO.password);
-    expect(returnedAccountDTO?.isPassenger).toBe(accountDTO.isPassenger);
-    expect(returnedAccountDTO?.isDriver).toBe(accountDTO.isDriver);
+    expect(returnedAccount).toBeInstanceOf(Account);
+    expect(typeof returnedAccount?.accountId).toBe("string");
+    expect(returnedAccount?.name).toBe(accountInput.name);
+    expect(returnedAccount?.email).toBe(accountInput.email);
+    expect(returnedAccount?.cpf).toBe(accountInput.cpf);
+    expect(returnedAccount?.carPlate).toBe(accountInput.carPlate);
+    expect(returnedAccount?.isPassenger).toBe(accountInput.isPassenger);
+    expect(returnedAccount?.isDriver).toBe(accountInput.isDriver);
 });
 
 test("Must return error if email already exists", async function() {
-    const accountDto = new AccountDTO('aaa', "José da Silva", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true);
-    accountRepository.addAccount(accountDto);
+    const account = Account.create("Jose da Silva", "jose@tests.com", "04780028078", false, true);
+    await accountRepository.addAccount(account);
     signupUseCase = new SignupUseCase(accountRepository);
-    const accountDtoToSignup = new AccountDTO(null, "Joao Silveira", "jose@tests.com", "04780028078", "AAA 5589", "698523", false, true);
-    await expect(() => signupUseCase.execute(accountDtoToSignup)).rejects.toThrow(new Error("Email has already been taken."));
+    const accountInput = AccountInput.create("Joao Silveira", "jose@tests.com", "04780028078",  false, true);
+    await expect(() => signupUseCase.execute(accountInput)).rejects.toThrow(new Error("Email has already been taken."));
 });
 
 test.each([
-    {field: 'Name', accountDto: new AccountDTO(null, "Ad a", "jose@tests.com", "04780028078", "AAA 1234", "123456", false, true)},
-    {field: 'Email', accountDto: new AccountDTO(null, "Jose da silva", "jose@tests", "04780028078", "AAA 1234", "123456", false, true)},
-    {field: 'CPF', accountDto: new AccountDTO(null, "Jose da silva", "jose@tests.com", "12345678911", "AAA 1234", "123456", false, true)},
-    {field: 'Car plate', accountDto: new AccountDTO(null, "Jose da silva", "jose@tests.com", "04780028078", "CCCCCCCC", "123456", false, true)}
-])("Must return error if field is invalid: %s", async function(object: {field:string, accountDto: AccountDTO}) {
-    await expect(() => signupUseCase.execute(object.accountDto)).rejects.toThrow(new Error(`${object.field} is invalid.`));
+    {field: 'Name', accountInput: AccountInput.create("Ad a", "jose@tests.com", "04780028078", false, true)},
+    {field: 'Email', accountInput: AccountInput.create("Jose da silva", "jose@tests", "04780028078", false, true)},
+    {field: 'CPF', accountInput: AccountInput.create("Jose da silva", "jose@tests.com", "123456789", false, true)},
+    {field: 'Car plate', accountInput: AccountInput.create("Jose da silva", "jose@tests.com", "04780028078", false, true, "BB 12")},
+])("Must return error if field is invalid: %s", async function(object: {field:string, accountInput: AccountInput}) {
+    await expect(() => signupUseCase.execute(object.accountInput)).rejects.toThrow(new Error(`${object.field} is invalid.`));
 });
