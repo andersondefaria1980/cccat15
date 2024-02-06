@@ -1,6 +1,5 @@
 import RideRepositoryInMemory from "../../../src/repository/ride/RideRepositoryInMemory";
 import AccountRepositoryInMemory from "../../../src/repository/account/AccountRepositoryInMemory";
-import CoordinateDto from "../../../src/usecase/ride/inputOutputData/CoordinateDto";
 import RequestRideUseCase from "../../../src/usecase/ride/RequestRideUseCase";
 import Account from "../../../src/domain/Account";
 import RideInput from "../../../src/usecase/ride/inputOutputData/RideInput";

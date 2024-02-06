@@ -1,6 +1,6 @@
 import {RideRepositoryInterface} from "./RideRepositoryInterface";
 import Ride from "../../domain/Ride";
-import {db} from "../../infra/database";
+import {db} from "../../infra/database/database";
 import AccountInput from "../../usecase/account/inputOutputData/AccountInput";
 import CoordinateDto from "../../usecase/ride/inputOutputData/CoordinateDto";
 import Account from "../../domain/Account";

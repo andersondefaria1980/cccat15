@@ -37,7 +37,7 @@ router.post('/rides/request', async function (req, res, ) {
             "rideId": rideId,
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }
@@ -50,7 +50,7 @@ router.delete('/rides/:id', async function (req, res, ) {
             "msg": "Ride deleted",
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }
@@ -63,7 +63,7 @@ router.post('/rides/accept', async function (req, res, ) {
             "msg": "Ride accepted",
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }
@@ -76,7 +76,7 @@ router.post('/rides/start', async function (req, res, ) {
             "msg": "Ride started",
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }
@@ -113,7 +113,7 @@ router.post('/accounts', async function (req, res, ) {
             "accountId": accountId,
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }
@@ -126,7 +126,7 @@ router.put('/accounts', async function (req, res, ) {
             "msg": "Account updated",
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }
@@ -139,7 +139,7 @@ router.delete('/accounts/:id', async function (req, res, ) {
             "msg": "Account deleted",
         });
     } catch (e) {
-        res.status(400).json({
+        res.status(422).json({
             msg: `${e}`
         });
     }

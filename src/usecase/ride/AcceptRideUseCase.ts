@@ -20,6 +20,7 @@ export default class AcceptRideUseCase {
         const driveRidesNotCompleted = await this.rideRepository.findRidesFromDriver(accountDriverId, [Ride.STATUS_ACCEPTED, Ride.STATUS_IN_PROGRESS], true);
         if (driveRidesNotCompleted.length > 0) throw new Error("Driver has another ride accepted or in progress.");
 
+        //todo isso esta errado, precisa chamar metodo accept da Ride ue vai validar, alterar o stauts e devolver somente com o status e driver atualizado
         const rideToUpdate = Ride.restore(ride.rideId, ride.passenger, accountDriver, Ride.STATUS_ACCEPTED, ride.fare, ride.distance, ride.from, ride.to, ride.date);
         await this.rideRepository.updateRide(rideToUpdate);
     }
