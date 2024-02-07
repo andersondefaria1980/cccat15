@@ -1,17 +1,18 @@
 import AccountRepositoryDatabase from '../repository/account/AccountRepositoryDatabase';
 import RideRepositoryDatabase from "../repository/ride/RideRepositoryDatabase";
-import ListRidesUseCase from "../usecase/ride/ListRidesUseCase";
-import GetRideUseCase from "../usecase/ride/GetRideUseCase";
-import RequestRideUseCase from "../usecase/ride/RequestRideUseCase";
-import DeleteRideUseCase from "../usecase/ride/DeleteRideUseCase";
-import AcceptRideUseCase from "../usecase/ride/AcceptRideUseCase";
-import StartRideUseCase from "../usecase/ride/StartRideUseCase";
-import RideInput from "../usecase/ride/inputOutputData/RideInput";
-import RideOutput from "../usecase/ride/inputOutputData/RideOutput";
+import ListRidesUseCase from "../application/usecase/ride/ListRidesUseCase";
+import GetRideUseCase from "../application/usecase/ride/GetRideUseCase";
+import RequestRideUseCase from "../application/usecase/ride/RequestRideUseCase";
+import AcceptRideUseCase from "../application/usecase/ride/AcceptRideUseCase";
+import StartRideUseCase from "../application/usecase/ride/StartRideUseCase";
+import RideInput from "../application/usecase/ride/inputOutputData/RideInput";
+import RideOutput from "../application/usecase/ride/inputOutputData/RideOutput";
+import PositionRepositoryDatabase from "../repository/position/PositionRepositoryDatabase";
 
 export default class RideController {
     private rideRepository: RideRepositoryDatabase;
     private accountRepository: AccountRepositoryDatabase;
+    private positionRepository: PositionRepositoryDatabase;
 
     public constructor() {
         this.rideRepository = new RideRepositoryDatabase();
@@ -19,7 +20,7 @@ export default class RideController {
     }
 
     public async listRides(params: any): Promise<RideOutput[]> {
-        const listRides = new ListRidesUseCase(this.rideRepository);
+        const listRides = new ListRidesUseCase(this.rideRepository, this.accountRepository);
         return await listRides.execute();
     }
 
@@ -37,12 +38,6 @@ export default class RideController {
         return await requestRideUseCase.execute(rideInput);
     }
 
-    public async deleteRide(params: any): Promise<void> {
-        const rideId = params.id;
-        const deleteRideUseCase = new DeleteRideUseCase(this.rideRepository);
-        await deleteRideUseCase.execute(rideId);
-    }
-
     public async acceptRide(body: any): Promise<void> {
         const rideId = body.rideId;
         const driverId = body.driverId;
@@ -54,6 +49,11 @@ export default class RideController {
         const rideId = body.rideId;
         const startRideUseCase = new StartRideUseCase(this.rideRepository);
         await startRideUseCase.execute(rideId);
+    }
+
+    public async updatePosition(body: any): Promise<void> {
+        const updatePositionRideUseCase = new UpdatePositionRide(this.positionRepository);
+        await updatePositionRideUseCase.execute(body);
     }
 
 }

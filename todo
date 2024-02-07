@@ -1,11 +1,11 @@
 pendêcias 05/02
- - remover endpoints que nao sao use cases (delete, create etc...)
- - trocar supertes pelo axios
- - Teste: se bate no banco mesmo sendo repository deve ser teste de integração
- - para aceitar a corrida AcceptRideuseCase  -  entidade Ride precisa ter o metodo accept que vai fazer a atualização do motorista e do status
-    - colocar a validação so status da Ride entro da entidade neste metodo accept()
-     - altera campo status para private para poder mudar dentro da classe
- - fazer os values objects para name, email, cpf (trazer o validade cpf pra dentro do vo, metodos todos privados)... alterar testes de CPF
+ - OK remover endpoints que nao sao use cases (delete, create etc...)
+ - OK trocar supertes pelo axios
+ - OK Teste: se bate no banco mesmo sendo repository deve ser teste de integração
+ - OK para aceitar a corrida AcceptRideuseCase  -  entidade Ride precisa ter o metodo accept que vai fazer a atualização do motorista e do status
+    - OK colocar a validação so status da Ride entro da entidade neste metodo accept()
+    - OK altera campo status para private para poder mudar dentro da classe
+ - OK fazer os values objects para name, email, cpf (trazer o validade cpf pra dentro do vo, metodos todos privados)... alterar testes de CPF
  - useCase Update Position: atualizar a distancia acumulada da corrida
 
 

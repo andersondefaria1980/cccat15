@@ -43,19 +43,6 @@ router.post('/rides/request', async function (req, res, ) {
     }
 });
 
-router.delete('/rides/:id', async function (req, res, ) {
-    try {
-        await rideController.deleteRide(req.params);
-        res.status(200).json({
-            "msg": "Ride deleted",
-        });
-    } catch (e) {
-        res.status(422).json({
-            msg: `${e}`
-        });
-    }
-});
-
 router.post('/rides/accept', async function (req, res, ) {
     try {
         await rideController.acceptRide(req.body);
@@ -82,13 +69,15 @@ router.post('/rides/start', async function (req, res, ) {
     }
 });
 
-router.get('/accounts', async function (req, res, ) {
+router.post('/rides/update-position', async function (req, res, ) {
     try {
-        const accounts = await accountController.listAccounts(req.params, req.body);
-        res.status(200).json(accounts);
+        await rideController.updatePosition(req.body);
+        res.status(200).json({
+            "msg": "Ride started",
+        });
     } catch (e) {
         res.status(422).json({
-            msg: `Erro:  ${e}`
+            msg: `${e}`
         });
     }
 });
@@ -105,38 +94,12 @@ router.get('/accounts/:id', async function (req, res, ) {
     }
 });
 
-router.post('/accounts', async function (req, res, ) {
+router.post('/signup', async function (req, res, ) {
     try {
         const accountId = await accountController.signup(req.body);
         res.status(201).json({
             "msg": "Account created",
             "accountId": accountId,
-        });
-    } catch (e) {
-        res.status(422).json({
-            msg: `${e}`
-        });
-    }
-});
-
-router.put('/accounts', async function (req, res, ) {
-    try {
-        await accountController.updateAccount(req.body);
-        res.status(200).json({
-            "msg": "Account updated",
-        });
-    } catch (e) {
-        res.status(422).json({
-            msg: `${e}`
-        });
-    }
-});
-
-router.delete('/accounts/:id', async function (req, res, ) {
-    try {
-        await accountController.deleteAccount(req.params);
-        res.status(200).json({
-            "msg": "Account deleted",
         });
     } catch (e) {
         res.status(422).json({

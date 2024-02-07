@@ -1,5 +1,5 @@
 import {RideRepositoryInterface} from "./RideRepositoryInterface";
-import Ride from "../../domain/Ride";
+import Ride from "../../domain/entity/Ride";
 
 export default class RideRepositoryInMemory implements RideRepositoryInterface {
     private rides: Ride[] = [];
@@ -31,13 +31,13 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
     }
 
     async findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
-        if (!status || status.length == 0) return this.rides.filter(r => r.passenger.accountId === passengerId);
-        return this.rides.filter(r => r.passenger.accountId === passengerId && status.filter(s => hasStatus ? (s === r.status) : (s !== r.status)));
+        if (!status || status.length == 0) return this.rides.filter(r => r.passengerId === passengerId);
+        return this.rides.filter(r => r.passengerId === passengerId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));
     }
 
     async findRidesFromDriver(driverId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
-        if (!status || status.length == 0) return this.rides.filter(r => r.driver?.accountId === driverId);
-        return this.rides.filter(r => r.driver?.accountId === driverId && status.filter(s => hasStatus ? (s === r.status) : (s !== r.status)));
+        if (!status || status.length == 0) return this.rides.filter(r => r.getDriverId() === driverId);
+        return this.rides.filter(r => r.getDriverId() === driverId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));
     }
 
     async listRides(): Promise<Ride[]> {

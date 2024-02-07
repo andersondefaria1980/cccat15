@@ -1,4 +1,4 @@
-import Account from "../../domain/Account";
+import Account from "../../domain/entity/Account";
 
 export interface AccountRepositoryInterface {    
     addAccount(account: Account): Promise<void>;

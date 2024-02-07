@@ -1,9 +1,9 @@
 import {RideRepositoryInterface} from "./RideRepositoryInterface";
-import Ride from "../../domain/Ride";
+import Ride from "../../domain/entity/Ride";
 import {db} from "../../infra/database/database";
-import AccountInput from "../../usecase/account/inputOutputData/AccountInput";
-import CoordinateDto from "../../usecase/ride/inputOutputData/CoordinateDto";
-import Account from "../../domain/Account";
+import AccountInput from "../../application/usecase/account/inputOutputData/AccountInput";
+import Coordinate from "../../application/usecase/ride/inputOutputData/Coordinate";
+import Account from "../../domain/entity/Account";
 
 export default class RideRepositoryDatabase implements RideRepositoryInterface {
 
@@ -13,7 +13,7 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
     async addRide(ride: Ride): Promise<void> {
          const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
          await db.query("insert into cccat15.ride (ride_id, passenger_id, driver_id, status, fare, distance, from_lat, from_long, to_lat, to_long, date) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",
-             [ride.rideId, ride.passenger.accountId, ride.driver?.accountId, ride.status, ride.fare, ride.distance, ride.from.latitude, ride.from.longitude, ride.to.latitude, ride.to.longitude, date]);
+             [ride.rideId, ride.passengerId, ride.getDriverId(), ride.getStatus(), ride.fare, ride.distance, ride.from.latitude, ride.from.longitude, ride.to.latitude, ride.to.longitude, date]);
     }
 
     async findRide(rideId: string) {
@@ -63,7 +63,7 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
 
     async updateRide(ride: Ride): Promise<void> {
          await db.query("update cccat15.ride  set passenger_id = $1, driver_id = $2, status = $3, fare = $4, distance = $5, from_lat = $6, from_long = $7, to_lat = $8, to_long = $9 where ride_id = $10",
-             [ride.passenger.accountId, ride.driver?.accountId, ride.status, ride.fare, ride.distance, ride.from.latitude, ride.from.longitude, ride.to.latitude, ride.to.longitude, ride.rideId]);
+             [ride.passengerId, ride.getDriverId(), ride.getStatus(), ride.fare, ride.distance, ride.from.latitude, ride.from.longitude, ride.to.latitude, ride.to.longitude, ride.rideId]);
     }
 
     public async deleteRide(rideId: string) {
@@ -86,13 +86,8 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
     }
 
     private getRideFromDb(rideDb: any): Ride {
-        const from = CoordinateDto.create(+rideDb.from_lat, +rideDb.from_long);
-        const to = CoordinateDto.create(+rideDb.to_lat, +rideDb.to_long);
-        const passenger = Account.restore(rideDb.passenger_id, rideDb.passenger_name, rideDb.passenger_email, rideDb.passenger_cpf, rideDb.passenger_is_passenger, rideDb.passenger_is_driver, rideDb.passenger_car_plate);
-        let driver = null;
-        if (rideDb.driver_id) {
-            driver = Account.restore(rideDb.driver_id, rideDb.driver_name, rideDb.driver_email, rideDb.driver_cpf, rideDb.driver_is_passenger, rideDb.driver_is_driver, rideDb.driver_car_plate);
-        }
-        return Ride.restore(rideDb.ride_id, passenger, driver, rideDb.status, +rideDb.fare, +rideDb.distance, from, to, rideDb.date);
+        const from = Coordinate.create(+rideDb.from_lat, +rideDb.from_long);
+        const to = Coordinate.create(+rideDb.to_lat, +rideDb.to_long);
+        return Ride.restore(rideDb.ride_id, rideDb.passenger_id, rideDb.status, +rideDb.fare, +rideDb.distance, from, to, rideDb.date, rideDb.driver_id);
     }
 }

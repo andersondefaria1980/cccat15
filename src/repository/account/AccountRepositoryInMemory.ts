@@ -1,5 +1,5 @@
 import { AccountRepositoryInterface } from "./AccountRepositoryInterface";
-import Account from "../../domain/Account";
+import Account from "../../domain/entity/Account";
 
 export default class AccountRepositoryInMemory implements AccountRepositoryInterface {
     private accounts: Account[] = [];
@@ -13,7 +13,7 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
     }
     
     public async findAccountByEmail(email: string) {
-        return this.accounts.find(a => a.email == email);
+        return this.accounts.find(a => a.getEmail() == email);
     }    
 
     public async listAccounts() {
