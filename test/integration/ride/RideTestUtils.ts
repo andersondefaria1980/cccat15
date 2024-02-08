@@ -1,4 +1,3 @@
-import Coordinate from "../../../src/application/usecase/ride/inputOutputData/Coordinate";
 import Ride from "../../../src/domain/entity/Ride";
 import {AccountRepositoryInterface} from "../../../src/repository/account/AccountRepositoryInterface";
 import {RideRepositoryInterface} from "../../../src/repository/ride/RideRepositoryInterface";
@@ -10,13 +9,16 @@ export default class RideTestUtils {
         rideRepository: RideRepositoryInterface,
         passengerId: string,
         status: string = Ride.STATUS_REQUESTED,
-        driverId?: string
+        driverId?: string,
+        fromLat?: number,
+        fromLong?: number,
+        toLat?: number,
+        toLong?: number,
+        lastLat?: number,
+        lastLong?: number,
     ): Promise<Ride> {
-        const from = Coordinate.create(1,2);
-        const to = Coordinate.create(5,6);
-        const driverAccount = driverId ? driverId : null;
-        const rideCreated = Ride.create(passengerId, from, to);
-        const rideRestored = Ride.restore(rideCreated.rideId, passengerId, status, 0, 0, from, to, Date.now(), driverId);
+        const rideCreated = Ride.create(passengerId, +fromLat,+fromLong,+toLat,+toLong);
+        const rideRestored = Ride.restore(rideCreated.rideId, passengerId, status, 0, +fromLat, +fromLong, +toLat, +toLong, rideCreated.date, rideCreated.getLastLat(), rideCreated.getLastLong(),rideCreated.getDistance(), driverId);
         await rideRepository.addRide(rideRestored);
         return rideRestored;
     }

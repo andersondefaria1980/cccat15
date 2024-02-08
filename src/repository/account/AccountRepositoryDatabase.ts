@@ -33,13 +33,4 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
         accountDbList.forEach((accountDb) => accountList.push(Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf,  accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate)));
         return accountList;
     }
-
-    public async deleteAccount(accountId: string) {
-        await db.any("delete from cccat15.account where account_id = $1", accountId );
-    }
-
-    public async updateAccount(account: Account) {
-        await db.query("update cccat15.account  set name = $1, email = $2, cpf = $3, car_plate = $4, is_passenger = $5, is_driver = $6 where account_id = $7",
-            [account.getName(), account.getEmail(), account.getCpf(), account.getCarPlte(), !!account.isPassenger, !!account.isDriver, account.accountId]);
-    }
 }

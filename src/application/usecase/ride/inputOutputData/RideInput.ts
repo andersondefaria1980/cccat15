@@ -1,4 +1,4 @@
-import Coordinate from "./Coordinate";
+import Coordinate from "../../../../domain/vo/Coordinate";
 
 export default class RideInput {
     private constructor(

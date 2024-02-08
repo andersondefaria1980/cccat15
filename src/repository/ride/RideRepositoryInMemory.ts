@@ -21,15 +21,6 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         }
     }
 
-    public async deleteRide(rideId: string) {
-        const indexOfObject = this.rides.findIndex((a) => {
-            return a.rideId === rideId;
-        });
-        if (indexOfObject !== -1) {
-            this.rides.splice(indexOfObject, 1);
-        }
-    }
-
     async findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
         if (!status || status.length == 0) return this.rides.filter(r => r.passengerId === passengerId);
         return this.rides.filter(r => r.passengerId === passengerId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));

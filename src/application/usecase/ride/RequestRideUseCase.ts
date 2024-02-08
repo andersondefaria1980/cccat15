@@ -15,7 +15,7 @@ export default class RequestRideUseCase {
         if (!passengerAccount.isPassenger) throw new Error("Passenger account is not passenger.");
         const ridesNotCompleted = await this.rideRepository.findRidesFromPassenger(rideInput.passengerId, [Ride.STATUS_COMPLETED], false);
         if (ridesNotCompleted.length > 0) throw new Error("Passenger has ride not completed.");
-        const ride = Ride.create(rideInput.passengerId, rideInput.from, rideInput.to);
+        const ride = Ride.create(rideInput.passengerId, rideInput.from.latitude, rideInput.from.longitude, rideInput.to.latitude, rideInput.to.longitude);
         await this.rideRepository.addRide(ride)
         return ride.rideId;
     }

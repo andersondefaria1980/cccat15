@@ -11,9 +11,8 @@ const accountApiTestUtils = new AccountApiTestUtils();
 
 describe("GET /rides/:id", () => {
     it("Should return an ride", async () => {
-        const responseList = await axios.get(`${baseURL}/rides`);
-        const firstRide = responseList.data[0];
-        const response = await axios.get(`${baseURL}/rides/${firstRide.rideId}`);
+        const [ride, createdRideId] = await createRide();
+        const response = await axios.get(`${baseURL}/rides/${createdRideId}`);
         expect(response.status).toBe(200);
         validateRideResponse(response.data);
     });
@@ -27,15 +26,17 @@ describe("POST /rides/request", () => {
     it("Should create a ride", async () => {
         const [ride, createdRideId] = await createRide();
         const responseGet = await axios.get(`${baseURL}/rides/${createdRideId}`);
-        const rideResponde = responseGet.data;
-        expect(rideResponde.rideId).toBe(createdRideId);
-        expect(rideResponde.status).toBe(Ride.STATUS_REQUESTED);
-        expect(rideResponde.from.latitude).toBe(ride.from.latitude);
-        expect(rideResponde.from.longitude).toBe(ride.from.longitude);
-        expect(rideResponde.to.latitude).toBe(ride.to.latitude);
-        expect(rideResponde.to.longitude).toBe(ride.to.longitude);
-        expect(rideResponde.passengerId).toBe(ride.passengerId);
-        expect(rideResponde.driver).toBeUndefined();
+        const rideResponse = responseGet.data;
+        expect(rideResponse.rideId).toBe(createdRideId);
+        expect(rideResponse.status).toBe(Ride.STATUS_REQUESTED);
+        expect(rideResponse.fromLat).toBe(ride.from.latitude);
+        expect(rideResponse.fromLong).toBe(ride.from.longitude);
+        expect(rideResponse.toLat).toBe(ride.to.latitude);
+        expect(rideResponse.toLong).toBe(ride.to.longitude);
+        expect(rideResponse.lastLat).toBe(ride.from.latitude);
+        expect(rideResponse.lastLong).toBe(ride.from.longitude);
+        expect(rideResponse.passengerId).toBe(ride.passengerId);
+        expect(rideResponse.driver).toBeUndefined();
     });
 });
 
@@ -82,7 +83,7 @@ describe("POST /rides/start", () => {
 });
 
 describe("POST /rides/update-position", () => {
-    it.only("Should update ride position", async function () {
+    it("Should update ride position", async function () {
         const [ride, createdRideId] = await createRide();
         const driverAccountId = await getAccount(false, true);
         const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
@@ -90,25 +91,33 @@ describe("POST /rides/update-position", () => {
         expect(responseAcceptRide.status).toBe(200);
         const responseStartRide = await axios.post(`${baseURL}/rides/start`, {rideId: createdRideId});
         expect(responseStartRide.status).toBe(200);
-
         const inputUpdatePosition = {
             rideId: createdRideId,
             lat: -27.496887588317275,
             long: -48.522234807851476,
         }
-        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-posotion`, inputUpdatePosition);
+        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-position`, inputUpdatePosition);
         expect(responseUpdatePosition.status).toBe(200);
         const responseAfterUpdatePosition = await axios.get(`${baseURL}/rides/${createdRideId}`);
         expect(responseAfterUpdatePosition.data.distance).toBe(10);
         expect(responseAfterUpdatePosition.data.lastLat).toBe(-27.496887588317275);
         expect(responseAfterUpdatePosition.data.lastLong).toBe(-48.522234807851476);
     });
-    // it("Should return error if ride does not have a driver", async function () {
-    //     const [ride, createdRideId] = await createRide();
-    //     const responseStartRide = await axios.post(`${baseURL}/rides/start`, {rideId: createdRideId});
-    //     expect(responseStartRide.status).toBe(422);
-    //     expect(responseStartRide.data.msg).toBe("Error: Ride does not have a driver and cannot be started.");
-    // })
+    it("Should return error if ride is not in progress", async function () {
+        const [ride, createdRideId] = await createRide();
+        const driverAccountId = await getAccount(false, true);
+        const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
+        const responseAcceptRide = await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
+        expect(responseAcceptRide.status).toBe(200);
+        const inputUpdatePosition = {
+            rideId: createdRideId,
+            lat: -27.496887588317275,
+            long: -48.522234807851476,
+        }
+        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-position`, inputUpdatePosition);
+        expect(responseUpdatePosition.status).toBe(422);
+        expect(responseUpdatePosition.data.msg).toBe(`Error: Invalid ride status. Position only can be update if status = ${Ride.STATUS_IN_PROGRESS}`);
+    })
 });
 
 async function getRideToRequest(fromLat?: number, fromLong?: number, toLat?: number, toLong?: number): Promise<any> {
@@ -158,11 +167,10 @@ function validateRideResponse(r: any) {
     expect(typeof(r.status)).toBe("string");
     expect(typeof(r.fare)).toBe("number");
     expect(typeof(r.distance)).toBe("number");
-    validateCoordinateResponse(r.from);
-    validateCoordinateResponse(r.to);
-}
-
-function validateCoordinateResponse(c: any) {
-    expect(typeof(c.latitude)).toBe("number");
-    expect(typeof(c.longitude)).toBe("number");
+    expect(typeof(r.fromLat)).toBe("number");
+    expect(typeof(r.fromLong)).toBe("number");
+    expect(typeof(r.toLat)).toBe("number");
+    expect(typeof(r.toLong)).toBe("number");
+    expect(typeof(r.lastLat)).toBe("number");
+    expect(typeof(r.lastLong)).toBe("number");
 }

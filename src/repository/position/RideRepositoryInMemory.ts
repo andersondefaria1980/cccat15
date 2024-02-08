@@ -1,7 +1,10 @@
 import {PositionRepositoryInterface} from "./PositionRepositoryInterface";
+import Position from "../../domain/entity/Position";
 
-export default class RideRepositoryInMemory implements PositionRepositoryInterface {
-    addPosition(position): Promise<void> {
-        return Promise.resolve(undefined);
+export default class PositionRepositoryInMemory implements PositionRepositoryInterface {
+    private positions : Position[] = [];
+
+    async addPosition(position: Position): Promise<void> {
+        this.positions.push(position);
     }
 }

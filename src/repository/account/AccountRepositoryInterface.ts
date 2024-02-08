@@ -5,6 +5,4 @@ export interface AccountRepositoryInterface {
     findAccount(accountId: string): Promise<Account|undefined>;
     findAccountByEmail(email: string): Promise<Account|undefined>;
     listAccounts(): Promise<Account[]>;
-    deleteAccount(accountId: string): Promise<void>;
-    updateAccount(account: Account): Promise<void>;
 }

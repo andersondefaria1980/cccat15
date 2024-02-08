@@ -8,6 +8,7 @@ import StartRideUseCase from "../application/usecase/ride/StartRideUseCase";
 import RideInput from "../application/usecase/ride/inputOutputData/RideInput";
 import RideOutput from "../application/usecase/ride/inputOutputData/RideOutput";
 import PositionRepositoryDatabase from "../repository/position/PositionRepositoryDatabase";
+import UpdateRidePositionUseCase from "../application/usecase/ride/UpdateRidePositionUseCase";
 
 export default class RideController {
     private rideRepository: RideRepositoryDatabase;
@@ -17,6 +18,7 @@ export default class RideController {
     public constructor() {
         this.rideRepository = new RideRepositoryDatabase();
         this.accountRepository = new AccountRepositoryDatabase();
+        this.positionRepository = new PositionRepositoryDatabase();
     }
 
     public async listRides(params: any): Promise<RideOutput[]> {
@@ -52,8 +54,7 @@ export default class RideController {
     }
 
     public async updatePosition(body: any): Promise<void> {
-        const updatePositionRideUseCase = new UpdatePositionRide(this.positionRepository);
+        const updatePositionRideUseCase = new UpdateRidePositionUseCase(this.positionRepository, this.rideRepository);
         await updatePositionRideUseCase.execute(body);
     }
-
 }

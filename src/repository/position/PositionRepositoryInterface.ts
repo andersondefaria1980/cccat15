@@ -1,5 +1,5 @@
-import Ride from "../../domain/entity/Ride";
+import Position from "../../domain/entity/Position";
 
 export interface PositionRepositoryInterface {
-    addPosition(position): Promise<void>;
+    addPosition(position: Position): Promise<void>;
 }

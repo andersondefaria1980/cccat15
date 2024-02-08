@@ -73,7 +73,7 @@ router.post('/rides/update-position', async function (req, res, ) {
     try {
         await rideController.updatePosition(req.body);
         res.status(200).json({
-            "msg": "Ride started",
+            "msg": "Position Updated",
         });
     } catch (e) {
         res.status(422).json({

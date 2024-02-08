@@ -15,6 +15,6 @@ test.each([
 	undefined,
 	"asdfasd d. aaa",
     "asadfasdfsadfafafasdfasdfasdfasdf"
-])("Email must be invalid: %s", async function (name: any) {
+])("Name must be invalid: %s", async function (name: any) {
     await expect( () => Name.create(name)).rejects.toThrow(new Error("Name is invalid"));
 });

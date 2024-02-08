@@ -16,7 +16,8 @@ beforeEach(() => {
 
 test("Must return a list of rides", async function() {
     const passengerAccount = await RideTestUtils.createAccount(accountRepository, true, false);
-    await RideTestUtils.createRide(rideRepository, passengerAccount.accountId);
+    const driverAccount = await RideTestUtils.createAccount(accountRepository, true, true);
+    await RideTestUtils.createRide(rideRepository, passengerAccount.accountId, undefined,  driverAccount.accountId);
     const rideList = await listRideUseCase.execute();
     expect(Array.isArray(rideList)).toBe(true);
     rideList.forEach((rideOutput) => {
