@@ -82,6 +82,19 @@ router.post('/rides/update-position', async function (req, res, ) {
     }
 });
 
+router.post('/rides/finish', async function (req, res, ) {
+    try {
+        await rideController.finishRide(req.body);
+        res.status(200).json({
+            "msg": "Ride Finished",
+        });
+    } catch (e) {
+        res.status(422).json({
+            msg: `${e}`
+        });
+    }
+});
+
 router.get('/accounts/:id', async function (req, res, ) {
     try {
         const account = await accountController.getAccount(req.params);

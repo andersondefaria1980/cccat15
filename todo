@@ -6,8 +6,9 @@ pendêcias 05/02
     - OK colocar a validação so status da Ride entro da entidade neste metodo accept()
     - OK altera campo status para private para poder mudar dentro da classe
  - OK fazer os values objects para name, email, cpf (trazer o validade cpf pra dentro do vo, metodos todos privados)... alterar testes de CPF
- - useCase Update Position: atualizar a distancia acumulada da corrida
-
+ - OK useCase Update Position: atualizar a distancia acumulada da corrida
+ - UC8 - FinishRide
+ - UC9 - ProcessPayment
 
 pendências 30/01
  - otimizar codigo do route tem muit trycatch

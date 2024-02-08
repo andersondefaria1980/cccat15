@@ -67,8 +67,7 @@ describe("POST /rides/start", () => {
         const [ride, createdRideId] = await createRide();
         const driverAccountId = await getAccount(false, true);
         const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
-        const responseAcceptRide = await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
-        expect(responseAcceptRide.status).toBe(200);
+        await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
         const responseStartRide = await axios.post(`${baseURL}/rides/start`, {rideId: createdRideId});
         expect(responseStartRide.status).toBe(200);
         const responseAfterStarted = await axios.get(`${baseURL}/rides/${createdRideId}`);
@@ -87,19 +86,12 @@ describe("POST /rides/update-position", () => {
         const [ride, createdRideId] = await createRide();
         const driverAccountId = await getAccount(false, true);
         const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
-        const responseAcceptRide = await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
-        expect(responseAcceptRide.status).toBe(200);
-        const responseStartRide = await axios.post(`${baseURL}/rides/start`, {rideId: createdRideId});
-        expect(responseStartRide.status).toBe(200);
-        const inputUpdatePosition = {
-            rideId: createdRideId,
-            lat: -27.496887588317275,
-            long: -48.522234807851476,
-        }
-        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-position`, inputUpdatePosition);
+        await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
+        await axios.post(`${baseURL}/rides/start`, {rideId: createdRideId});
+        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-position`, {rideId: createdRideId, lat: -27.496887588317275, long: -48.522234807851476});
         expect(responseUpdatePosition.status).toBe(200);
         const responseAfterUpdatePosition = await axios.get(`${baseURL}/rides/${createdRideId}`);
-        expect(responseAfterUpdatePosition.data.distance).toBe(10);
+        expect(responseAfterUpdatePosition.data.distance).toBe(10.04);
         expect(responseAfterUpdatePosition.data.lastLat).toBe(-27.496887588317275);
         expect(responseAfterUpdatePosition.data.lastLong).toBe(-48.522234807851476);
     });
@@ -107,16 +99,38 @@ describe("POST /rides/update-position", () => {
         const [ride, createdRideId] = await createRide();
         const driverAccountId = await getAccount(false, true);
         const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
-        const responseAcceptRide = await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
-        expect(responseAcceptRide.status).toBe(200);
-        const inputUpdatePosition = {
-            rideId: createdRideId,
-            lat: -27.496887588317275,
-            long: -48.522234807851476,
-        }
-        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-position`, inputUpdatePosition);
+        await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
+        const responseUpdatePosition = await axios.post(`${baseURL}/rides/update-position`, {rideId: createdRideId, lat: -27.496887588317275, long: -48.522234807851476});
         expect(responseUpdatePosition.status).toBe(422);
         expect(responseUpdatePosition.data.msg).toBe(`Error: Invalid ride status. Position only can be update if status = ${Ride.STATUS_IN_PROGRESS}`);
+    })
+});
+
+describe("POST /rides/finish", () => {
+    it.only("Should finsh ride and calculate distance and fare", async function () {
+        const [ride, createdRideId] = await createRide();
+        const driverAccountId = await getAccount(false, true);
+        const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
+        await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
+        await axios.post(`${baseURL}/rides/start`, {rideId: createdRideId});
+        await axios.post(`${baseURL}/rides/update-position`, {rideId: createdRideId, lat: -27.49, long: -48.52});
+        await axios.post(`${baseURL}/rides/update-position`, {rideId: createdRideId, lat: -27.58, long: -48.25});
+        const response = await axios.post(`${baseURL}/rides/finish`, {rideId: createdRideId});
+        expect(response.status).toBe(200);
+        const responseAfterFinished = await axios.get(`${baseURL}/rides/${createdRideId}`);
+        expect(responseAfterFinished.data.status).toBe(Ride.STATUS_COMPLETED);
+        expect(responseAfterFinished.data.distance).toBe(28.44);
+        expect(responseAfterFinished.data.fare).toBe(59.72);
+        console.log(createdRideId)
+    });
+    it("Should return error if ride is not in progress", async function () {
+        const [ride, createdRideId] = await createRide();
+        const driverAccountId = await getAccount(false, true);
+        const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
+        await axios.post(`${baseURL}/rides/accept`, acceptRideRequestBody);
+        const response = await axios.post(`${baseURL}/rides/finish`, {rideId: createdRideId});
+        expect(response.status).toBe(422);
+        expect(response.data.msg).toBe(`Error: Invalid ride status. Ride only can be finished if status = ${Ride.STATUS_IN_PROGRESS}`);
     })
 });
 

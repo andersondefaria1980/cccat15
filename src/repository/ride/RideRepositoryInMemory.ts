@@ -21,13 +21,11 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         }
     }
 
-    async findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
-        if (!status || status.length == 0) return this.rides.filter(r => r.passengerId === passengerId);
+    async findRidesFromPassenger(passengerId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
         return this.rides.filter(r => r.passengerId === passengerId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));
     }
 
-    async findRidesFromDriver(driverId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
-        if (!status || status.length == 0) return this.rides.filter(r => r.getDriverId() === driverId);
+    async findRidesFromDriver(driverId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
         return this.rides.filter(r => r.getDriverId() === driverId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));
     }
 

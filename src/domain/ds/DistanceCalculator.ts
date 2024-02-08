@@ -13,6 +13,7 @@ export default class DistanceCalculator {
             Math.sin(deltaLon / 2) *
             Math.sin(deltaLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return Math.round(earthRadius * c);
+        const distance = earthRadius * c;
+        return +distance.toFixed(2);
     }
 }

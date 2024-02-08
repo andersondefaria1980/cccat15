@@ -30,7 +30,7 @@ test("Must throw error if ride does not exist", async function () {
     const passengerAccountDto = await RideTestUtils.createAccount(accountRepository, true, false);
     const rideId = crypto.randomUUID();
     startRideUseCase = new StartRideUseCase(rideRepository);
-    await expect(() => startRideUseCase.execute(rideId)).rejects.toThrow(new Error("Ride not found."));
+    await expect(() => startRideUseCase.execute(rideId)).rejects.toThrow(new Error("Ride not found"));
 });
 
 test("Must throw error if ride does not have driver", async function () {

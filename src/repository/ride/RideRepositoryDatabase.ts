@@ -21,7 +21,7 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
             "from cccat15.ride r\n" +
             "    inner join cccat15.account p on p.account_id = r.passenger_id\n" +
             "    left join cccat15.account d on d.account_id = r.driver_id\n" +
-            `where r.ride_id = $1`, rideId);
+            `where r.ride_id = $1`, [rideId]);
         if (rideDbList.length > 0) {
             const rideDb = rideDbList[0]
             return this.getRideFromDb(rideDb);
@@ -29,11 +29,11 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
         return undefined;
     }
 
-    async findRidesFromDriver(driverId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
+    async findRidesFromDriver(driverId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
         return await this.findRidesFromAccount(RideRepositoryDatabase.ACCOUNT_TYPE_DRIVER, driverId, status, hasStatus);
     }
 
-    async findRidesFromPassenger(passengerId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
+    async findRidesFromPassenger(passengerId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
         return await this.findRidesFromAccount(RideRepositoryDatabase.ACCOUNT_TYPE_PASSENGER, passengerId, status, hasStatus);
     }
 
@@ -53,11 +53,11 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
             sql += ` and status ${condition} ('${statusIn}')`;
         }
         const rideDbList = await db.any(sql, parameters);
-        const rideDtoList: Ride[] = [];
+        const rideList: Ride[] = [];
         rideDbList.forEach((r) => {
-            rideDtoList.push(this.getRideFromDb(r));
+            rideList.push(this.getRideFromDb(r));
         });
-        return rideDtoList;
+        return rideList;
     }
 
     async updateRide(ride: Ride): Promise<void> {

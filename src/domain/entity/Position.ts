@@ -19,6 +19,10 @@ export default class Position {
         return new Position(positionId, rideId, lat, long, new Date());
     }
 
+    public static restore(positionId: string, rideId: string, lat:number, long: number, date: Date) {
+        return new Position(positionId, rideId, lat, long, date);
+    }
+
     getLat() {
         return this.position.latitude;
     }

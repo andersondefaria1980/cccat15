@@ -9,6 +9,7 @@ import RideInput from "../application/usecase/ride/inputOutputData/RideInput";
 import RideOutput from "../application/usecase/ride/inputOutputData/RideOutput";
 import PositionRepositoryDatabase from "../repository/position/PositionRepositoryDatabase";
 import UpdateRidePositionUseCase from "../application/usecase/ride/UpdateRidePositionUseCase";
+import FinishRideUseCase from "../application/usecase/ride/FinishRideUseCase";
 
 export default class RideController {
     private rideRepository: RideRepositoryDatabase;
@@ -56,5 +57,11 @@ export default class RideController {
     public async updatePosition(body: any): Promise<void> {
         const updatePositionRideUseCase = new UpdateRidePositionUseCase(this.positionRepository, this.rideRepository);
         await updatePositionRideUseCase.execute(body);
+    }
+
+    public async finishRide(body: any): Promise<void> {
+        const rideId = body.rideId;
+        const finishRideUseCase = new FinishRideUseCase(this.rideRepository, this.positionRepository);
+        await finishRideUseCase.execute(rideId);
     }
 }

@@ -8,7 +8,7 @@ export default class UpdateRidePositionUseCase {
 
     public async execute(input: RidePositionInput) {
         let ride = await this.rideRepository.findRide(input.rideId);
-        if (!ride) throw new Error("Ride not found.");
+        if (!ride) throw new Error("Ride not found");
         await ride.updatePosition(input.lat, input.long);
         const position = await Position.create(input.rideId, input.lat, input.long);
         await this.rideRepository.updateRide(ride);

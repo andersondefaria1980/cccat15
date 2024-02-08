@@ -35,7 +35,9 @@ describe("GET /accounts/:id", () => {
             name: "John Doe",
             email: `john.doe${Math.random()}@gmail.com`,
             cpf: "97456321558",
-            isPassenger: true
+            isPassenger: true,
+            isDriver: true,
+            carPlate: "AAA 1242",
         };
         const responseSignup = await axios.post("http://localhost:3000/signup", input);
 
@@ -44,7 +46,7 @@ describe("GET /accounts/:id", () => {
         accountApiTestUtils.validateAccountResponse(response.data);
     });
     it("Should return not foundt", async () => {
-        const response = await axios.get(`console.log(response.data)/accounts/d05b5be4-d3d0-474f-a3c4-119765f4d07b`);
+        const response = await axios.get(`${baseURL}/accounts/d05b5be4-d3d0-474f-a3c4-119765f4d07b`);
         expect(response.status).toBe(404);
     });
 });

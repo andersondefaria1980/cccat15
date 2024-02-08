@@ -1,6 +1,7 @@
 import Coordinate from "../vo/Coordinate";
 import crypto from "crypto";
 import DistanceCalculator from "../ds/DistanceCalculator";
+import Position from "./Position";
 
 export default class Ride {
 
@@ -9,6 +10,7 @@ export default class Ride {
     public static STATUS_IN_PROGRESS = "IN_PROGRESS";
     public static STATUS_COMPLETED = "COMPLETED";
     public static STATUS_CANCELED = "CANCELED";
+    public static FARE_COEFFICIENT = 2.1;
 
     private from: Coordinate;
     private to: Coordinate;
@@ -61,6 +63,20 @@ export default class Ride {
         const actualPosition = await Coordinate.create(lat, long);
         this.distance = await DistanceCalculator.calculateDistanceFromCoordinates(this.lastPosition, actualPosition);
         this.lastPosition = actualPosition;
+    }
+
+    async finish(positions: Position[]) {
+        if (this.status !== Ride.STATUS_IN_PROGRESS) throw new Error(`Invalid ride status. Ride only can be finished if status = ${Ride.STATUS_IN_PROGRESS}`);
+        let totalDistance = 0;
+        let lastPosition = undefined;
+        for (const p of positions) {
+            const actualPosition = Coordinate.create(p.getLat(), p.getLong());
+            if (typeof lastPosition !== "undefined") totalDistance += await DistanceCalculator.calculateDistanceFromCoordinates(lastPosition, actualPosition);
+            lastPosition = actualPosition;
+        }
+        this.distance = totalDistance;
+        this.fare = +(totalDistance * Ride.FARE_COEFFICIENT).toFixed(2);
+        this.status = Ride.STATUS_COMPLETED;
     }
 
     getStatus(): string {
