@@ -1,3 +1,7 @@
+pendências 19/02
+ - separação dos context bounds em aplicações diferentes e chamar via serviço (account done falta o resto)
+ - implementar o registry com proxy (rever) melhorando os controllers
+ - process payment serviço separado - criar gatway nas outras aplicações
 pendêcias 05/02
  - OK remover endpoints que nao sao use cases (delete, create etc...)
  - OK trocar supertes pelo axios
@@ -7,7 +11,7 @@ pendêcias 05/02
     - OK altera campo status para private para poder mudar dentro da classe
  - OK fazer os values objects para name, email, cpf (trazer o validade cpf pra dentro do vo, metodos todos privados)... alterar testes de CPF
  - OK useCase Update Position: atualizar a distancia acumulada da corrida
- - UC8 - FinishRide
+ - OK UC8 - FinishRide
  - UC9 - ProcessPayment
 
 pendências 30/01
