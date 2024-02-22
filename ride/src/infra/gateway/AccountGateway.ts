@@ -16,6 +16,7 @@ type Output = {
     name: string,
     email: string,
     cpf: string,
+    creditCardToken: string,
     isPassenger: boolean,
     isDriver?: boolean,
     carPlate?: string,

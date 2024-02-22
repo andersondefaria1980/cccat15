@@ -10,7 +10,7 @@ export default class AccountRepositoryInMemory implements AccountRepositoryInter
 
     public async findAccount(accountId: string) {
         const account = this.accounts.find(a => a.accountId === accountId);
-        return account ? Account.restore(account.accountId, account.getName(),account.getEmail(), account.getCpf(), account.isPassenger, account.isDriver, account.getCarPlte()) : undefined;
+        return account ? Account.restore(account.accountId, account.getName(),account.getEmail(), account.getCpf(), account.creditCardToken, account.isPassenger, account.isDriver, account.getCarPlte()) : undefined;
     }
     
     public async findAccountByEmail(email: string) {

@@ -1,8 +1,10 @@
 import {RideRepositoryInterface} from "./RideRepositoryInterface";
 import Ride from "../../../domain/entity/Ride";
+import Transaction from "../../../domain/entity/Transaction";
 
 export default class RideRepositoryInMemory implements RideRepositoryInterface {
     private rides: Ride[] = [];
+    private transactions: Transaction[] = [];
 
     public async addRide(rideDto: Ride) {
         this.rides.push(rideDto);
@@ -31,5 +33,17 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
 
     async listRides(): Promise<Ride[]> {
         return this.rides;
+    }
+
+    async addTransaction(transaction: Transaction): Promise<void> {
+        this.transactions.push(transaction);
+    }
+
+    async findTransaction(transactionId: string): Promise<Transaction | undefined> {
+        return await this.transactions.find(r => r.transactionId === transactionId);
+    }
+
+    async listRideTransactions(rideId: string): Promise<Transaction[]> {
+        return this.transactions.filter(r => r.rideId === rideId);
     }
 }

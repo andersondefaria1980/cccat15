@@ -15,6 +15,7 @@ export default class Account {
         name: string,
         email: string,
         cpf: string,
+        readonly creditCardToken: string,
         readonly isPassenger: boolean,
         readonly isDriver?: boolean,
         carPlate?: string,
@@ -25,13 +26,13 @@ export default class Account {
         if (carPlate) this.carPlate = new CarPlate(carPlate);
     }
 
-    public static create(name: string, email: string, cpf: string, isPassenger: boolean, isDriver?: boolean, carPlate?: string): Account {
+    public static create(name: string, email: string, cpf: string, creditCardToken: string, isPassenger: boolean, isDriver?: boolean, carPlate?: string): Account {
         const accountId = crypto.randomUUID();
-        return new Account(accountId, name, email, cpf, isPassenger, isDriver, carPlate);
+        return new Account(accountId, name, email, cpf, creditCardToken, isPassenger, isDriver, carPlate);
     }
 
-    public static restore(accountId: string, name: string, email: string, cpf: string, isPassenger: boolean, isDriver?: boolean, carPlate?: string): Account {
-        return new Account(accountId, name, email, cpf, isPassenger, isDriver, carPlate);
+    public static restore(accountId: string, name: string, email: string, cpf: string, creditCardToken: string, isPassenger: boolean, isDriver?: boolean, carPlate?: string): Account {
+        return new Account(accountId, name, email, cpf, creditCardToken, isPassenger, isDriver, carPlate);
     }
 
     getName() {

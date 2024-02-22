@@ -106,7 +106,7 @@ describe("POST /rides/update-position", () => {
 });
 
 describe("POST /rides/finish", () => {
-    it("Should finsh ride and calculate distance and fare", async function () {
+    it.only("Should finsh ride and calculate distance and fare, process payment and save transaction", async function () {
         const [ride, createdRideId] = await createRide();
         const driverAccountId = await getAccount(false, true);
         const acceptRideRequestBody = { rideId: createdRideId, driverId: driverAccountId };
@@ -120,7 +120,8 @@ describe("POST /rides/finish", () => {
         expect(responseAfterFinished.data.status).toBe(Ride.STATUS_COMPLETED);
         expect(responseAfterFinished.data.distance).toBe(28.44);
         expect(responseAfterFinished.data.fare).toBe(59.72);
-        console.log(createdRideId)
+        //todo consultar transações da ride pra ver se cadastrou
+
     });
     it("Should return error if ride is not in progress", async function () {
         const [ride, createdRideId] = await createRide();

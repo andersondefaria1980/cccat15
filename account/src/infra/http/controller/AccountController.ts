@@ -22,7 +22,7 @@ export default class AccountController {
     }
 
     public async signup(body: any) {
-        const accountInput = AccountInput.create(body.name, body.email, body.cpf, body.isPassenger, body.isDriver, body.carPlate);
+        const accountInput = AccountInput.create(body.name, body.email, body.cpf, body.creditCardToken, body.isPassenger, body.isDriver, body.carPlate);
         const signupUseCase = new SignupUseCase(this.accountRepository, this.mailerGateway);
         return await signupUseCase.execute(accountInput);
     }

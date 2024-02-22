@@ -13,7 +13,7 @@ beforeEach(() => {
 });
 
 test("Must return an account", async function() {
-    const account = Account.create("Jose da Silva", "jose@tests.com", "02976067945",  false, true, "AAA 1234");
+    const account = Account.create("Jose da Silva", "jose@tests.com", "02976067945",  "AAA", false, true, "AAA 1234");
     await accountRepository.addAccount(account);
     getAccountUseCase = new GetAccountUseCase(accountRepository);
     const returnedAccount = await getAccountUseCase.execute(account.accountId);

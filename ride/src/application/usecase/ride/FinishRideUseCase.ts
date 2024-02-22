@@ -2,6 +2,7 @@ import {RideRepositoryInterface} from "../../../infra/repository/ride/RideReposi
 import {PositionRepositoryInterface} from "../../../infra/repository/position/PositionRepositoryInterface";
 import PaymentGateway from "../../../infra/gateway/PaymentGateway";
 import {AccountGateway} from "../../../infra/gateway/AccountGateway";
+import Transaction from "../../../domain/entity/Transaction";
 
 export default class FinishRideUseCase {
     public constructor(
@@ -20,7 +21,9 @@ export default class FinishRideUseCase {
         const positions = await this.positionRepository.findRidePositions(rideId);
         await ride.finish(positions);
         await this.rideRepository.updateRide(ride);
-        const creditCardToken = 'AAA';
-        await this.paymentGateway.processPayment(ride.rideId, creditCardToken, ride.getFare());
+        const creditCardToken = passengerAccount.creditCardToken;
+        const payment = await this.paymentGateway.processPayment(ride.rideId, creditCardToken, ride.getFare());
+        const transaction = await Transaction.create(rideId, payment.amount, payment.success);
+        await this.rideRepository.addTransaction(transaction);
     }
 }

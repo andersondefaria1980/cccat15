@@ -6,6 +6,7 @@ import FinishRideUseCase from "../../../src/application/usecase/ride/FinishRideU
 import PositionRepositoryInMemory from "../../../src/infra/repository/position/PositionRepositoryInMemory";
 import PaymentGateway, {PaymentGatewayConsole} from "../../../src/infra/gateway/PaymentGateway";
 import {AccountGateway} from "../../../src/infra/gateway/AccountGateway";
+import Transaction from "../../../src/domain/entity/Transaction";
 
 let rideRepository: RideRepositoryInMemory;
 let positionRepository: PositionRepositoryInMemory;
@@ -42,7 +43,7 @@ test("Should throw error if ride is not IN_PROGRESS", async function() {
     await expect(() => finishRideUseCase.execute(ride.rideId)).rejects.toThrow(new Error(`Invalid ride status. Ride only can be finished if status = ${Ride.STATUS_IN_PROGRESS}`));
 });
 
-test("Musf finish ride and calculate distance and fare", async function() {
+test("Musf finish ride and calculate distance and fare, process payment ans save transaction", async function() {
     const passengerAccountId = await RideTestUtils.createAccount(true, false);
     const driverAccountId = await RideTestUtils.createAccount(false, true);
     const fromLat = -27.588272014187325;
@@ -65,7 +66,11 @@ test("Musf finish ride and calculate distance and fare", async function() {
     finishRideUseCase = new FinishRideUseCase(rideRepository, positionRepository, paymentGateway, accountGateway);
     await finishRideUseCase.execute(ride.rideId);
     const finishedRide = await rideRepository.findRide(ride.rideId);
+    const transactions = await rideRepository.listRideTransactions(ride.rideId);
     expect(finishedRide?.getStatus()).toBe(Ride.STATUS_COMPLETED);
     expect(finishedRide?.getDistance()).toBe(3.19);
     expect(finishedRide?.getFare()).toBe(6.7);
+    expect(transactions.length).toBe(1);
+    expect(transactions[0].status).toBe(Transaction.STATUS_PROCESSED);
+    expect(transactions[0].amount).toBe(6.7);
 });

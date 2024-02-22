@@ -1,6 +1,7 @@
 import {RideRepositoryInterface} from "./RideRepositoryInterface";
 import Ride from "../../../domain/entity/Ride";
 import {db} from "../../database/database";
+import Transaction from "../../../domain/entity/Transaction";
 
 export default class RideRepositoryDatabase implements RideRepositoryInterface {
 
@@ -83,4 +84,34 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
     private getRideFromDb(rideDb: any): Ride {
         return Ride.restore(rideDb.ride_id, rideDb.passenger_id, rideDb.status, parseFloat(rideDb.fare), parseFloat(rideDb.from_lat), parseFloat(rideDb.from_long), parseFloat(rideDb.to_lat), parseFloat(rideDb.to_long), rideDb.date, parseFloat(rideDb.last_lat), parseFloat(rideDb.last_long), parseFloat(rideDb.distance), rideDb.driver_id);
     }
+
+    async addTransaction(transaction: Transaction): Promise<void> {
+        await db.query("insert into cccat15.transaction (transaction_id, ride_id, amount, date, status) values ($1, $2, $3, $4, $5)",
+            [transaction.transactionId, transaction.rideId, transaction.amount, transaction.dateTime, transaction.status]);
+    }
+
+    async findTransaction(transactionId: string): Promise<Transaction | undefined> {
+        const transactionDbList = await db.any(`select * from cccat15.transaction where transaction_id = $1`, [transactionId]);
+        if (transactionDbList.length > 0) {
+            return this.getTransactionFromDb(transactionDbList[0]);
+        }
+        return undefined;
+    }
+
+    private getTransactionFromDb(transactionDb: any): Transaction {
+        return Transaction.restore(transactionDb.transaction_id, transactionDb.ride_id, transactionDb.amount, transactionDb.date, transactionDb.status);
+    }
+
+    async listRideTransactions(rideId: string): Promise<Transaction[]> {
+        let sql = `select * from cccat15.transaction where ride_id = $1`;
+        let parameters: any[] = [rideId];
+        const transactionsDbList = await db.any(sql, parameters);
+        const transactionList: Transaction[] = [];
+        transactionsDbList.forEach((r) => {
+            transactionList.push(this.getTransactionFromDb(r));
+        });
+        return transactionList;
+    }
+
+
 }

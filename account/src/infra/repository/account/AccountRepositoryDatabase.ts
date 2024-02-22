@@ -13,7 +13,7 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
         const accountDbList = await db.any("select * from cccat15.account where account_id = $1", accountId);
         if (accountDbList.length > 0) {
             const accountDb = accountDbList[0]
-            return Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf,  accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate);
+            return Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.credit_card_token, accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate);
         }
         return undefined;
     }
@@ -22,7 +22,7 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
         const accountDbList = await db.any("select * from cccat15.account where email = $1", email);
         if (accountDbList.length > 0) {
             const accountDb = accountDbList[0]
-            return Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf,  accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate);
+            return Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.credit_card_token, accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate);
         }
         return undefined;
     }    
@@ -30,7 +30,7 @@ export default class AccountRepositoryDatabase implements AccountRepositoryInter
     public async listAccounts() {
         const accountDbList = await db.any("select * from cccat15.account order by name");        
         let accountList: Account[] = [];
-        accountDbList.forEach((accountDb) => accountList.push(Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf,  accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate)));
+        accountDbList.forEach((accountDb) => accountList.push(Account.restore(accountDb.account_id, accountDb.name, accountDb.email, accountDb.cpf, accountDb.credit_card_token, accountDb.is_passenger, accountDb.is_driver, accountDb.car_plate)));
         return accountList;
     }
 }

@@ -1,7 +1,12 @@
 pendências 19/02
- - separação dos context bounds em aplicações diferentes e chamar via serviço (account done falta o resto)
+ - teste de api d ride ono finish ride precisar consultar as transactions pra validar se foi cadastrado
+    - vai precisar criar um use cse para lkstar transactions da ride para poder chamar no teste de api
+ - OK separação dos context bounds em aplicações diferentes e chamar via serviço (account done falta o resto)
+ - OK process payment - salvar a transaction na base
+ - OK no finish ride pegar a conta do passagenro e colocar o credito card token para processar pagamento e validar retonor
  - implementar o registry com proxy (rever) melhorando os controllers
- - process payment serviço separado - criar gatway nas outras aplicações
+ - OK process payment serviço separado - criar gatway nas outras aplicações
+
 pendêcias 05/02
  - OK remover endpoints que nao sao use cases (delete, create etc...)
  - OK trocar supertes pelo axios

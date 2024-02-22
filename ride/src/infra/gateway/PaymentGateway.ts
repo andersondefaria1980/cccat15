@@ -1,20 +1,24 @@
+import axios from "axios";
+
 export default interface PaymentGateway {
     processPayment (rideId: string, creditCardToken: string, amount: number): Promise<Output>;
 }
 
 export class PaymentGatewayConsole implements PaymentGateway {
-    public static STATUS_OK: "OK";
-    public static STATUS_ERROR: "ERROR";
-
 	async processPayment (rideId: string, creditCardToken: string, amount: number): Promise<Output> {
-        return {
-            status: PaymentGatewayConsole.STATUS_OK,
-            message: `Processed payment: Ride: ${rideId} - Amount: ${amount}`,
-        }
+        const input = {
+            creditCardToken: creditCardToken,
+            amount: amount,
+        };
+        const response= await axios.post(`http://localhost:3002/payment/process`, input);
+        return response.data;
 	}
 }
 
 type Output = {
-    status: string,
-    message: string,
+    paymentId: string,
+    creditCardToken: string,
+    amount: number,
+    success: boolean,
+    description: string,
 }
