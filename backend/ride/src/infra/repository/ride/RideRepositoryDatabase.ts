@@ -30,12 +30,12 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
         return undefined;
     }
 
-    async findRidesFromDriver(driverId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
-        return await this.findRidesFromAccount(RideRepositoryDatabase.ACCOUNT_TYPE_DRIVER, driverId, status, hasStatus);
+    async findRidesNotCompletedFromDriver(driverId: string): Promise<Ride[]> {
+        return await this.findRidesFromAccount(RideRepositoryDatabase.ACCOUNT_TYPE_DRIVER, driverId, [Ride.STATUS_ACCEPTED, Ride.STATUS_IN_PROGRESS], true);
     }
 
-    async findRidesFromPassenger(passengerId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
-        return await this.findRidesFromAccount(RideRepositoryDatabase.ACCOUNT_TYPE_PASSENGER, passengerId, status, hasStatus);
+    async findRidesNotCompletedFromPassenger(passengerId: string): Promise<Ride[]> {
+        return await this.findRidesFromAccount(RideRepositoryDatabase.ACCOUNT_TYPE_PASSENGER, passengerId, [Ride.STATUS_COMPLETED], false);
     }
 
     async findRidesFromAccount(accountType: string, accountId: string, status?: string[], hasStatus?: boolean): Promise<Ride[]> {
@@ -88,14 +88,6 @@ export default class RideRepositoryDatabase implements RideRepositoryInterface {
     async addTransaction(transaction: Transaction): Promise<void> {
         await db.query("insert into cccat15.transaction (transaction_id, ride_id, amount, date, status) values ($1, $2, $3, $4, $5)",
             [transaction.transactionId, transaction.rideId, transaction.amount, transaction.dateTime, transaction.status]);
-    }
-
-    async findTransaction(transactionId: string): Promise<Transaction | undefined> {
-        const transactionDbList = await db.any(`select * from cccat15.transaction where transaction_id = $1`, [transactionId]);
-        if (transactionDbList.length > 0) {
-            return this.getTransactionFromDb(transactionDbList[0]);
-        }
-        return undefined;
     }
 
     private getTransactionFromDb(transactionDb: any): Transaction {

@@ -23,12 +23,12 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         }
     }
 
-    async findRidesFromPassenger(passengerId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
-        return this.rides.filter(r => r.passengerId === passengerId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));
+    async findRidesNotCompletedFromPassenger(passengerId: string): Promise<Ride[]> {
+        return this.rides.filter(r => r.passengerId === passengerId && r.getStatus() !== Ride.STATUS_COMPLETED);
     }
 
-    async findRidesFromDriver(driverId: string, status: string[], hasStatus: boolean): Promise<Ride[]> {
-        return this.rides.filter(r => r.getDriverId() === driverId && status.filter(s => hasStatus ? (s === r.getStatus()) : (s !== r.getStatus())));
+    async findRidesNotCompletedFromDriver(driverId: string): Promise<Ride[]> {
+        return this.rides.filter(r => r.getDriverId() === driverId && (r.getStatus() === Ride.STATUS_ACCEPTED || r.getStatus() === Ride.STATUS_IN_PROGRESS));
     }
 
     async listRides(): Promise<Ride[]> {
@@ -39,11 +39,12 @@ export default class RideRepositoryInMemory implements RideRepositoryInterface {
         this.transactions.push(transaction);
     }
 
-    async findTransaction(transactionId: string): Promise<Transaction | undefined> {
-        return await this.transactions.find(r => r.transactionId === transactionId);
-    }
-
     async listRideTransactions(rideId: string): Promise<Transaction[]> {
-        return this.transactions.filter(r => r.rideId === rideId);
+        const transactions =  this.transactions.filter(r => r.rideId === rideId);
+        const list: Transaction[] = [];
+        transactions.forEach((t) => {
+            list.push(Transaction.restore(t.transactionId, t.rideId, t.amount, t.dateTime, t.status));
+        });
+        return list;
     }
 }

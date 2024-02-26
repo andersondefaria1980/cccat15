@@ -10,7 +10,7 @@ export class PaymentGateway implements PaymentGatewayInterface {
             creditCardToken: creditCardToken,
             amount: amount,
         };
-        const response= await axios.post(`http://localhost:3002/payment/process`, input);
+        const response = await axios.post(`http://localhost:3002/payment/process`, input);
         return response.data;
 	}
 }

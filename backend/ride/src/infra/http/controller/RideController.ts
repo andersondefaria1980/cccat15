@@ -9,10 +9,10 @@ import RideOutput from "../../../application/usecase/ride/inputOutputData/RideOu
 import PositionRepositoryDatabase from "../../repository/position/PositionRepositoryDatabase";
 import UpdateRidePositionUseCase from "../../../application/usecase/ride/UpdateRidePositionUseCase";
 import FinishRideUseCase from "../../../application/usecase/ride/FinishRideUseCase";
-import PaymentGateway, {PaymentGateway} from "../../gateway/PaymentGateway";
 import {PositionRepositoryInterface} from "../../repository/position/PositionRepositoryInterface";
 import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
 import {AccountGateway} from "../../gateway/AccountGateway";
+import {PaymentGateway} from "../../gateway/PaymentGateway";
 
 export default class RideController {
     private rideRepository: RideRepositoryInterface;

@@ -1,6 +1,6 @@
 pendências 19/02
- - RIDE -> correção dos testes payment gateway
-  - cobertura de testes
+ - OK RIDE -> correção dos testes payment gateway
+ - OK cobertura de testes
  - OK criar mock dos gateways nos testes para nao depender do outro serviço nos testes de integração, mos de API deixar com a integraçãpo completa
  - OK teste de api d ride ono finish ride precisar consultar as transactions pra validar se foi cadastrado
     - OK vai precisar criar um use cse para listar transactions da ride para poder chamar no teste de api

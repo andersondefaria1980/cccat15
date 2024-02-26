@@ -13,7 +13,7 @@ export default class RequestRideUseCase {
         const passengerAccount = await this.accountGateway.findById(rideInput.passengerId);
         if (!passengerAccount) throw new Error("Account not found.");
         if (!passengerAccount.isPassenger) throw new Error("Passenger account is not passenger.");
-        const ridesNotCompleted = await this.rideRepository.findRidesFromPassenger(rideInput.passengerId, [Ride.STATUS_COMPLETED], false);
+        const ridesNotCompleted = await this.rideRepository.findRidesNotCompletedFromPassenger(rideInput.passengerId);
         if (ridesNotCompleted.length > 0) throw new Error("Passenger has ride not completed.");
         const ride = Ride.create(rideInput.passengerId, rideInput.from.latitude, rideInput.from.longitude, rideInput.to.latitude, rideInput.to.longitude);
         await this.rideRepository.addRide(ride)

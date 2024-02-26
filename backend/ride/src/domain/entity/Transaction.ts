@@ -16,7 +16,7 @@ export default class Transaction {
     public static async create(rideId: string, amount: number, success: boolean) {
         const transactionId = crypto.randomUUID();
         const dateTime = new Date();
-        const status = success ? this.STATUS_PROCESSED : this.STATUS_ERROR;
+        const status = this.STATUS_PROCESSED;
         return new Transaction(transactionId, rideId, amount, dateTime, status);
     }
 

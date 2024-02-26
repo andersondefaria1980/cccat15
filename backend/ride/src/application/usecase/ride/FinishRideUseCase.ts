@@ -1,15 +1,15 @@
 import {RideRepositoryInterface} from "../../../infra/repository/ride/RideRepositoryInterface";
 import {PositionRepositoryInterface} from "../../../infra/repository/position/PositionRepositoryInterface";
-import PaymentGateway from "../../../infra/gateway/PaymentGateway";
-import {AccountGateway} from "../../../infra/gateway/AccountGateway";
+import AccountGatewayInterface from "../../../infra/gateway/AccountGateway";
 import Transaction from "../../../domain/entity/Transaction";
+import PaymentGatewayInterface from "../../../infra/gateway/PaymentGateway";
 
 export default class FinishRideUseCase {
     public constructor(
         readonly rideRepository: RideRepositoryInterface,
         readonly positionRepository: PositionRepositoryInterface,
-        readonly paymentGateway: PaymentGateway,
-        readonly accountGateway: AccountGateway,
+        readonly paymentGateway: PaymentGatewayInterface,
+        readonly accountGateway: AccountGatewayInterface,
     ) {
     }
 
