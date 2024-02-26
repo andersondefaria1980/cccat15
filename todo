@@ -1,6 +1,9 @@
 pendências 19/02
- - teste de api d ride ono finish ride precisar consultar as transactions pra validar se foi cadastrado
-    - vai precisar criar um use cse para lkstar transactions da ride para poder chamar no teste de api
+ - RIDE -> correção dos testes payment gateway
+  - cobertura de testes
+ - OK criar mock dos gateways nos testes para nao depender do outro serviço nos testes de integração, mos de API deixar com a integraçãpo completa
+ - OK teste de api d ride ono finish ride precisar consultar as transactions pra validar se foi cadastrado
+    - OK vai precisar criar um use cse para listar transactions da ride para poder chamar no teste de api
  - OK separação dos context bounds em aplicações diferentes e chamar via serviço (account done falta o resto)
  - OK process payment - salvar a transaction na base
  - OK no finish ride pegar a conta do passagenro e colocar o credito card token para processar pagamento e validar retonor
