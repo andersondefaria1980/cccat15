@@ -2,6 +2,7 @@ import Coordinate from "../vo/Coordinate";
 import crypto from "crypto";
 import DistanceCalculator from "../ds/DistanceCalculator";
 import Position from "./Position";
+import FareCalculatorFactory from "../ds/FareCalculator";
 
 export default class Ride {
 
@@ -61,21 +62,14 @@ export default class Ride {
     async updatePosition(lat: number, long: number): Promise<void> {
         if (this.status !== Ride.STATUS_IN_PROGRESS) throw new Error(`Invalid ride status. Position only can be update if status = ${Ride.STATUS_IN_PROGRESS}`);
         const actualPosition = await Coordinate.create(lat, long);
-        this.distance = await DistanceCalculator.calculateDistanceFromCoordinates(this.lastPosition, actualPosition);
+        this.distance += await DistanceCalculator.calculateDistanceFromCoordinates(this.lastPosition, actualPosition);
         this.lastPosition = actualPosition;
     }
 
     async finish(positions: Position[]) {
         if (this.status !== Ride.STATUS_IN_PROGRESS) throw new Error(`Invalid ride status. Ride only can be finished if status = ${Ride.STATUS_IN_PROGRESS}`);
-        let totalDistance = 0;
-        let lastPosition = undefined;
-        for (const p of positions) {
-            const actualPosition = Coordinate.create(p.getLat(), p.getLong());
-            if (typeof lastPosition !== "undefined") totalDistance += await DistanceCalculator.calculateDistanceFromCoordinates(lastPosition, actualPosition);
-            lastPosition = actualPosition;
-        }
-        this.distance = totalDistance;
-        this.fare = +(totalDistance * Ride.FARE_COEFFICIENT).toFixed(2);
+        const fareCalculator = FareCalculatorFactory.create(this.date);
+        this.fare = fareCalculator.calculate(this.distance);
         this.status = Ride.STATUS_COMPLETED;
     }
 

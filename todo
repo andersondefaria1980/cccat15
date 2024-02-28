@@ -1,3 +1,29 @@
+pendências 26/02
+ - OK Ride.ts - finish - alterar para so pegar a distancia, pois ela já é calculada no updte ride
+ - OK finsih ride - ao finalizar a corrida em horario noturno a tarifa é diferente
+    - OK a data utilizada é da ta da criação, mas ela esta dentro do create de Ride
+    - OK vai precisar de um stub do new Date verificar testes feito pelo branas
+ - OK finish ride  - criar ponto de extensão apra os comportamentos diferentes para as tarifas
+   - OK pode ser dum domainService para calcular
+    - OK open/closed principle
+   - OK precisa fazer o teste fa factory
+
+ - Liskov Substitution (Bárbara Liskov)
+  - Faltou o signup no AccountGateway
+  - AccountGateway está acoplado ao axios - driver precisa remover isso
+   - instalando fecth - yarn add node-fetch@2 / $types/node-fetch@2
+
+ - EDA
+  - CAP Theorem
+  - Livro microservice patterns
+   - Account/infra/qeue  -yarn ampqlib
+     - producer.ts
+     - consumer.ts
+     - rabit mqeue
+    - Criar qeue
+
+
+
 pendências 19/02
  - OK RIDE -> correção dos testes payment gateway
  - OK cobertura de testes

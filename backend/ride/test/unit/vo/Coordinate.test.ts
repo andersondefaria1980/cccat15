@@ -1,5 +1,4 @@
 import Coordinate from "../../../src/domain/vo/Coordinate";
-import {errors} from "pg-promise";
 
 test.each([
     {lat: -27.584905257808835, long: -48.545022195325124},

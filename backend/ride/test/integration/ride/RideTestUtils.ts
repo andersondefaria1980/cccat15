@@ -30,14 +30,4 @@ export default class RideTestUtils {
         await rideRepository.addRide(rideRestored);
         return rideRestored;
     }
-
-    public static async addPosition(
-        positionRepository: PositionRepositoryInterface,
-        rideId: string,
-        lat: number,
-        long: number
-    ) {
-        const position = await Position.create(rideId, lat, long);
-        await positionRepository.addPosition(position);
-    }
 }

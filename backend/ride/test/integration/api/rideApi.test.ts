@@ -119,11 +119,11 @@ describe("POST /rides/finish", () => {
         expect(response.status).toBe(200);
         const responseAfterFinished = await axios.get(`${baseURL}/rides/${createdRideId}`);
         expect(responseAfterFinished.data.status).toBe(Ride.STATUS_COMPLETED);
-        expect(responseAfterFinished.data.distance).toBe(28.44);
-        expect(responseAfterFinished.data.fare).toBe(59.72);
+        expect(responseAfterFinished.data.distance).toBe(39.28);
+        expect(responseAfterFinished.data.fare).toBe(82.49);
         const responseTransactions = await axios.get(`${baseURL}/transactions/${createdRideId}`);
         expect(responseTransactions.data.length).toBe(1);
-        expect(responseTransactions.data[0].amount).toBe(59.72);
+        expect(responseTransactions.data[0].amount).toBe(82.49);
         expect(responseTransactions.data[0].status).toBe(Transaction.STATUS_PROCESSED);
 
     });
