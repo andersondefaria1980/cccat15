@@ -32,11 +32,9 @@ export default class FareCalculatorFactory {
     static create (date: Date) {
         const isSunday: boolean = date.getDay() === 0;
         const isOvernight: boolean = date.getHours() > 22 || date.getHours() < 6;
-        const isNormal: boolean = date.getHours() <= 22 && date.getHours() >= 6;
         if (isSunday) return new SundayFareCalculator();
         if (isOvernight) return new OvernightFareCalculator();
-        if (isNormal) return new NormalFareCalculator();
-        throw new Error("Invalid Hour");
+        return new NormalFareCalculator();
     }
 }
 

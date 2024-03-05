@@ -1,3 +1,6 @@
+pendências 04/03
+ - 
+
 pendências 26/02
  - OK Ride.ts - finish - alterar para so pegar a distancia, pois ela já é calculada no updte ride
  - OK finsih ride - ao finalizar a corrida em horario noturno a tarifa é diferente
@@ -10,8 +13,9 @@ pendências 26/02
 
  - Liskov Substitution (Bárbara Liskov)
   - Faltou o signup no AccountGateway
-  - AccountGateway está acoplado ao axios - driver precisa remover isso
-   - instalando fecth - yarn add node-fetch@2 / $types/node-fetch@2
+  - OK AccountGateway está acoplado ao axios - driver precisa remover isso
+   ******* - testes http client (Parado aqui...)
+   - OK - instalando fecth - yarn add node-fetch@2 / $types/node-fetch@2
 
  - EDA
   - CAP Theorem

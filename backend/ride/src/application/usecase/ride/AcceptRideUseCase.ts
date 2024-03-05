@@ -1,11 +1,10 @@
 import {RideRepositoryInterface} from "../../../infra/repository/ride/RideRepositoryInterface";
-import Ride from "../../../domain/entity/Ride";
-import {AccountGateway} from "../../../infra/gateway/AccountGateway";
+import AccountGatewayInterface from "../../../infra/gateway/AccountGateway";
 
 export default class AcceptRideUseCase {
     public constructor(
         readonly rideRepository: RideRepositoryInterface,
-        readonly accountGateway: AccountGateway
+        readonly accountGateway: AccountGatewayInterface
     ) {}
 
     public async execute(rideId: string, driverId: string) {

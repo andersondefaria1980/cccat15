@@ -1,6 +1,11 @@
 import axios from "axios";
 import Ride from "../../../src/domain/entity/Ride";
 import Transaction from "../../../src/domain/entity/Transaction";
+import {
+    NormalFareCalculator,
+    OvernightFareCalculator,
+    SundayFareCalculator
+} from "../../../src/domain/ds/FareCalculator";
 
 axios.defaults.validateStatus = function () {
     return true;
@@ -120,12 +125,20 @@ describe("POST /rides/finish", () => {
         const responseAfterFinished = await axios.get(`${baseURL}/rides/${createdRideId}`);
         expect(responseAfterFinished.data.status).toBe(Ride.STATUS_COMPLETED);
         expect(responseAfterFinished.data.distance).toBe(39.28);
-        expect(responseAfterFinished.data.fare).toBe(82.49);
+
+        let coeficient = 2.1;
+        const date = new Date();
+        const isSunday: boolean = date.getUTCDay() === 0;
+        const isOvernight: boolean = date.getUTCHours() > 22 || date.getUTCHours() < 6;
+        if (isSunday) coeficient = 2.9;
+        if (isOvernight) coeficient = 3.9;
+        const fare = +((39.28 * coeficient).toFixed(2));
+
+        expect(responseAfterFinished.data.fare).toBe(fare);
         const responseTransactions = await axios.get(`${baseURL}/transactions/${createdRideId}`);
         expect(responseTransactions.data.length).toBe(1);
-        expect(responseTransactions.data[0].amount).toBe(82.49);
+        expect(responseTransactions.data[0].amount).toBe(fare);
         expect(responseTransactions.data[0].status).toBe(Transaction.STATUS_PROCESSED);
-
     });
     it("Should return error if ride is not in progress", async function () {
         const [ride, createdRideId] = await createRide();

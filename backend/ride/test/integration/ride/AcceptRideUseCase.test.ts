@@ -5,6 +5,7 @@ import RideTestUtils from "./RideTestUtils";
 import Ride from "../../../src/domain/entity/Ride";
 import {AccountGateway} from "../../../src/infra/gateway/AccountGateway";
 import sinon, {SinonMock} from "sinon";
+import {AxiosAdapter} from "../../../src/infra/http/HttpClient";
 
 let rideRepository: RideRepositoryInMemory;
 let accountGateway: AccountGateway;
@@ -13,7 +14,7 @@ let accountGatewayMock: SinonMock;
 
 beforeEach(() => {
     rideRepository = new RideRepositoryInMemory();
-    accountGateway = new AccountGateway();
+    accountGateway = new AccountGateway(new AxiosAdapter());
     accountGatewayMock = sinon.mock(AccountGateway.prototype);
 });
 

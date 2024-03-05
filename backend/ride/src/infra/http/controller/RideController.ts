@@ -13,6 +13,7 @@ import {PositionRepositoryInterface} from "../../repository/position/PositionRep
 import {RideRepositoryInterface} from "../../repository/ride/RideRepositoryInterface";
 import {AccountGateway} from "../../gateway/AccountGateway";
 import {PaymentGateway} from "../../gateway/PaymentGateway";
+import {AxiosAdapter} from "../HttpClient";
 
 export default class RideController {
     private rideRepository: RideRepositoryInterface;
@@ -24,7 +25,7 @@ export default class RideController {
         this.rideRepository = new RideRepositoryDatabase();
         this.positionRepository = new PositionRepositoryDatabase();
         this.paymentGateway = new PaymentGateway();
-        this.accountGateway = new AccountGateway();
+        this.accountGateway = new AccountGateway(new AxiosAdapter());
     }
 
     public async listRides(params: any): Promise<RideOutput[]> {

@@ -9,6 +9,7 @@ import Transaction from "../../../src/domain/entity/Transaction";
 import sinon, {SinonFakeTimers, SinonMock} from "sinon";
 import {PaymentGateway} from "../../../src/infra/gateway/PaymentGateway";
 import UpdateRidePositionUseCase from "../../../src/application/usecase/ride/UpdateRidePositionUseCase";
+import {AxiosAdapter} from "../../../src/infra/http/HttpClient";
 
 let rideRepository: RideRepositoryInMemory;
 let positionRepository: PositionRepositoryInMemory;
@@ -24,7 +25,7 @@ beforeEach(() => {
     positionRepository = new PositionRepositoryInMemory();
     rideTestUtils = new RideTestUtils();
     paymentGateway = new PaymentGateway();
-    accountGateway = new AccountGateway();
+    accountGateway = new AccountGateway(new AxiosAdapter());
     accountGatewayMock = sinon.mock(AccountGateway.prototype);
     paymentGatewayMock = sinon.mock(PaymentGateway.prototype);
 });
